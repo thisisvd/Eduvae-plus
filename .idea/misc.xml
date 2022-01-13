@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/drop_down_item_converter.xml" value="0.1731958762886598" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/edittext_stroke.xml" value="0.17835051546391753" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/activity_setup.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/drop_down_list_view.xml" value="0.1642361111111111" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_complete_profile.xml" value="0.176" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_login.xml" value="0.152" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_on_boarding_screen.xml" value="0.2" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_otp.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_sign_up_screen.xml" value="0.176" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_splash_screen.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/drawable/button_blue.xml" value="0.1701388888888889" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/drawable/edittext_stroke.xml" value="0.17430555555555555" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/activity_main.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/activity_setup.xml" value="0.16944444444444445" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/fragment_on_boarding_screen.xml" value="0.136" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/fragment_onboarding_screen.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/fragment_sign_up_screen.xml" value="0.136" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/fragment_splash_screen.xml" value="0.152" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

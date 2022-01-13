@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1011062373162",
+    "project_id": "edugate-2022",
+    "storage_bucket": "edugate-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011062373162:android:fa1ffd567e2c7be071bc53",
+        "android_client_info": {
+          "package_name": "com.digitalinclined.edugate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011062373162-2b0g10j8h2kpf5m7n8a565hagdl3fhg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdn27lKADWOvbq8-nclKDnKphucdUKmls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011062373162-2b0g10j8h2kpf5m7n8a565hagdl3fhg5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
