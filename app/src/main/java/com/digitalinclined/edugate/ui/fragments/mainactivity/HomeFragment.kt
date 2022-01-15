@@ -8,6 +8,7 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.ui.fragments.SetupActivity
 import com.google.firebase.auth.FirebaseAuth
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class HomeFragment: Fragment(R.layout.fragment_home) {
 
@@ -24,17 +25,45 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // calling carousel method
+        carouselImageView()
+
         binding.apply {
 
-            // signOut
-            signOut.setOnClickListener{
-                firebaseAuth.signOut()
-                startActivity(Intent(requireActivity(),SetupActivity::class.java))
-                requireActivity().finish()
-            }
+
 
         }
 
+    }
+
+    // Carousel image view container
+    private fun carouselImageView() {
+
+        binding.carousel.registerLifecycle(lifecycle)
+
+        val list = mutableListOf<CarouselItem>()
+
+        list.add(
+            CarouselItem(
+//                imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
+                imageDrawable = R.drawable.digens_img
+            )
+        )
+
+        list.add(
+            CarouselItem(
+//                imageUrl = "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
+                imageDrawable = R.drawable.digens_img
+                )
+        )
+
+        list.add(
+            CarouselItem(
+                imageDrawable = R.drawable.digens_img
+            )
+        )
+
+        binding.carousel.setData(list)
     }
 
 }

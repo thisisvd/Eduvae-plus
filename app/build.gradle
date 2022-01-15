@@ -64,4 +64,9 @@ dependencies {
     // OTP edit text
     implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx' // kotlin
 
+    // Image Carousel Dependency
+    // Circle Indicator (To fix the xml preview "Missing classes" error)
+    implementation 'me.relex:circleindicator:2.1.6'
+    implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.0.6'
+
 }
