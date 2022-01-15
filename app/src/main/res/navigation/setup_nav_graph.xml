@@ -3,21 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setup_nav_graph"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/onBoardingScreenFragment">
 
-    <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.SplashScreenFragment"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
-        <action
-            android:id="@+id/action_splashScreenFragment_to_onBoardingScreenFragment"
-            app:destination="@id/onBoardingScreenFragment"
-            app:enterAnim="@anim/slide_left_animation"
-            app:exitAnim="@anim/wait_animation"
-            app:popEnterAnim="@anim/wait_animation"
-            app:popExitAnim="@anim/slide_right_animation" />
-    </fragment>
     <fragment
         android:id="@+id/onBoardingScreenFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.OnBoardingScreenFragment"
@@ -43,15 +30,15 @@
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.SignUpScreenFragment"
         android:label="SignUpScreenFragment" >
         <action
-            android:id="@+id/action_signUpScreenFragment_to_completeProfileFragment"
-            app:destination="@id/completeProfileFragment"
+            android:id="@+id/action_signUpScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_left_animation"
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
         <action
-            android:id="@+id/action_signUpScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            android:id="@+id/action_signUpScreenFragment_to_OTPFragment"
+            app:destination="@id/OTPFragment"
             app:enterAnim="@anim/slide_left_animation"
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
@@ -99,5 +86,16 @@
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
+        <action
+            android:id="@+id/action_OTPFragment_to_completeProfileFragment"
+            app:destination="@id/completeProfileFragment" />
+        <argument
+            android:name="fragment"
+            app:argType="string"
+            android:defaultValue="signUP" />
+        <argument
+            android:name="phone"
+            app:argType="string"
+            android:defaultValue="none" />
     </fragment>
 </navigation>

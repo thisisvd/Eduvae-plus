@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.digitalinclined.edugate">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Edugate">
         <activity
-            android:name=".ui.SetupActivity"
-            android:exported="true" >
+            android:name=".ui.fragments.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,14 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
-            android:exported="true">
-           </activity>
+            android:name=".ui.fragments.SetupActivity"
+            android:exported="false"></activity>
+        <activity
+            android:name=".ui.fragments.MainActivity"
+            android:exported="false">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -28,8 +30,15 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
             // navigate to complete profile screen
             nextButton.setOnClickListener {
-                if (isTextEmpty()) {
-                    findNavController().navigate(R.id.action_signUpScreenFragment_to_completeProfileFragment)
+                if (!isTextEmpty()) {
+                    val bundle = Bundle().apply {
+                        putString("fragment", "signUP")
+                        putString("phone",phoneNumber.text.toString())
+                    }
+                    findNavController().navigate(
+                        R.id.action_signUpScreenFragment_to_OTPFragment,
+                        bundle
+                    )
                 }
             }
 
@@ -37,6 +46,9 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
             login.setOnClickListener {
                 findNavController().navigate(R.id.action_signUpScreenFragment_to_loginFragment)
             }
+
+            // handling onBack Pressed
+            onBack()
 
         }
 
@@ -103,6 +115,24 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
                 }
             }
         }
+    }
+
+    // handle onBack pressed
+    private fun onBack() {
+//        requireActivity()
+//            .onBackPressedDispatcher
+//            .addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    findNavController().navigate(R.id.action_signUpScreenFragment_to_onBoardingScreenFragment)
+//                }
+//            }
+//            )
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // Handle the back button event
+            findNavController().popBackStack(R.id.onBoardingScreenFragment,false)
+        }
+
     }
 
 }

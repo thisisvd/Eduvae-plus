@@ -63,19 +63,32 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_13sdp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneNumber"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberEdittextLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/edittext_stroke"
             android:fontFamily="@font/titillium_web"
-            android:hint="Your registered phone number"
-            android:inputType="number"
-            android:padding="@dimen/_13sdp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/_14sdp" />
+            app:errorEnabled="true"
+            android:hint=" "
+            app:errorTextColor="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edittext_stroke"
+                android:fontFamily="@font/titillium_web"
+                android:hint="Your phone number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="@dimen/_13sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_14sdp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

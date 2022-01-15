@@ -1,16 +1,14 @@
 package com.digitalinclined.edugate.ui.fragments.setupactivity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
-import com.digitalinclined.edugate.databinding.FragmentOnBoardingScreenBinding
-import com.digitalinclined.edugate.databinding.FragmentSplashScreenBinding
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 
 class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
@@ -29,7 +27,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         roughCourseList.add("BBA")
         roughCourseList.add("MBA")
         roughCourseList.add("MCA")
-        roughCourseList.add("BTECH")
+        roughCourseList.add("B.TECH")
 
         roughYearList.add("First Year")
         roughYearList.add("Second Year")
@@ -47,6 +45,12 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             // navigate to login screen
             login.setOnClickListener {
                 findNavController().navigate(R.id.action_completeProfileFragment_to_loginFragment)
+            }
+
+            // complete sign up button onClick listener
+            completeButton.setOnClickListener {
+                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                requireActivity().finish()
             }
 
         }
