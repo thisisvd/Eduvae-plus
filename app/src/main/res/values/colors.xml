@@ -10,10 +10,12 @@
 
 <!-- Theme working colors-->
     <color name="theme_color">#030B30</color>
+    <color name="navy_blue_color">#1045FF</color>
     <color name="edittext_stroke_color">#959595</color>
     <color name="secondary_text_color">#A710FF</color>
     <color name="third_text_color">#059CFF</color>
     <color name="button_gradient_end_color">#1045FF</color>
     <color name="button_gradient_start_color">#02ADFF</color>
+
 
 </resources>

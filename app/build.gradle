@@ -69,4 +69,10 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.0.6'
 
+    // circular image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // bottom nav bar dependency
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.8'
+
 }

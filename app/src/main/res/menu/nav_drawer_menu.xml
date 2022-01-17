@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/pqp"
+        android:title="Previous Question Papers" />
+
+    <item
+        android:id="@+id/syllabus"
+        android:title="Saved Reports" />
+
+    <item
+        android:id="@+id/notes"
+        android:title="Notes" />
+
+    <item
+        android:id="@+id/universityPortal"
+        android:title="University Portal" />
+
+    <item
+        android:id="@+id/jobUpdates"
+        android:title="Job Updates" />
+
+    <item
+        android:id="@+id/about"
+        android:title="About" />
+
+    <item
+        android:id="@+id/joinOurTelegram"
+        android:title="Join Our Telegram" />
+
+    <item
+        android:id="@+id/signOut"
+        android:title="Sign out!" />
+
+</menu>

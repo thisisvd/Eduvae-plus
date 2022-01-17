@@ -52,8 +52,8 @@
     <org.imaginativeworld.whynotimagecarousel.ImageCarousel
         android:id="@+id/carousel"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         app:showNavigationButtons="false"
         app:imageScaleType="fitXY"
         app:carouselType="BLOCK"
@@ -63,6 +63,8 @@
         app:autoPlay="true"
         app:autoPlayDelay="3000"
         app:infiniteCarousel="true"
+        app:showTopShadow="false"
+        app:showBottomShadow="false"
         app:touchToPause="true" />
 
     <LinearLayout
@@ -70,7 +72,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_30sdp"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
     <LinearLayout
@@ -82,7 +84,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_weight="1"
             android:background="@drawable/home_yellow_box" >
 
@@ -100,7 +103,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_weight="1"
             android:background="@drawable/home_blue_box" >
 
@@ -127,7 +131,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_weight="1"
             android:background="@drawable/home_voilet_box" >
 
@@ -146,7 +151,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/home_orange_box">
 
             <TextView

@@ -5,4 +5,7 @@
 
     <string name="on_boarding_text">Live <font color='#1045FF'>learning</font> app for students</string>
 
+    <string name="open">open</string>
+    <string name="close">open</string>
+
 </resources>
