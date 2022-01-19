@@ -1,21 +1,15 @@
 package com.digitalinclined.edugate.ui.fragments.setupactivity
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_EMAIL
+import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentSignUpScreenBinding
-import com.digitalinclined.edugate.databinding.FragmentSplashScreenBinding
 
 class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
@@ -28,18 +22,9 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
         binding.apply {
 
-            // navigate to complete profile screen
+            // navigate to OTP screen
             nextButton.setOnClickListener {
-                if (!isTextEmpty()) {
-                    val bundle = Bundle().apply {
-                        putString("fragment", "signUP")
-                        putString("phone",phoneNumber.text.toString())
-                    }
-                    findNavController().navigate(
-                        R.id.action_signUpScreenFragment_to_OTPFragment,
-                        bundle
-                    )
-                }
+                nextButtonPressed()
             }
 
             // navigate to login screen
@@ -52,6 +37,29 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
         }
 
+    }
+
+    // navigate to OTP screen
+    private fun nextButtonPressed() {
+        binding.apply {
+            if (!isTextEmpty()) {
+                // Data to be send to next fragment
+                val bundle = Bundle().apply {
+                    putString("fragment", "signUP")
+                    putString("phone", phoneNumber.text.toString())
+                }
+
+                // Setting up the user detail's to temporary memory
+                TEMP_CREATE_USER_NAME = name.text.toString()
+                TEMP_CREATE_USER_EMAIL = email.text.toString()
+
+                // navigate to OTP Fragment with carry data in bundle
+                findNavController().navigate(
+                    R.id.action_signUpScreenFragment_to_OTPFragment,
+                    bundle
+                )
+            }
+        }
     }
 
     // check for empty edit texts

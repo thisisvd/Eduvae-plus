@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 
 class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
 
@@ -17,6 +19,8 @@ class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSyllabusBinding.bind(view)
 
+        // change the title bar
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"
 
 
     }

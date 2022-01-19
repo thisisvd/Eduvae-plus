@@ -1,27 +1,42 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
+import com.digitalinclined.edugate.models.UserProfile
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.SetupActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
+    // TAG
+    private val TAG = "HomeFragment"
+
     // viewBinding
     private lateinit var binding: FragmentHomeBinding
+
+    // Shared Preference
+    private lateinit var sharedPreferences: SharedPreferences
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
@@ -39,14 +54,49 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // change the title bar
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
+
         // calling carousel method
         carouselImageView()
 
-        binding.apply {
+        // user name for the top
+        getUserName()
 
+        binding.apply {
 
         }
 
+    }
+
+    // get user name
+    private fun getUserName() {
+        binding.apply {
+
+//            val name = sharedPreferences.getString(USER_NAME,"")!!.split(" ")
+            val name = (requireActivity() as MainActivity).sharedPreferences.getString(USER_NAME,"")!!.split(" ")
+            userName.text = "${name[0]} "
+
+//            dbReference.document(firebaseAuth.currentUser!!.uid).get()
+//                .addOnSuccessListener { document ->
+//                    if (document != null) {
+//                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+//                        val userProfile = document.toObject(UserProfile::class.java)!!
+//
+//                        if(userProfile.name != null) {
+//                            val name = userProfile.name.split(" ")
+//                            userName.text = "${name[0]} "
+//                        }
+//
+//                    } else {
+//                        Log.d(TAG, "No such document")
+//                    }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.d(TAG, "get failed with ", exception)
+//                }
+
+        }
     }
 
     // Carousel image view container
@@ -104,6 +154,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_bar_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun onSnackBar() {
+        Snackbar.make(
+            binding.root,
+            "Logged in as !",
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
 }

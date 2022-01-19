@@ -6,18 +6,26 @@ import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentSplashScreenBinding
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.SetupActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
     // viewBinding
     private lateinit var binding: FragmentSplashScreenBinding
 
-    // firebase
-    private lateinit var firebaseAuth: FirebaseAuth
+    // firebase auth & user
+    private var firebaseAuth = FirebaseAuth.getInstance()
+
+    // firebase db instances
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("users")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +43,8 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
             // After finish navigate to next fragment
             override fun onFinish() {
                 if (firebaseAuth.currentUser != null) {
-//                    findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    requireActivity().finish()
                 } else {
                     startActivity(Intent(requireActivity(), SetupActivity::class.java))
                     requireActivity().finish()
@@ -46,5 +55,9 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
     }
 
+//    // check for the pre-existing user
+//    private fun checkForPreExistingUser() {
+//        dbReference.get().
+//    }
 
 }

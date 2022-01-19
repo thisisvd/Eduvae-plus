@@ -6,18 +6,22 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentOtpBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
 class OTPFragment: Fragment(R.layout.fragment_otp) {
@@ -40,8 +44,12 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private var mCallBacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     private var mVerificationId: String? = null
 
-    // firebase auth
-    private lateinit var firebaseAuth: FirebaseAuth
+    // firebase auth & user
+    private var firebaseAuth = FirebaseAuth.getInstance()
+
+    // firebase db instances
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("users")
 
     // progress dialog
     private lateinit var progressDialog: ProgressDialog
@@ -74,7 +82,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             // callbacks
             firebasePhoneCallback()
 
-            // start verification process
+            // start verification process (i.e, request for code / send code)
             startPhoneNumberVerification(phoneNumber)
 
             // navigate to signup screen
@@ -91,14 +99,16 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             verifyButton.setOnClickListener{
                 val code = otpEdittext.text.toString().trim()
                 if(TextUtils.isEmpty(code)) {
-                    Toast.makeText(requireContext(),"Please enter verification code",Toast.LENGTH_SHORT).show()
+                    // Snack bar on empty OTP
+                    Snackbar.make(binding.root ,
+                        "Please enter verification code!",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 } else {
                     verifyPhoneNumberWithCode(mVerificationId, code)
                 }
             }
-
         }
-
     }
 
     // Setting up the phone code callback
@@ -175,12 +185,6 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String?){
         Log.d(TAG,"verifyPhoneNumberWithCode $verificationId : $code")
 
-        // progress update
-        progressDialog.apply {
-            setMessage("Resending Code...")
-            show()
-        }
-
         // getting credentials
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
         signInWIthPhoneAuthCredential(credential)
@@ -198,20 +202,107 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 progressDialog.dismiss()
                 val phone = firebaseAuth.currentUser!!.phoneNumber
 
-                // go to next activity / fragment
-                if (recentFragment == "signUP") {
-                    findNavController().navigate(R.id.action_OTPFragment_to_completeProfileFragment)
-                } else {
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
-//                    requireActivity().finish()
-                }
+                checkForAccount()
+
             }
             .addOnFailureListener { e ->
                 // login failed
                 progressDialog.dismiss()
                 Log.d(TAG,"${e.message}")
             }
+    }
 
+    // check for an account if it exists or not fireStore
+    private fun checkForAccount() {
+        // temp variable only be used for login checks
+        var isAccountExistsForLogin = false
+        // temp variable only be used for signup checks
+        var isAccountExistsForSignUp = false
+
+        // fetching data and performing operations
+        dbReference.get().addOnCompleteListener { snapshot ->
+            if(snapshot.isSuccessful){
+                for(document in snapshot.result!!) {
+                    if(document.id == firebaseAuth.currentUser?.uid) {
+
+                        // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
+                        if(recentFragment == "login") {
+                            // User already have an account in db
+                            startActivity(Intent(requireActivity(), MainActivity::class.java))
+                            requireActivity().finish()
+                            isAccountExistsForLogin = true
+                        }
+
+                        // CODE TO BE RUN IF RECENT FRAGMENT IS SIGN UP
+                        if(recentFragment == "signUP") {
+                            // User already have an account in db
+                            MaterialAlertDialogBuilder(requireContext()).apply {
+                                setTitle("Account Already Exists!")
+                                    .setMessage("Account with this number already exists. " +
+                                            "Do you want to login with an existing account?")
+                                setPositiveButton("Login") { _,_ ->
+                                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                                    requireActivity().finish()
+                                }
+                                setNegativeButton("Go back") { _,_ ->
+                                    // signing out the authenticated user via (LOGIN)
+                                    firebaseAuth.signOut()
+                                    findNavController().popBackStack()
+                                }
+                                setCancelable(false)
+                            }.show()
+
+                            isAccountExistsForSignUp = true
+                        }
+
+                    }
+                }
+
+                // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
+                if(recentFragment == "login") {
+                    // If the OTP verified account doesn't exist in db
+                    if (!isAccountExistsForLogin) {
+                        Snackbar.make(
+                            binding.root,
+                            "You don't have an account with this phone!",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                        // signing out the authenticated user via (SIGNUP)
+                        firebaseAuth.currentUser!!.delete().addOnSuccessListener {
+                            Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
+                        }
+                    }
+                } else if (recentFragment == "signUP") {  // CODE TO BE RUN IF RECENT FRAGMENT IS SIGN UP
+                    // User don't have an account in db
+                    if (!isAccountExistsForSignUp) {
+                        createNewAccount()
+                    }
+                }
+            }
+        }
+    }
+
+    // create a new account in fireStore for users [SIGN-UP CODE]
+    private fun createNewAccount() {
+        val user = hashMapOf(
+            "name" to Constants.TEMP_CREATE_USER_NAME,
+            "email" to Constants.TEMP_CREATE_USER_EMAIL,
+            "phone" to firebaseAuth.currentUser?.phoneNumber,
+            "course" to "",
+            "year" to "",
+            "city" to "",
+            "profilephotolink" to ""
+        )
+
+        // create db in fireStore
+        dbReference.document(firebaseAuth.currentUser!!.uid)
+            .set(user)
+            .addOnSuccessListener {
+                findNavController().navigate(R.id.action_OTPFragment_to_completeProfileFragment)
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
     }
 
 }

@@ -23,10 +23,10 @@
             app:layout_constraintTop_toTopOf="parent" >
 
             <TextView
+                android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
-                android:text="Home"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp" />
@@ -66,7 +66,7 @@
         <me.ibrahimsn.lib.SmoothBottomBar
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="?attr/actionBarSize"
             app:backgroundColor="@color/theme_color"
             app:indicatorColor="@color/white"
             app:indicatorRadius="@dimen/_12sdp"
@@ -74,6 +74,7 @@
             app:iconTintActive="@color/theme_color"
             app:textSize="@dimen/_12sdp"
             app:iconSize="@dimen/_16sdp"
+            app:cornerRadius="@dimen/_20sdp"
             app:itemFontFamily="@font/titillium_web_light"
             app:textColor="@color/theme_color"
             app:layout_constraintBottom_toBottomOf="parent"

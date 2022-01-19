@@ -1,7 +1,9 @@
 package com.digitalinclined.edugate.ui.fragments
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
@@ -16,6 +18,12 @@ class SetupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setup)
         binding = ActivitySetupBinding.inflate(layoutInflater)
+
+        // Force No Night mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        //Screen orientation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // Nav controller
         val navHostFragment =

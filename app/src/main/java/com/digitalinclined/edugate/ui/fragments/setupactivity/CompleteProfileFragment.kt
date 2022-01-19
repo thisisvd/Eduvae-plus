@@ -2,15 +2,27 @@ package com.digitalinclined.edugate.ui.fragments.setupactivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_EMAIL
+import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
+
+    // TAG
+    private val TAG = "CompleteProfileFragment"
 
     // ROUGH LIST -
     private var roughCourseList = ArrayList<String>()
@@ -18,6 +30,14 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
     // viewBinding
     private lateinit var binding: FragmentCompleteProfileBinding
+
+    // Firebase
+    private var firebaseAuth = FirebaseAuth.getInstance()
+    private var firebaseUser = firebaseAuth.currentUser
+
+    // firebase db instances
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("users")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,12 +69,29 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
             // complete sign up button onClick listener
             completeButton.setOnClickListener {
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                requireActivity().finish()
+                updateAnAccount()
             }
 
         }
+    }
 
+    // update some values of account in fireStore
+    private fun updateAnAccount() {
+        val user = hashMapOf(
+            "course" to "MBA",
+            "year" to "Third Year",
+        )
+
+        // create db in fireStore
+        dbReference.document(firebaseUser!!.uid)
+            .update(user as Map<String, Any>)
+            .addOnSuccessListener {
+                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                requireActivity().finish()
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
     }
 
     // Setting adapters for Spinner / AutoTextView

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_color"
-    android:padding="@dimen/_20sdp"
+    android:padding="@dimen/_15sdp"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_18sdp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +35,7 @@
             android:fontFamily="@font/titillium_web"
             android:textColor="@color/white"
             android:text="👋"
+            android:layout_gravity="center_vertical"
             android:textSize="@dimen/_14sdp" />
 
     </LinearLayout>
@@ -70,7 +71,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -79,9 +80,12 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_weight="1"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/syllabusText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/_10sdp"
@@ -126,6 +130,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_weight="1"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:orientation="horizontal">
 
         <RelativeLayout

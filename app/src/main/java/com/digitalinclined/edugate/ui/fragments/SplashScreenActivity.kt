@@ -1,9 +1,11 @@
 package com.digitalinclined.edugate.ui.fragments
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import androidx.appcompat.app.AppCompatDelegate
 import com.digitalinclined.edugate.databinding.ActivitySplashScreenBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,6 +21,12 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Force No Night mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        //Screen orientation
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
