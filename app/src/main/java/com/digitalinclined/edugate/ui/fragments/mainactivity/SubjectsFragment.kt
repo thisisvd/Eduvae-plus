@@ -5,35 +5,35 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
+import com.digitalinclined.edugate.databinding.FragmentSubjectsBinding
+import com.digitalinclined.edugate.databinding.SubjectComponentLayoutBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 
-class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
+class SubjectsFragment : Fragment(R.layout.fragment_subjects) {
 
     // viewBinding
-    private lateinit var binding: FragmentSyllabusBinding
+    private lateinit var binding: FragmentSubjectsBinding
 
     // Adapters
     lateinit var recyclerAdapter: SubjectRecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSyllabusBinding.bind(view)
+        binding = FragmentSubjectsBinding.bind(view)
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Subjects"
 
         // getting the name
-        binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
+        binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(
+            Constants.USER_NAME,"")
 
         // set up recycler view
         setupRecyclerView()
@@ -41,7 +41,7 @@ class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
         // on click listener
         recyclerAdapter.apply {
             setOnItemClickListener { value ->
-                Toast.makeText(requireContext(),value.textMain,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),value.textMain, Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -7,9 +7,9 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/syllabusFragment"
+        android:id="@+id/subjectsFragment"
         android:icon="@drawable/topic_icon"
-        android:title="Syllabus" />
+        android:title="Subjects" />
 
     <item
         android:id="@+id/discussionFragment"

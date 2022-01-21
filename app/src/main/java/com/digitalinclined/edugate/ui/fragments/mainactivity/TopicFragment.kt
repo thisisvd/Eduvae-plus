@@ -13,21 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.databinding.FragmentNotesBinding
 import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
+import com.digitalinclined.edugate.databinding.FragmentTopicsBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 
-class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
+class TopicFragment : Fragment(R.layout.fragment_topics) {
 
     // viewBinding
-    private lateinit var binding: FragmentSyllabusBinding
+    private lateinit var binding: FragmentTopicsBinding
 
     // Adapters
     lateinit var recyclerAdapter: SubjectRecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSyllabusBinding.bind(view)
+        binding = FragmentTopicsBinding.bind(view)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"
@@ -53,11 +55,10 @@ class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
     // viewModel observers
     private fun viewModelObservers() {
         val list = arrayListOf(
-            SubjectRecyclerData("E","English"),
-            SubjectRecyclerData("H","Hindi"),
-            SubjectRecyclerData("M","Maths"),
-            SubjectRecyclerData("P","Physics"),
-            SubjectRecyclerData("C","Chemistry")
+            SubjectRecyclerData("1","Topic-1"),
+            SubjectRecyclerData("2","Topic-2"),
+            SubjectRecyclerData("3","Topic-3"),
+            SubjectRecyclerData("4","Topic-4")
         )
         recyclerAdapter.differ.submitList(list)
     }

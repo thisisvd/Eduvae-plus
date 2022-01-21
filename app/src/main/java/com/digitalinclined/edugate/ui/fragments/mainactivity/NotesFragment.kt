@@ -13,21 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.databinding.FragmentNotesBinding
 import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 
-class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
+class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     // viewBinding
-    private lateinit var binding: FragmentSyllabusBinding
+    private lateinit var binding: FragmentNotesBinding
 
     // Adapters
     lateinit var recyclerAdapter: SubjectRecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSyllabusBinding.bind(view)
+        binding = FragmentNotesBinding.bind(view)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"

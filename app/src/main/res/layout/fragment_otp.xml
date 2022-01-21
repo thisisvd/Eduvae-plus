@@ -179,18 +179,26 @@
         android:textColor="@color/secondary_text_color"
         android:textSize="@dimen/_15sdp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/verifyButton"
-        style="@style/Widget.MaterialComponents.Button"
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/verifyButton"-->
+<!--        style="@style/Widget.MaterialComponents.Button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_above="@+id/OnBoardingLinearLayout"-->
+<!--        android:layout_marginTop="@dimen/_20sdp"-->
+<!--        android:layout_marginBottom="@dimen/_15sdp"-->
+<!--        android:backgroundTint="@color/button_gradient_end_color"-->
+<!--        android:padding="@dimen/_8sdp"-->
+<!--        android:text="Verify"-->
+<!--        android:textSize="@dimen/_17sdp" />-->
+
+    <include
+        android:id="@+id/progressBarButton"
+        layout="@layout/progress_btn_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/OnBoardingLinearLayout"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:backgroundTint="@color/button_gradient_end_color"
-        android:padding="@dimen/_8sdp"
-        android:text="Verify"
-        android:textSize="@dimen/_17sdp" />
+        android:layout_marginBottom="@dimen/_15sdp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

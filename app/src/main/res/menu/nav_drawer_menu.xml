@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/pqp"
+        android:id="@+id/previousQuestionPapers"
         android:title="Previous Question Papers" />
 
     <item
         android:id="@+id/syllabus"
-        android:title="Saved Reports" />
+        android:title="Syllabus" />
 
     <item
         android:id="@+id/notes"
@@ -22,8 +22,8 @@
         android:title="Job Updates" />
 
     <item
-        android:id="@+id/about"
-        android:title="About" />
+        android:id="@+id/aboutUs"
+        android:title="About Us" />
 
     <item
         android:id="@+id/joinOurTelegram"

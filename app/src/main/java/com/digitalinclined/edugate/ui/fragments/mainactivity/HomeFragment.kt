@@ -1,30 +1,22 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.app.Activity
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
-import com.digitalinclined.edugate.models.UserProfile
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.SetupActivity
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -65,6 +57,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.apply {
 
+            // syllabus click listener
+            syllabus.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_syllabusFragment)
+            }
+
+            // oldYearPaper click listener
+            oldYearPaper.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_yearOfPapersFragment)
+            }
+
+            // notes click listener
+            notes.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_notesFragment)
+            }
+
+            // videos click listener
+            videos.setOnClickListener {
+                Toast.makeText(requireContext(),"Videos",Toast.LENGTH_SHORT).show()
+            }
+
         }
 
     }
@@ -72,30 +84,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     // get user name
     private fun getUserName() {
         binding.apply {
-
-//            val name = sharedPreferences.getString(USER_NAME,"")!!.split(" ")
             val name = (requireActivity() as MainActivity).sharedPreferences.getString(USER_NAME,"")!!.split(" ")
             userName.text = "${name[0]} "
-
-//            dbReference.document(firebaseAuth.currentUser!!.uid).get()
-//                .addOnSuccessListener { document ->
-//                    if (document != null) {
-//                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-//                        val userProfile = document.toObject(UserProfile::class.java)!!
-//
-//                        if(userProfile.name != null) {
-//                            val name = userProfile.name.split(" ")
-//                            userName.text = "${name[0]} "
-//                        }
-//
-//                    } else {
-//                        Log.d(TAG, "No such document")
-//                    }
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.d(TAG, "get failed with ", exception)
-//                }
-
         }
     }
 
@@ -143,7 +133,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.homeProfileMenu -> {
-                Toast.makeText(requireContext(),"Profile menu clicked!",Toast.LENGTH_LONG).show()
+                val navBuilder = NavOptions.Builder()
+                navBuilder.setEnterAnim(R.anim.slide_down).setExitAnim(R.anim.wait_animation)
+                .setPopEnterAnim(R.anim.wait_animation).setPopExitAnim(R.anim.slide_up)
+                findNavController().navigate(R.id.myProfile,null,navBuilder.build())
                 true
             }
         }
@@ -154,14 +147,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_bar_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun onSnackBar() {
-        Snackbar.make(
-            binding.root,
-            "Logged in as !",
-            Snackbar.LENGTH_LONG
-        ).show()
     }
 
 }

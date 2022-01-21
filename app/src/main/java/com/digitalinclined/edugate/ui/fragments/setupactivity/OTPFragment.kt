@@ -1,7 +1,9 @@
 package com.digitalinclined.edugate.ui.fragments.setupactivity
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.adapter.ProgressButton
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentOtpBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -51,8 +54,12 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private val db = Firebase.firestore
     private val dbReference = db.collection("users")
 
-    // progress dialog
-    private lateinit var progressDialog: ProgressDialog
+    // alert progress dialog
+    private lateinit var dialog: Dialog
+
+    // progress Button
+    private lateinit var progressButton: ProgressButton
+    private lateinit var viewProgress: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,12 +74,19 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
         binding.apply {
 
-            // progress init
-            progressDialog = ProgressDialog(requireContext())
-            progressDialog.apply {
-                setTitle("Please wait")
-                setCanceledOnTouchOutside(false)
+            // init Loading Dialog
+            dialog = Dialog(requireContext())
+            dialog.apply {
+                setContentView(R.layout.custom_dialog)
+                setCancelable(false)
+                if(dialog.window != null){
+                    dialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
+                }
             }
+
+            // init progress bar button
+            viewProgress = binding.root.findViewById(R.id.progressBarButton)
+            progressButton = ProgressButton(requireContext(),viewProgress)
 
             // Hiding the google/facebook sign in layout
             if(recentFragment == "signUP") {
@@ -96,7 +110,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             }
 
             // code verify with input code
-            verifyButton.setOnClickListener{
+            viewProgress.setOnClickListener{
                 val code = otpEdittext.text.toString().trim()
                 if(TextUtils.isEmpty(code)) {
                     // Snack bar on empty OTP
@@ -124,7 +138,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                progressDialog.dismiss()
+                dialog.dismiss()
                 Log.d(TAG,"VerificationFailed : ${e.message}")
             }
 
@@ -132,7 +146,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 Log.d(TAG,"onCodeSent: $verificationId")
                 mVerificationId = verificationId
                 forceResendingToken = token
-                progressDialog.dismiss()
+                dialog.dismiss()
                 Log.d(TAG,"OnCodeSent Successfully with ID : $verificationId")
             }
         }
@@ -143,10 +157,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
         Log.d(TAG,"startPhoneNumberVerification $phone")
 
         // progress update
-        progressDialog.apply {
-            setMessage("Verifying Phone Number...")
-            show()
-        }
+        dialog.show()
 
         // code send
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -163,11 +174,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private fun resendVerificationCode(phone: String, token: PhoneAuthProvider.ForceResendingToken) {
         Log.d(TAG,"resendVerificationCode $phone")
 
-        // progress update
-        progressDialog.apply {
-            setMessage("Resending Code...")
-            show()
-        }
+        // progress show
+        dialog.show()
 
         // code resend
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -194,20 +202,17 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private fun signInWIthPhoneAuthCredential(credential: PhoneAuthCredential) {
         Log.d(TAG,":::::signInWIthPhoneAuthCredential:::::")
 
-        progressDialog.setMessage("Logging IN")
+        // progress button activated
+        progressButton.buttonActivated()
 
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
                 // login success
-                progressDialog.dismiss()
-                val phone = firebaseAuth.currentUser!!.phoneNumber
-
                 checkForAccount()
-
             }
             .addOnFailureListener { e ->
                 // login failed
-                progressDialog.dismiss()
+                progressButton.buttonFailed()
                 Log.d(TAG,"${e.message}")
             }
     }
@@ -228,6 +233,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                         // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
                         if(recentFragment == "login") {
                             // User already have an account in db
+                            progressButton.buttonSuccessfullyFinished()
                             startActivity(Intent(requireActivity(), MainActivity::class.java))
                             requireActivity().finish()
                             isAccountExistsForLogin = true
@@ -236,6 +242,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                         // CODE TO BE RUN IF RECENT FRAGMENT IS SIGN UP
                         if(recentFragment == "signUP") {
                             // User already have an account in db
+                            progressButton.buttonSuccessfullyFinished()
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setTitle("Account Already Exists!")
                                     .setMessage("Account with this number already exists. " +
@@ -262,6 +269,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 if(recentFragment == "login") {
                     // If the OTP verified account doesn't exist in db
                     if (!isAccountExistsForLogin) {
+                        progressButton.buttonFailed()
                         Snackbar.make(
                             binding.root,
                             "You don't have an account with this phone!",
@@ -298,9 +306,11 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
         dbReference.document(firebaseAuth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {
+                progressButton.buttonSuccessfullyFinished()
                 findNavController().navigate(R.id.action_OTPFragment_to_completeProfileFragment)
             }
             .addOnFailureListener { e ->
+                progressButton.buttonFailed()
                 Log.w(TAG, "Error adding document", e)
             }
     }

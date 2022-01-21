@@ -9,10 +9,15 @@
         <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="textInputLayoutFocusedRectEnabled">false</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/theme_color</item>
         <!-- Customize your theme here. -->
 
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxStrokeColor">#fff</item>
     </style>
 
 </resources>

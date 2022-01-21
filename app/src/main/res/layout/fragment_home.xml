@@ -85,7 +85,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/syllabusText"
+            android:id="@+id/syllabus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/_10sdp"
@@ -99,12 +99,13 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/titillium_web"
                 android:text="Syllabus"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/oldYearPaper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_10sdp"
@@ -119,7 +120,7 @@
                 android:fontFamily="@font/titillium_web"
                 android:text="Old Year\nQuestion\nPapers"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>
@@ -135,6 +136,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/notes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/_10sdp"
@@ -148,12 +150,13 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/titillium_web"
                 android:text="Notes"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/videos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -164,10 +167,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/titillium_web"
                 android:layout_centerInParent="true"
+                android:fontFamily="@font/titillium_web"
                 android:text="Videos"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>

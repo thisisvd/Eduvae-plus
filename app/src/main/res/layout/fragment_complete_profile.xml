@@ -62,28 +62,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:hintEnabled="false"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/edittext_stroke"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:boxStrokeColor="@color/transparent"
             app:endIconTint="@color/edittext_stroke_color"
-            android:hint=" "
-            android:background="@color/theme_color"
-            android:backgroundTint="@color/theme_color"
-            app:boxBackgroundColor="@color/theme_color"
-            app:boxStrokeColor="@color/edittext_stroke_color"
-            app:boxStrokeWidth="@dimen/_2sdp">
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp" >
 
             <AutoCompleteTextView
                 android:id="@+id/chooseCourseAutoTextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
-                android:background="@drawable/edittext_stroke"
                 android:hint="Choose Course"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textAllCaps="true" />
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,25 +106,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:hintEnabled="false"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/edittext_stroke"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:boxStrokeColor="@color/transparent"
             app:endIconTint="@color/edittext_stroke_color"
-            android:hint=" "
-            app:boxStrokeColor="@color/edittext_stroke_color"
-            app:boxStrokeWidth="@dimen/_2sdp">
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp" >
 
             <AutoCompleteTextView
                 android:id="@+id/yearAutoTextView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Year"
-                android:inputType="textCapWords"
-                android:background="@drawable/edittext_stroke"
-                android:padding="@dimen/_13sdp"
-                android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
-                android:textAllCaps="true" />
+                android:inputType="textCapWords"
+                android:padding="@dimen/_13sdp"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

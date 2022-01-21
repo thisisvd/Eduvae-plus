@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_EMAIL
@@ -49,16 +51,16 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         roughCourseList.add("MCA")
         roughCourseList.add("B.TECH")
 
-        roughYearList.add("First Year")
-        roughYearList.add("Second Year")
-        roughYearList.add("Third Year")
-        roughYearList.add("Fourth Year")
+        roughYearList.add("1st Year")
+        roughYearList.add("2nd Year")
+        roughYearList.add("3rd Year")
+        roughYearList.add("4th Year")
 
         // setting adapter method
         adapterForSpinners()
 
         // autocomplete checks
-        checksForAutoCompleteTexts()
+//        autoCompleteTextsListeners()
 
         binding.apply {
 
@@ -69,7 +71,10 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
             // complete sign up button onClick listener
             completeButton.setOnClickListener {
-                updateAnAccount()
+                if(!isAutoCompleteEmpty() && isEnteredValueTrue()) {
+//                    Toast.makeText(requireContext(),"Done",Toast.LENGTH_SHORT).show()
+                    updateAnAccount()
+                }
             }
 
         }
@@ -77,21 +82,23 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
     // update some values of account in fireStore
     private fun updateAnAccount() {
-        val user = hashMapOf(
-            "course" to "MBA",
-            "year" to "Third Year",
-        )
+        binding.apply {
+            val user = hashMapOf(
+                "course" to chooseCourseAutoTextView.text.toString(),
+                "year" to yearAutoTextView.text.toString(),
+            )
 
-        // create db in fireStore
-        dbReference.document(firebaseUser!!.uid)
-            .update(user as Map<String, Any>)
-            .addOnSuccessListener {
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                requireActivity().finish()
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+            // create db in fireStore
+            dbReference.document(firebaseUser!!.uid)
+                .update(user as Map<String, Any>)
+                .addOnSuccessListener {
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    requireActivity().finish()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+        }
     }
 
     // Setting adapters for Spinner / AutoTextView
@@ -132,21 +139,70 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
     }
 
     // Checking for autocomplete and correct text views
-    private fun checksForAutoCompleteTexts() {
+    private fun isAutoCompleteEmpty(): Boolean {
+        var result = false
+
         binding.apply {
-            chooseCourseAutoTextView.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        binding.chooseCourseAutoTextView.setText("MBA")
-                    }
-                }
-            yearAutoTextView.onFocusChangeListener =
-                View.OnFocusChangeListener { _, hasFocus ->
-                    if (!hasFocus) {
-                        binding.yearAutoTextView.setText("First Year")
-                    }
-                }
+
+            if(chooseCourseAutoTextView.text.isNullOrEmpty()) {
+                result = true
+            }
+
+            if(yearAutoTextView.text.isNullOrEmpty()) {
+                result = true
+            }
         }
+
+        if(result) {
+            // Snack bar on empty OTP
+            Snackbar.make(binding.root ,
+                "Please enter all fields!",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
+
+        return result
+    }
+
+    // check for present values exists or not
+    private fun isEnteredValueTrue(): Boolean {
+        var result = true
+        var resultCourse = false
+        var resultYear = false
+        binding.apply {
+            for (i in roughCourseList) {
+                if (chooseCourseAutoTextView.text.toString() == i) {
+                    resultCourse = true
+                }
+            }
+
+            for (i in roughYearList) {
+                if (yearAutoTextView.text.toString() == i) {
+                    resultYear = true
+                }
+            }
+
+            if(!resultCourse) {
+                chooseCourseAutoTextView.setText("")
+                Snackbar.make(binding.root ,
+                    "Please enter all fields!",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                result = false
+            }
+
+            if(!resultYear) {
+                yearAutoTextView.setText("")
+                Snackbar.make(binding.root ,
+                    "Please enter all fields!",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                result = false
+            }
+
+        }
+
+        return result
     }
 
 }
