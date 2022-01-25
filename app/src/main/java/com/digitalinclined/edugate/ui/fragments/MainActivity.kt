@@ -21,6 +21,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
@@ -35,6 +36,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.json.JSONArray
+import java.io.IOException
+import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,6 +78,9 @@ class MainActivity : AppCompatActivity() {
         // init shared pref
         sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 
+        // FETCH CITY DB IN PRIMARY MEMORY
+        readIndianCityJson()
+
         // fetching users data
         fetchFirebaseUserData()
 
@@ -104,12 +111,12 @@ class MainActivity : AppCompatActivity() {
                     if(userProfile != null) {
                         sharedPreferences.edit()
                             .putString(USER_NAME, userProfile.name)
-                            .putString(USER_EMAIL, userProfile.name)
-                            .putString(USER_PHONE, userProfile.name)
-                            .putString(USER_COURSE, userProfile.name)
-                            .putString(USER_YEAR, userProfile.name)
-                            .putString(USER_CITY, userProfile.name)
-                            .putString(USER_PROFILE_PHOTO_LINK, userProfile.name)
+                            .putString(USER_EMAIL, userProfile.email)
+                            .putString(USER_PHONE, userProfile.phone)
+                            .putString(USER_COURSE, userProfile.course)
+                            .putString(USER_YEAR, userProfile.year)
+                            .putString(USER_CITY, userProfile.city)
+                            .putString(USER_PROFILE_PHOTO_LINK, userProfile.profilephotolink)
                             .apply()
 
                         // Show snack bar when open main activity
@@ -258,6 +265,28 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    // read city db from init json
+    private fun readIndianCityJson() {
+
+        var json: String? = null
+
+        try {
+            val inputStream: InputStream = this.assets.open("indian_cities.json")
+            json = inputStream.bufferedReader().use { it.readText() }
+
+            var jsonArray = JSONArray(json)
+
+            for(i in 0 until jsonArray.length()) {
+                var jsonObj = jsonArray.getString(i)
+                INDIAN_CITY_DATA.add(jsonObj)
+            }
+
+        }catch (e: IOException) {
+            Log.d(TAG,e.message.toString())
+        }
+
     }
 
     // Toolbar Menu Item selected

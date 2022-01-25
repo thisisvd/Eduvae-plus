@@ -87,6 +87,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             // init progress bar button
             viewProgress = binding.root.findViewById(R.id.progressBarButton)
             progressButton = ProgressButton(requireContext(),viewProgress)
+            progressButton.setBtnOriginalName("Verify")
 
             // Hiding the google/facebook sign in layout
             if(recentFragment == "signUP") {
@@ -203,7 +204,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
         Log.d(TAG,":::::signInWIthPhoneAuthCredential:::::")
 
         // progress button activated
-        progressButton.buttonActivated()
+        progressButton.buttonActivated("Verifying...")
 
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
@@ -212,7 +213,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             }
             .addOnFailureListener { e ->
                 // login failed
-                progressButton.buttonFailed()
+                progressButton.buttonFailed("Verify")
                 Log.d(TAG,"${e.message}")
             }
     }
@@ -233,7 +234,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                         // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
                         if(recentFragment == "login") {
                             // User already have an account in db
-                            progressButton.buttonSuccessfullyFinished()
+                            progressButton.buttonSuccessfullyFinished("Verified!")
                             startActivity(Intent(requireActivity(), MainActivity::class.java))
                             requireActivity().finish()
                             isAccountExistsForLogin = true
@@ -242,7 +243,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                         // CODE TO BE RUN IF RECENT FRAGMENT IS SIGN UP
                         if(recentFragment == "signUP") {
                             // User already have an account in db
-                            progressButton.buttonSuccessfullyFinished()
+                            progressButton.buttonSuccessfullyFinished("Verified!")
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setTitle("Account Already Exists!")
                                     .setMessage("Account with this number already exists. " +
@@ -269,7 +270,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 if(recentFragment == "login") {
                     // If the OTP verified account doesn't exist in db
                     if (!isAccountExistsForLogin) {
-                        progressButton.buttonFailed()
+                        progressButton.buttonFailed("Verify")
                         Snackbar.make(
                             binding.root,
                             "You don't have an account with this phone!",
@@ -306,11 +307,11 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
         dbReference.document(firebaseAuth.currentUser!!.uid)
             .set(user)
             .addOnSuccessListener {
-                progressButton.buttonSuccessfullyFinished()
+                progressButton.buttonSuccessfullyFinished("Verified!")
                 findNavController().navigate(R.id.action_OTPFragment_to_completeProfileFragment)
             }
             .addOnFailureListener { e ->
-                progressButton.buttonFailed()
+                progressButton.buttonFailed("Verify")
                 Log.w(TAG, "Error adding document", e)
             }
     }

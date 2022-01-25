@@ -6,6 +6,8 @@ object Constants {
     var TEMP_CREATE_USER_NAME: String? = null
     var TEMP_CREATE_USER_EMAIL: String? = null
 
+    // Indian City CONSTANT DATA
+    var INDIAN_CITY_DATA = arrayListOf<String>()
 
     // TEMPORARY USERS DATA FIREBASE
     var SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_USERS_DATA"

@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_8sdp"
-                android:text="Verify"
+                android:text="Name Of Button"
                 android:letterSpacing=".1"
                 android:backgroundTint="@color/button_gradient_end_color"
                 android:textAllCaps="true"

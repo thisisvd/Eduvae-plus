@@ -22,10 +22,12 @@
         </activity>
         <activity
             android:name=".ui.fragments.SetupActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name=".ui.fragments.MainActivity"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <meta-data
