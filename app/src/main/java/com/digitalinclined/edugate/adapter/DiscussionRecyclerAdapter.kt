@@ -43,6 +43,7 @@ class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.
 
     override fun onBindViewHolder(holder: DiscussionViewHolder, position: Int) {
 
+        // data from dataclasses
         val data = differ.currentList[position]
 
         holder.binding.apply {

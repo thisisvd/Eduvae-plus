@@ -8,4 +8,6 @@
     <string name="open">open</string>
     <string name="close">open</string>
 
+    <string name="viewPaper"><b><u>View Paper</u></b></string>
+
 </resources>
