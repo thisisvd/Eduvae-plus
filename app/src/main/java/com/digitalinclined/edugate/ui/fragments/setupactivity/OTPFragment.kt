@@ -187,7 +187,6 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             .setForceResendingToken(token)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
-
     }
 
     // verify phone number with manually typed code

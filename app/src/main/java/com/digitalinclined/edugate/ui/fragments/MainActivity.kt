@@ -234,6 +234,11 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this@MainActivity,"University Portal",Toast.LENGTH_SHORT).show()
                         true
                     }
+                    // Notification
+                    R.id.notification -> {
+                        navHostFragment.findNavController().navigate(R.id.notificationFragment,null,navBuilder.build())
+                        true
+                    }
                     // Job Update
                     R.id.jobUpdates -> {
                         navHostFragment.findNavController().navigate(R.id.jobUpdateFragment,null,navBuilder.build())

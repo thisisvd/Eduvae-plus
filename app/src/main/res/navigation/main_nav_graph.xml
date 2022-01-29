@@ -78,5 +78,10 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PreviousYearPapersFragment"
         android:label="fragment_previous_year_papers"
         tools:layout="@layout/fragment_previous_year_papers" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 
 </navigation>

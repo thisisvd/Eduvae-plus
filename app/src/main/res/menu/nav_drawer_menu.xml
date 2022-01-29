@@ -22,6 +22,10 @@
         android:title="Job Updates" />
 
     <item
+        android:id="@+id/notification"
+        android:title="Notification" />
+
+    <item
         android:id="@+id/aboutUs"
         android:title="About Us" />
 
