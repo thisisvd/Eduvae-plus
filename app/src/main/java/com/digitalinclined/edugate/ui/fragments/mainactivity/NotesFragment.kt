@@ -31,7 +31,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         binding = FragmentNotesBinding.bind(view)
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
 
         // getting the name
         binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")

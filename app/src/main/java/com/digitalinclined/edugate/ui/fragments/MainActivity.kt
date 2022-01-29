@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,10 +13,10 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -251,7 +251,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     // Join Our Telegram
                     R.id.joinOurTelegram -> {
-                        Toast.makeText(this@MainActivity,"Join Our Telegram",Toast.LENGTH_SHORT).show()
+                        val intent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/RGPVExams"))
+                        startActivity(intent)
                         true
                     }
                     // Signing out the user

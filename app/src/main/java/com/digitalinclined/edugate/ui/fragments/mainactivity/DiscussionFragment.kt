@@ -16,9 +16,6 @@ import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 
-
-
-
 class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
 
     // viewBinding
