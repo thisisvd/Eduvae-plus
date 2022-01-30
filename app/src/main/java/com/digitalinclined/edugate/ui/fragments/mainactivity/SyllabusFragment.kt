@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +17,12 @@ import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.fragments.SupportActivity
 
 class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
+
+    // TAG
+    private val TAG = "SyllabusFragment"
 
     // viewBinding
     private lateinit var binding: FragmentSyllabusBinding
@@ -40,8 +45,10 @@ class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
 
         // on click listener
         recyclerAdapter.apply {
-            setOnItemClickListener { value ->
-                Toast.makeText(requireContext(),value.textMain,Toast.LENGTH_SHORT).show()
+            setOnItemClickListener {
+                val intent = Intent(requireActivity(),SupportActivity::class.java)
+                intent.putExtra("fragment",TAG)
+                startActivity(intent)
             }
         }
 

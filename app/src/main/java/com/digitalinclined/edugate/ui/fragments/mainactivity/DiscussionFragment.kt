@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.DiscussionRecyclerAdapter
@@ -35,6 +36,11 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
             
             // set up recycler view
             setupRecyclerView()
+
+            // fab onClick listener
+            fab.setOnClickListener {
+                findNavController().navigate(R.id.action_discussionFragment_to_addDiscussionFragment)
+            }
 
             // view model init
             viewModelObservers()

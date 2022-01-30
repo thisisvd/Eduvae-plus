@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/support_nav_graph"
+    app:startDestination="@id/PDFFragment">
+
+    <fragment
+        android:id="@+id/PDFFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.supportactivity.PDFFragment"
+        android:label="fragment_p_d_f"
+        tools:layout="@layout/fragment_p_d_f" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.supportactivity.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.supportactivity.AboutUsFragment"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+
+</navigation>

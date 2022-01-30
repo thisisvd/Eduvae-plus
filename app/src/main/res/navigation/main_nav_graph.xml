@@ -40,7 +40,15 @@
         android:id="@+id/discussionFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.DiscussionFragment"
         android:label="fragment_discussion"
-        tools:layout="@layout/fragment_discussion" />
+        tools:layout="@layout/fragment_discussion" >
+        <action
+            android:id="@+id/action_discussionFragment_to_addDiscussionFragment"
+            app:destination="@id/addDiscussionFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/myProfile"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.MyProfile"
@@ -69,11 +77,6 @@
         android:label="fragment_job_update"
         tools:layout="@layout/fragment_job_update" />
     <fragment
-        android:id="@+id/aboutUsFragment"
-        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AboutUsFragment"
-        android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" />
-    <fragment
         android:id="@+id/previousYearPapersFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PreviousYearPapersFragment"
         android:label="fragment_previous_year_papers"
@@ -83,5 +86,10 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/addDiscussionFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AddDiscussionFragment"
+        android:label="fragment_add_discussion"
+        tools:layout="@layout/fragment_add_discussion" />
 
 </navigation>

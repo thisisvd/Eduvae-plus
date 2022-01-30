@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Edugate">
         <activity
+            android:name=".ui.fragments.SupportActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.fragments.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -22,13 +25,11 @@
         </activity>
         <activity
             android:name=".ui.fragments.SetupActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".ui.fragments.MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

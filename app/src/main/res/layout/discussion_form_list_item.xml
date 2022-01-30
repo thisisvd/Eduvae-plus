@@ -156,9 +156,9 @@
         app:layout_constraintTop_toBottomOf="@+id/content">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/adobe_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/adobe_image"
             android:layout_marginLeft="@dimen/_5sdp"/>
 
         <TextView

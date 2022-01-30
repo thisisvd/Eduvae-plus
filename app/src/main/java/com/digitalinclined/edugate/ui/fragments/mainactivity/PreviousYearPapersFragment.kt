@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,8 +16,12 @@ import com.digitalinclined.edugate.databinding.FragmentPreviousYearPapersBinding
 import com.digitalinclined.edugate.models.PreviousYearPapersDataClass
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.fragments.SupportActivity
 
 class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_papers) {
+
+    // TAG
+    private val TAG = "PreviousYearPapersFragment"
 
     // viewBinding
     private lateinit var binding: FragmentPreviousYearPapersBinding
@@ -50,11 +55,15 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
                 setOnItemClickListener { strLink, value ->
 
                     if (value == "syllabusTV") {
-                        Toast.makeText(requireContext(), "Syllabus is clicked : $strLink", Toast.LENGTH_SHORT)
-                            .show()
+                        val intent = Intent(requireActivity(), SupportActivity::class.java)
+                        intent.putExtra("fragment",TAG)
+                        intent.putExtra("pdfName","syllabus")
+                        startActivity(intent)
                     }else {
-                        Toast.makeText(requireContext(), "View Paper is clicked : $strLink", Toast.LENGTH_SHORT)
-                            .show()
+                        val intent = Intent(requireActivity(), SupportActivity::class.java)
+                        intent.putExtra("fragment",TAG)
+                        intent.putExtra("pdfName","paper")
+                        startActivity(intent)
                     }
                 }
             }

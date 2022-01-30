@@ -164,13 +164,15 @@ class MainActivity : AppCompatActivity() {
 
                     when (destination.id) {
                         // when these fragments will open toolbar will not be visible
-                        R.id.myProfile -> {
+                        R.id.myProfile, R.id.addDiscussionFragment -> {
                             toolbar.visibility = View.GONE
+                            bottomNavigationView.visibility = View.GONE
                             viewTop.visibility = View.GONE
                         }
                         else -> {
                             // toolbar visibility VISIBLE
                             toolbar.visibility = View.VISIBLE
+                            bottomNavigationView.visibility = View.VISIBLE
                             viewTop.visibility = View.VISIBLE
                         }
 
@@ -231,7 +233,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     // University Portal
                     R.id.universityPortal -> {
-                        Toast.makeText(this@MainActivity,"University Portal",Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
+                        intent.putExtra("fragment","universityPortal")
+                        intent.putExtra("url_link","https://www.rgpv.ac.in/")
+                        startActivity(intent)
                         true
                     }
                     // Notification
@@ -246,7 +251,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     // About Us
                     R.id.aboutUs -> {
-                        navHostFragment.findNavController().navigate(R.id.aboutUsFragment,null,navBuilder.build())
+                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
+                        intent.putExtra("fragment","aboutUs")
+                        startActivity(intent)
                         true
                     }
                     // Join Our Telegram
