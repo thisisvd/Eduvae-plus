@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -58,6 +59,9 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
         // setting adapter method
         adapterForSpinners()
+
+        // handle onBack pressed
+        onBack()
 
         // autocomplete checks
 //        autoCompleteTextsListeners()
@@ -203,6 +207,14 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         }
 
         return result
+    }
+
+    // handle onBack pressed
+    private fun onBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // Handle the back button event
+            // Do nothing
+        }
     }
 
 }

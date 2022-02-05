@@ -1,20 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_color"
+    android:scrollbarThumbVertical="@null"
     tools:context=".ui.fragments.supportactivity.AboutUsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_20sdp" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_69sdp"
+            android:layout_height="@dimen/_69sdp"
+            android:src="@drawable/splash_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/_35sdp"
+            android:fontFamily="@font/titillium_web"
+            android:text="Edugate"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_25sdp" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us Fragment"
-        android:textSize="@dimen/_24sdp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/titillium_web"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa ultrices bibendum tempus nisi volutpat. Tincidunt dignissim amet sit tempor eleifend nascetur donec. Euismod quisque pulvinar nunc dui. Pulvinar sagittis consequat lacus, lobortis sodales. Amet, neque dictum nibh tortor quisque senectus dolor. Auctor est in dignissim dignissim vestibulum, fames. Pellentesque vulputate nec elit, quisque. Nibh aenean blandit duis justo, velit mattis. Diam dignissim ut semper id semper.
+Tempor leo enim, laoreet suspendisse libero auctor. Cum praesent integer tincidunt sed natoque cras consequat felis quis. Dui, enim tempus dui posuere. Dignissim libero, enim, sit natoque elementum quam mauris urna. Cursus pulvinar consequat facilisi erat bibendum amet aliquet. Odio eget nisl aliquam phasellus proin egestas odio mattis. Sed suscipit bibendum integer ut at nulla magnis scelerisque. Aliquam et a, tincidunt ultrices sed. Elementum et sed auctor quis dignissim quis."
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

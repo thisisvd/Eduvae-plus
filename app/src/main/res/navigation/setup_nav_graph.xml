@@ -24,6 +24,13 @@
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
+        <action
+            android:id="@+id/action_onBoardingScreenFragment_to_completeProfileFragment"
+            app:destination="@id/completeProfileFragment"
+            app:enterAnim="@anim/slide_left_animation"
+            app:exitAnim="@anim/wait_animation"
+            app:popEnterAnim="@anim/wait_animation"
+            app:popExitAnim="@anim/slide_right_animation" />
     </fragment>
     <fragment
         android:id="@+id/signUpScreenFragment"
@@ -74,6 +81,13 @@
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
+        <action
+            android:id="@+id/action_loginFragment_to_completeProfileFragment"
+            app:destination="@id/completeProfileFragment"
+            app:enterAnim="@anim/slide_left_animation"
+            app:exitAnim="@anim/wait_animation"
+            app:popEnterAnim="@anim/wait_animation"
+            app:popExitAnim="@anim/slide_right_animation" />
     </fragment>
     <fragment
         android:id="@+id/OTPFragment"
@@ -88,7 +102,11 @@
             app:popExitAnim="@anim/slide_right_animation" />
         <action
             android:id="@+id/action_OTPFragment_to_completeProfileFragment"
-            app:destination="@id/completeProfileFragment" />
+            app:destination="@id/completeProfileFragment"
+            app:enterAnim="@anim/slide_left_animation"
+            app:exitAnim="@anim/wait_animation"
+            app:popEnterAnim="@anim/wait_animation"
+            app:popExitAnim="@anim/slide_right_animation" />
         <argument
             android:name="fragment"
             app:argType="string"

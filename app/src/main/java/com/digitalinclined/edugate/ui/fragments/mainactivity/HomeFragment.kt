@@ -7,12 +7,17 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -45,6 +50,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
+
+        // sharedPreferences init
+        sharedPreferences = (activity as MainActivity).sharedPreferences
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
@@ -123,6 +131,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onPrepareOptionsMenu(menu: Menu) {
         val profileMenuItem = menu!!.findItem(R.id.homeProfileMenu)
         val rootView = profileMenuItem.actionView as FrameLayout
+        val requestOptions = RequestOptions()
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+        requestOptions.centerCrop()
+        if(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString() != null &&
+            sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString() != "") {
+            Glide.with(rootView)
+                .load(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString())
+                .apply(requestOptions)
+                .into(rootView.findViewById(R.id.homeProfileImage))
+        }
         rootView.setOnClickListener {
             onOptionsItemSelected(profileMenuItem)
         }

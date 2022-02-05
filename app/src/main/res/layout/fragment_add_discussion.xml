@@ -81,7 +81,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/edittext_stroke"
                 android:fontFamily="@font/titillium_web"
-                android:hint="Your title"
+                android:hint="Enter Title of Discussion"
                 android:inputType="textCapSentences"
                 android:padding="@dimen/_13sdp"
                 android:textColor="@color/white"
@@ -117,7 +117,7 @@
                 android:background="@drawable/edittext_stroke"
                 android:fontFamily="@font/titillium_web"
                 android:gravity="start"
-                android:hint="Enter Your Content here"
+                android:hint="Enter Your Content Here!"
                 android:inputType="textMultiLine|textCapSentences"
                 android:maxLines="7"
                 android:padding="@dimen/_13sdp"
@@ -127,20 +127,30 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/titillium_web_light"
-            android:text="Add a file/document/pdf - "
-            android:textColor="@color/white"
-            android:textSize="@dimen/_13sdp" />
+            android:background="@drawable/edittext_stroke"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical">
 
-        <ImageView
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:src="@drawable/ic_baseline_add_24"/>
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_baseline_add_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/titillium_web_light"
+                android:text="Attach a file"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

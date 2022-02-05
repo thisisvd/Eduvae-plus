@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1011062373162-k6tf6kvbjpnu2f1hlliqn80j55kinkso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digitalinclined.edugate",
+            "certificate_hash": "55116d58a5c2b76607447c22b1fae9f7dbf66256"
+          }
+        },
+        {
           "client_id": "1011062373162-2b0g10j8h2kpf5m7n8a565hagdl3fhg5.apps.googleusercontent.com",
           "client_type": 3
         }

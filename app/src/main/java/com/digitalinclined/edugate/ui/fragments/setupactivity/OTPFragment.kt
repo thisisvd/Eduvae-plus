@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,13 +17,14 @@ import com.digitalinclined.edugate.adapter.ProgressButton
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentOtpBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
@@ -54,6 +56,15 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private val db = Firebase.firestore
     private val dbReference = db.collection("users")
 
+    // google client signIn
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    // constant for google sign-in
+    private companion object{
+        private const val RC_SIGN_IN = 100
+        private const val TAG_GOOGLE_SIGN_IN = "GOOGLE_SING_IN_TAG"
+    }
+
     // alert progress dialog
     private lateinit var dialog: Dialog
 
@@ -67,6 +78,13 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
+
+        // Configure the google SignIn
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("1011062373162-2b0g10j8h2kpf5m7n8a565hagdl3fhg5.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         // init args values that have been passed
         recentFragment = args.fragment
@@ -123,7 +141,108 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                     verifyPhoneNumberWithCode(mVerificationId, code)
                 }
             }
+
+            // google login
+            googleVerification.setOnClickListener {
+                dialog.show()
+                val intent = googleSignInClient.signInIntent
+                startActivityForResult(intent, RC_SIGN_IN)
+            }
+
         }
+    }
+
+    // on activity result
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d(TAG_GOOGLE_SIGN_IN, "firebaseAuthWithGoogle:" + account.id)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG_GOOGLE_SIGN_IN, "Google sign in failed : ${e.statusCode}", e)
+                dialog.dismiss()
+            }
+        }
+    }
+
+    // signing with google auth
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        Log.d(TAG_GOOGLE_SIGN_IN,"firebaseAuthWithGoogleAccount: begin firebase auth with google account.")
+
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnSuccessListener { authResult ->
+
+                // Sign in success, update UI with the signed-in user's information
+                Log.d(TAG_GOOGLE_SIGN_IN, "signInWithCredential:success")
+                val user = firebaseAuth.currentUser
+
+                if(authResult.additionalUserInfo!!.isNewUser){
+                    dialog.dismiss()
+                    dialogForNewUser(user)
+                } else {
+                    dialog.dismiss()
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    requireActivity().finish()
+                }
+
+            }.addOnFailureListener { exception ->
+                Log.d(TAG_GOOGLE_SIGN_IN, "signInWithCredential:failure", exception)
+                dialog.dismiss()
+            }
+    }
+
+    // dialog to check for account
+    private fun dialogForNewUser(user: FirebaseUser?){
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle("Account don't Exists!")
+                .setMessage("No Account exists with this email. " +
+                        "Do you want to create a new account with this email?")
+            setPositiveButton("Create") { _,_ ->
+                dialog.show()
+                createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+            }
+            setNegativeButton("Go back") { _,_ ->
+                // signing out the authenticated user via (LOGIN)
+                firebaseAuth.currentUser!!.delete().addOnSuccessListener {
+                    Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
+                }
+                findNavController().navigate(R.id.onBoardingScreenFragment)
+            }
+            setCancelable(false)
+        }.show()
+    }
+
+    // create a new account in fireStore for users [SIGN-UP CODE]
+    private fun createNewAccount(name: String? = null, email: String? = null, phone: String? = null, photoUrlLink: String? = null) {
+
+        // user data
+        val user = hashMapOf(
+            "name" to (name ?: ""),
+            "email" to (email ?: ""),
+            "phone" to (phone ?: ""),
+            "course" to "",
+            "year" to "",
+            "city" to "",
+            "profilephotolink" to (photoUrlLink ?: "")
+        )
+
+        // create db in fireStore
+        dbReference.document(firebaseAuth.currentUser!!.uid)
+            .set(user)
+            .addOnSuccessListener {
+                findNavController().navigate(R.id.action_OTPFragment_to_completeProfileFragment)
+                dialog.dismiss()
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+                dialog.dismiss()
+            }
     }
 
     // Setting up the phone code callback
