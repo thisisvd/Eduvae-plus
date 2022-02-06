@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Edugate">
+        <activity
+            android:name=".ui.fragments.YoutubeVideoActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.fragments.SupportActivity"
             android:exported="false" />
@@ -25,11 +34,11 @@
         </activity>
         <activity
             android:name=".ui.fragments.SetupActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".ui.fragments.MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="preloaded_fonts"

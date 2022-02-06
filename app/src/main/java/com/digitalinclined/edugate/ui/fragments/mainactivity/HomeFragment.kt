@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -21,6 +22,7 @@ import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
 import com.google.firebase.auth.FirebaseAuth
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
@@ -82,7 +84,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             // videos click listener
             videos.setOnClickListener {
-                Toast.makeText(requireContext(),"Videos",Toast.LENGTH_SHORT).show()
+//                findNavController().navigate(R.id.action_homeFragment_to_chaptersScreenFragment)
+//                Toast.makeText(requireContext(),"Videos",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
             }
 
         }
