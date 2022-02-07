@@ -163,6 +163,7 @@ class MainActivity : AppCompatActivity() {
                 .addOnDestinationChangedListener { _, destination, _ ->
 
                     when (destination.id) {
+
                         // when these fragments will open toolbar will not be visible
                         R.id.myProfile, R.id.addDiscussionFragment -> {
                             toolbar.visibility = View.GONE

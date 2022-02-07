@@ -30,6 +30,13 @@
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
+        <action
+            android:id="@+id/action_homeFragment_to_uploadVideoFragment"
+            app:destination="@id/uploadVideoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/syllabusFragment"
@@ -91,5 +98,10 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AddDiscussionFragment"
         android:label="fragment_add_discussion"
         tools:layout="@layout/fragment_add_discussion" />
+    <fragment
+        android:id="@+id/uploadVideoFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.UploadVideoFragment"
+        android:label="fragment_upload_video"
+        tools:layout="@layout/fragment_upload_video" />
 
 </navigation>

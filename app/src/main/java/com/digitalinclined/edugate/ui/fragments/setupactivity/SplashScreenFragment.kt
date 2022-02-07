@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.IS_SPLASH_SCREEN_FIRST_SHOWED
 import com.digitalinclined.edugate.databinding.FragmentSplashScreenBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.SetupActivity
@@ -23,10 +24,6 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     // firebase auth & user
     private var firebaseAuth = FirebaseAuth.getInstance()
 
-    // firebase db instances
-    private val db = Firebase.firestore
-    private val dbReference = db.collection("users")
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSplashScreenBinding.bind(view)
@@ -34,30 +31,32 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // delay Splash Screen for 5 sec
-        object : CountDownTimer(5000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                // Do something here in every sec
-            }
+        if(IS_SPLASH_SCREEN_FIRST_SHOWED) {
 
-            // After finish navigate to next fragment
-            override fun onFinish() {
-                if (firebaseAuth.currentUser != null) {
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
-                    requireActivity().finish()
-                } else {
-                    startActivity(Intent(requireActivity(), SetupActivity::class.java))
-                    requireActivity().finish()
+            // setting fragment 2nd showed
+            IS_SPLASH_SCREEN_FIRST_SHOWED = false
+
+            // delay Splash Screen for 5 sec
+            object : CountDownTimer(5000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    // Do something here in every sec
                 }
-                Toast.makeText(requireContext(),"Chala",Toast.LENGTH_SHORT).show()
-            }
-        }.start()
+
+                // After finish navigate to next fragment
+                override fun onFinish() {
+                    if (firebaseAuth.currentUser != null) {
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        requireActivity().finish()
+                    } else {
+                        findNavController().navigate(R.id.action_splashScreenFragment_to_onBoardingScreenFragment)
+                    }
+                }
+            }.start()
+
+        } else {
+            findNavController().navigate(R.id.action_splashScreenFragment_to_onBoardingScreenFragment)
+        }
 
     }
-
-//    // check for the pre-existing user
-//    private fun checkForPreExistingUser() {
-//        dbReference.get().
-//    }
 
 }

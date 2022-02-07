@@ -2,6 +2,9 @@ package com.digitalinclined.edugate.constants
 
 object Constants {
 
+    // Splash Screen Constant
+    var IS_SPLASH_SCREEN_FIRST_SHOWED = true
+
     // Temporary memory for containing create user info till successful created account
     var TEMP_CREATE_USER_NAME: String? = null
     var TEMP_CREATE_USER_EMAIL: String? = null

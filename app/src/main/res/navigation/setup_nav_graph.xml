@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/setup_nav_graph"
-    app:startDestination="@id/onBoardingScreenFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/onBoardingScreenFragment"
@@ -115,5 +115,18 @@
             android:name="phone"
             app:argType="string"
             android:defaultValue="none" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.SplashScreenFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_onBoardingScreenFragment"
+            app:destination="@id/onBoardingScreenFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 </navigation>
