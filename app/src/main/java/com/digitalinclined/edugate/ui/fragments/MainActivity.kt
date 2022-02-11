@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.io.IOException
 import java.io.InputStream
@@ -102,38 +105,40 @@ class MainActivity : AppCompatActivity() {
 
     // fetching the user data from firebase and saving it in to shared preferences
     fun fetchFirebaseUserData() {
-        dbReference.document(firebaseAuth.currentUser!!.uid).get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                    val userProfile = document.toObject(UserProfile::class.java)!!
+        lifecycleScope.launch(Dispatchers.IO) {
+            dbReference.document(firebaseAuth.currentUser!!.uid).get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                        val userProfile = document.toObject(UserProfile::class.java)!!
 
-                    if(userProfile != null) {
-                        sharedPreferences.edit()
-                            .putString(USER_NAME, userProfile.name)
-                            .putString(USER_EMAIL, userProfile.email)
-                            .putString(USER_PHONE, userProfile.phone)
-                            .putString(USER_COURSE, userProfile.course)
-                            .putString(USER_YEAR, userProfile.year)
-                            .putString(USER_CITY, userProfile.city)
-                            .putString(USER_PROFILE_PHOTO_LINK, userProfile.profilephotolink)
-                            .apply()
+                        if (userProfile != null) {
+                            sharedPreferences.edit()
+                                .putString(USER_NAME, userProfile.name)
+                                .putString(USER_EMAIL, userProfile.email)
+                                .putString(USER_PHONE, userProfile.phone)
+                                .putString(USER_COURSE, userProfile.course)
+                                .putString(USER_YEAR, userProfile.year)
+                                .putString(USER_CITY, userProfile.city)
+                                .putString(USER_PROFILE_PHOTO_LINK, userProfile.profilephotolink)
+                                .apply()
 
-                        // Show snack bar when open main activity
-                        Snackbar.make(
-                            binding.root,
-                            "Logged in as ${userProfile.name}!",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                            // Show snack bar when open main activity
+                            Snackbar.make(
+                                binding.root,
+                                "Logged in as ${userProfile.name}!",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    } else {
+                        Log.d(TAG, "No such document")
                     }
-
-                } else {
-                    Log.d(TAG, "No such document")
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+        }
 
     }
 

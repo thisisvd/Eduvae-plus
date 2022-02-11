@@ -23,6 +23,11 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
             // youtube init
             youtubeListener()
 
+            // back
+            back.setOnClickListener {
+                onBackPressed()
+            }
+
             // next chapter on click
             nextChapter.setOnClickListener {
                 Toast.makeText(this@YoutubeVideoActivity,"Next chapter clicked!",Toast.LENGTH_SHORT).show()

@@ -66,10 +66,12 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.45">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -78,20 +80,34 @@
                     android:id="@+id/userProfileImage"
                     android:layout_width="@dimen/_55sdp"
                     android:layout_height="@dimen/_55sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:src="@drawable/user_unknown_icon"
-                    app:civ_border_width="0dp" />
+                    app:civ_border_width="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/userProfileImage"
+                    app:layout_constraintEnd_toEndOf="@+id/userProfileImage"
+                    app:layout_constraintStart_toStartOf="@+id/userProfileImage"
+                    app:layout_constraintTop_toTopOf="@+id/userProfileImage" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_toRightOf="@+id/userProfileImage"
+                    android:orientation="vertical"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/userProfileImage"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/name"
@@ -113,7 +129,7 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"

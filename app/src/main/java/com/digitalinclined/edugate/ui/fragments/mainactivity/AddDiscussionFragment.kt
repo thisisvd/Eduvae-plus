@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
@@ -32,6 +33,11 @@ class AddDiscussionFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
+            // submit discussion
+            submitDiscussion.setOnClickListener {
+                Toast.makeText(requireContext(),"Discussion Submitted!",Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
+            }
 
         }
     }
