@@ -163,7 +163,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
             R.id.uploadVideo -> {
                 findNavController().navigate(R.id.action_homeFragment_to_uploadVideoFragment)
-                Toast.makeText(requireContext(),"Upload Video Clicked!",Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -12,24 +12,24 @@
         <action
             android:id="@+id/action_homeFragment_to_notesFragment"
             app:destination="@id/notesFragment"
-            app:enterAnim="@anim/slide_down_negative_anim"
-            app:exitAnim="@anim/wait_animation"
-            app:popEnterAnim="@anim/wait_animation"
-            app:popExitAnim="@anim/slide_up_negative_anim" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_syllabusFragment"
             app:destination="@id/syllabusFragment"
-            app:enterAnim="@anim/slide_right_negative_anim"
-            app:exitAnim="@anim/wait_animation"
-            app:popEnterAnim="@anim/wait_animation"
-            app:popExitAnim="@anim/slide_left_negative_anim" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_yearOfPapersFragment"
             app:destination="@id/yearOfPapersFragment"
-            app:enterAnim="@anim/slide_left_animation"
-            app:exitAnim="@anim/wait_animation"
-            app:popEnterAnim="@anim/wait_animation"
-            app:popExitAnim="@anim/slide_right_animation" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_homeFragment_to_uploadVideoFragment"
             app:destination="@id/uploadVideoFragment"

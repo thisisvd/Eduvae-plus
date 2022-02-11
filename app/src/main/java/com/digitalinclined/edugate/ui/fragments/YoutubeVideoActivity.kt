@@ -18,7 +18,20 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityYoutubeVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.apply {
 
+            // youtube init
+            youtubeListener()
+
+            // next chapter on click
+            nextChapter.setOnClickListener {
+                Toast.makeText(this@YoutubeVideoActivity,"Next chapter clicked!",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // youtube listener
+    private fun youtubeListener(){
         val listener = object : YouTubePlayer.OnInitializedListener {
             override fun onInitializationSuccess(
                 p0: YouTubePlayer.Provider?,
@@ -41,7 +54,6 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
         }
 
         binding.youtubePlayer.initialize("AIzaSyCdn27lKADWOvbq8-nclKDnKphucdUKmls",listener)
-
-
     }
+
 }
