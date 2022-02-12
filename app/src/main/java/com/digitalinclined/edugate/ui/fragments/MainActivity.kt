@@ -252,7 +252,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     // Job Update
                     R.id.jobUpdates -> {
-                        navHostFragment.findNavController().navigate(R.id.jobUpdateFragment,null,navBuilder.build())
+                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
+                        intent.putExtra("fragment","jobUpdates")
+                        intent.putExtra("url_link","https://www.naukri.com/")
+                        startActivity(intent)
                         true
                     }
                     // About Us

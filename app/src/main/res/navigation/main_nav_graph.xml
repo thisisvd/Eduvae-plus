@@ -79,11 +79,6 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.YearOfPapersFragment"
         android:label="YearOfPapersFragment" />
     <fragment
-        android:id="@+id/jobUpdateFragment"
-        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.JobUpdateFragment"
-        android:label="fragment_job_update"
-        tools:layout="@layout/fragment_job_update" />
-    <fragment
         android:id="@+id/previousYearPapersFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PreviousYearPapersFragment"
         android:label="fragment_previous_year_papers"

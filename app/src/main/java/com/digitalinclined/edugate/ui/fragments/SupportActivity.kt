@@ -20,6 +20,7 @@ class SupportActivity : AppCompatActivity() {
     var previousFragment: String? = null
     var fragmentPdfName = ""
     var URL = ""
+    var pdfUri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class SupportActivity : AppCompatActivity() {
                 previousFragment = getStringExtra("fragment")
                 fragmentPdfName = getStringExtra("pdfName").toString()
                 URL = getStringExtra("url_link").toString()
+                pdfUri = getStringExtra("pdfUri").toString()
             }
 
             // nav host fragment init
@@ -45,7 +47,7 @@ class SupportActivity : AppCompatActivity() {
                 supportFragmentManager.findFragmentById(R.id.navHostFragmentMain) as NavHostFragment
             val navController = navHostFragment.navController
 
-            if (previousFragment == "universityPortal") {
+            if (previousFragment == "universityPortal" || previousFragment == "jobUpdates") {
                 navController.navigate(R.id.webViewFragment)
             } else if(previousFragment == "aboutUs") {
                 navController.navigate(R.id.aboutUsFragment)

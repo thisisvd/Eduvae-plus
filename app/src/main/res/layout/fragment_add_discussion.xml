@@ -128,12 +128,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/attachFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_stroke"
             android:orientation="horizontal"
             android:padding="@dimen/_10sdp"
-            android:layout_gravity="center_horizontal"
             android:gravity="center_vertical">
 
             <ImageView
@@ -149,6 +149,8 @@
                 android:text="Attach a file"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
+
+
 
         </LinearLayout>
 
