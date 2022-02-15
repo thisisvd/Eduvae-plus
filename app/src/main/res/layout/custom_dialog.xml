@@ -8,9 +8,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/theme_color">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/theme_color"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,18 +30,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/white"
+                android:indeterminateTint="@color/text_color"
                 android:indeterminateTintMode="src_atop" />
 
             <TextView
                 android:id="@+id/progressTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Please Wait..."
                 android:layout_marginLeft="30sp"
-                android:textSize="@dimen/_16sdp"
                 android:fontFamily="@font/titillium_web_semibold"
-                android:textColor="@color/white"/>
+                android:text="Please Wait..."
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_16sdp" />
 
         </LinearLayout>
 

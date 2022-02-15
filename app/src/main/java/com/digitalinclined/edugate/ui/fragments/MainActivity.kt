@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Force No Night mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         //Screen orientation
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

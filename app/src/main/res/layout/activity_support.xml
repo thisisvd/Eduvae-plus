@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/titillium_web"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:maxLength="30"
             android:textSize="@dimen/_15sdp" />
 
@@ -32,7 +32,7 @@
         android:id="@+id/viewTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:background="@color/white"
+        android:background="@color/view_line_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />

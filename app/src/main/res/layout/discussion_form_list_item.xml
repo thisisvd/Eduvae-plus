@@ -14,105 +14,106 @@
         android:paddingRight="@dimen/_20sdp"
         android:paddingTop="@dimen/_20sdp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userProfileImage"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="8dp"
-            app:civ_border_width="0dp" />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_toRightOf="@+id/userProfileImage"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userProfileImage"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/user_unknown_icon"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                app:civ_border_width="0dp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_toRightOf="@+id/userProfileImage"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/titillium_web"
-                    android:maxLength="20"
-                    android:text="Aman Sahu"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14sdp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <View
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:background="@drawable/circle_brown_background" />
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_web"
+                        android:maxLength="20"
+                        android:text="Aman Sahu"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_14sdp" />
 
-                <TextView
-                    android:id="@+id/followUser"
-                    android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="@dimen/_2sdp"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@drawable/circle_brown_background" />
+
+                    <TextView
+                        android:id="@+id/followUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_web"
+                        android:text="Follow"
+                        android:textColor="@color/light_blue_color"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/titillium_web"
-                    android:text="Follow"
-                    android:textColor="@color/light_blue_color"
-                    android:textSize="@dimen/_14sdp" />
+                    android:layout_below="@+id/discussLL1"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/courseYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_web_light"
+                        android:text="B.A. 3rd Year"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_11sdp" />
+
+                    <View
+                        android:layout_width="@dimen/_2sdp"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@drawable/circle_brown_background" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_web_light"
+                        android:text="3 Jan 2021"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_11sdp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/discussLL1"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/courseYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/titillium_web_light"
-                    android:text="B.A. 3rd Year"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_11sdp" />
-
-                <View
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:background="@drawable/circle_brown_background" />
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/titillium_web_light"
-                    android:text="3 Jan 2021"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_11sdp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
+        </RelativeLayout>
 
     <TextView
         android:id="@+id/title"
@@ -123,7 +124,7 @@
         android:letterSpacing=".05"
         android:maxLines="2"
         android:text="Question paper of Psychology (2019)"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +136,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/titillium_web_light"
         android:text="Hey’s guys I would like to share the Nov. 2019 question paper of Psychology (Planning, Recruitment and Selection)"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:letterSpacing=".05"
         android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_5sdp"
@@ -181,6 +182,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/discussLL2">
@@ -188,14 +190,15 @@
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:src="@drawable/heart_icon" />
+            android:src="@drawable/heart_icon"
+            app:iconTint="@color/text_color"/>
 
         <TextView
             android:id="@+id/likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web_light"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:text="16"
             android:letterSpacing=".05"
             android:layout_marginLeft="@dimen/_3sdp"
@@ -207,6 +210,7 @@
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:layout_marginLeft="@dimen/_10sdp"
+            app:iconTint="@color/text_color"
             android:src="@drawable/comment_icon" />
 
         <TextView
@@ -214,7 +218,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web_light"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:text="16"
             android:letterSpacing=".05"
             android:layout_marginLeft="@dimen/_3sdp"
