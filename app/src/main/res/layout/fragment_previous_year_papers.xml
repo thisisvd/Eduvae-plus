@@ -25,7 +25,7 @@
                 android:fontFamily="@font/titillium_web_semibold"
                 android:gravity="center"
                 android:text="Free Question Paper"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_20sdp" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

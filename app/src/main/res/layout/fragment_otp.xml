@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/titillium_web"
         android:text="Verification through OTP"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_20sdp" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/_13sdp"
         android:fontFamily="@font/titillium_web"
         android:text="Enter the 5-digit OTP sent to you through \ntext message."
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp" />
 
     <TextView
@@ -165,7 +165,7 @@
         android:letterSpacing="0.8"
         android:padding="@dimen/_10sdp"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textColorHint="#c5c5c5" />
 
     <TextView
@@ -178,19 +178,6 @@
         android:layout_marginTop="@dimen/_20sdp"
         android:textColor="@color/secondary_text_color"
         android:textSize="@dimen/_15sdp" />
-
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/verifyButton"-->
-<!--        style="@style/Widget.MaterialComponents.Button"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@+id/OnBoardingLinearLayout"-->
-<!--        android:layout_marginTop="@dimen/_20sdp"-->
-<!--        android:layout_marginBottom="@dimen/_15sdp"-->
-<!--        android:backgroundTint="@color/button_gradient_end_color"-->
-<!--        android:padding="@dimen/_8sdp"-->
-<!--        android:text="Verify"-->
-<!--        android:textSize="@dimen/_17sdp" />-->
 
     <include
         android:id="@+id/progressBarButton"
@@ -280,7 +267,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:text="Don't have an account? "
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_15sdp" />
 
             <TextView

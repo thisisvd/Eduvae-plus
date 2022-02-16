@@ -39,7 +39,7 @@
             android:text="English"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:textColor="@color/black"
+            android:textColor="@color/made_with_text_color"
             android:textSize="@dimen/_20sdp" />
 
     </LinearLayout>

@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/titillium_web"
         android:text="Welcome Back!"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_20sdp" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/_13sdp"
         android:fontFamily="@font/titillium_web"
         android:text="Select an option your prefer to Login."
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp" />
 
     <TextView
@@ -60,7 +60,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/titillium_web_light"
             android:text="Mobile"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -84,8 +84,8 @@
                 android:inputType="number"
                 android:maxLength="10"
                 android:padding="@dimen/_13sdp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
                 android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +108,8 @@
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:backgroundTint="@color/button_gradient_end_color"
                 android:padding="@dimen/_8sdp"
+                app:cornerRadius="@dimen/_14sdp"
+                android:textColor="@color/white"
                 android:text="Verify With OTP"
                 android:textSize="@dimen/_17sdp" />
 
@@ -133,7 +135,7 @@
                     android:fontFamily="@font/titillium_web_extralight"
                     android:text="or"
                     android:textAlignment="gravity"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_15sdp" />
 
                 <View
@@ -185,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/titillium_web"
                     android:text="Don't have an account? "
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView

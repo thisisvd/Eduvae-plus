@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/theme_color"
     android:paddingLeft="@dimen/_18sdp"
     android:paddingRight="@dimen/_18sdp"
@@ -26,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/titillium_web"
             android:text="@string/on_boarding_text"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_30sdp" />
 
         <TextView
@@ -36,7 +37,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/titillium_web_light"
             android:text="Learn from India’s best\nteachers from the comfort of\nyour home."
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
     </LinearLayout>
@@ -95,7 +96,7 @@
                 android:fontFamily="@font/titillium_web_extralight"
                 android:text="or"
                 android:textAlignment="gravity"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_15sdp" />
 
             <View
@@ -112,13 +113,15 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_above="@+id/OnBoardingLinearLayout"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/button_gradient_end_color"
         android:padding="@dimen/_8sdp"
         android:text="Get started"
-        android:textSize="@dimen/_17sdp" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17sdp"
+        app:cornerRadius="@dimen/_14sdp" />
 
     <LinearLayout
         android:id="@+id/OnBoardingLinearLayout"
@@ -133,7 +136,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
             android:text="Already have an account? "
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
         <TextView

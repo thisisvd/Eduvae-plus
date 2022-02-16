@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_15sdp" />
 
         </androidx.appcompat.widget.Toolbar>
@@ -37,7 +37,7 @@
             android:id="@+id/viewTop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/view_line_color"
+            android:background="@color/text_color"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -58,7 +58,7 @@
             android:id="@+id/viewBottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
-            android:background="@color/view_line_color"
+            android:background="@color/text_color"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -68,9 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:backgroundColor="@color/theme_color"
-            app:indicatorColor="@color/white"
+            app:indicatorColor="@color/text_color"
             app:indicatorRadius="@dimen/_12sdp"
-            app:iconTint="@color/white"
+            app:iconTint="@color/text_color"
             app:iconTintActive="@color/theme_color"
             app:textSize="@dimen/_12sdp"
             app:iconSize="@dimen/_16sdp"
@@ -92,7 +92,8 @@
         android:background="@color/navy_blue_color"
         app:itemTextAppearance="?android:attr/textAppearanceMedium"
         app:headerLayout="@layout/nav_drawer_header"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/text_color"
+        app:itemIconTint="@color/text_color"
         app:menu="@menu/nav_drawer_menu"
         android:fitsSystemWindows="true">
 
@@ -103,7 +104,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/titillium_web_light"
             android:text="Made With ❤ By Digitalinclined"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_12sdp" />
 
     </com.google.android.material.navigation.NavigationView>

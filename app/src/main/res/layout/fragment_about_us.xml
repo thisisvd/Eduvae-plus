@@ -37,7 +37,7 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Edugate"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_25sdp" />
 
     </LinearLayout>
@@ -49,7 +49,7 @@
         android:fontFamily="@font/titillium_web"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa ultrices bibendum tempus nisi volutpat. Tincidunt dignissim amet sit tempor eleifend nascetur donec. Euismod quisque pulvinar nunc dui. Pulvinar sagittis consequat lacus, lobortis sodales. Amet, neque dictum nibh tortor quisque senectus dolor. Auctor est in dignissim dignissim vestibulum, fames. Pellentesque vulputate nec elit, quisque. Nibh aenean blandit duis justo, velit mattis. Diam dignissim ut semper id semper.
 Tempor leo enim, laoreet suspendisse libero auctor. Cum praesent integer tincidunt sed natoque cras consequat felis quis. Dui, enim tempus dui posuere. Dignissim libero, enim, sit natoque elementum quam mauris urna. Cursus pulvinar consequat facilisi erat bibendum amet aliquet. Odio eget nisl aliquam phasellus proin egestas odio mattis. Sed suscipit bibendum integer ut at nulla magnis scelerisque. Aliquam et a, tincidunt ultrices sed. Elementum et sed auctor quis dignissim quis."
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp"
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"

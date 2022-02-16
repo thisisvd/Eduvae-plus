@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Complete Your Profile"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_20sdp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/_13sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Complete your profile in order to get \nstarted"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_14sdp" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/_13sdp"
             android:fontFamily="@font/titillium_web_light"
             android:text="Course"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -81,8 +81,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Course"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/text_color"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
@@ -97,7 +97,7 @@
             android:layout_marginTop="@dimen/_13sdp"
             android:fontFamily="@font/titillium_web_light"
             android:text="Year"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -125,8 +125,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Year"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
+                android:textColorHint="@color/text_color"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
@@ -146,8 +146,10 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/button_gradient_end_color"
         android:padding="@dimen/_8sdp"
+        android:textColor="@color/white"
         android:text="Complete Sign Up"
-        android:textSize="@dimen/_17sdp" />
+        android:textSize="@dimen/_17sdp"
+        app:cornerRadius="@dimen/_14sdp" />
 
     <LinearLayout
         android:id="@+id/OnBoardingLinearLayout"
@@ -162,7 +164,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
             android:text="Already have an account? "
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
         <TextView

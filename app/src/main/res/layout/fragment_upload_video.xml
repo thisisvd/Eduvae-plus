@@ -17,7 +17,6 @@
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="@dimen/_150sdp"
-
             android:src="@drawable/upload_video_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/uploadVideoText"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +67,8 @@
                 android:hint="What would you like to contribute?"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
                 android:textSize="@dimen/_11sdp"
                 android:textStyle="bold" />
 
@@ -99,7 +98,7 @@
                 android:letterSpacing="0.08"
                 android:text="You can upload anything you prefer, like a question/sample paper or notes, etc."
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textFontWeight="600"
                 android:textSize="@dimen/_15sdp" />
 
@@ -116,6 +115,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:textSize="@dimen/_17sdp"
             app:cornerRadius="@dimen/_14sdp"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />

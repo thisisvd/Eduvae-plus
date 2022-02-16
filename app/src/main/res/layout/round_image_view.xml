@@ -15,7 +15,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/user_unknown_icon"
-        app:civ_border_color="@color/white"
+        app:civ_border_color="@color/text_color"
         app:civ_border_width="1dp" />
 
 </FrameLayout>

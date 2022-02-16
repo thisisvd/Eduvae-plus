@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
             android:text="Hello, "
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_18sdp" />
 
         <TextView
@@ -26,14 +26,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_18sdp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:text="👋"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/_14sdp" />
@@ -47,7 +47,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:fontFamily="@font/titillium_web"
         android:text="What would you like to learn today?"
-        android:textColor="@color/white"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp" />
 
     <org.imaginativeworld.whynotimagecarousel.ImageCarousel

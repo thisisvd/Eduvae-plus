@@ -20,6 +20,7 @@
             android:id="@+id/back"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            app:tint="@color/text_color"
             android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/titillium_web"
             android:text="My Profile"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -38,7 +39,7 @@
         android:id="@+id/viewTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:background="@color/white"
+        android:background="@color/view_line_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -81,6 +82,7 @@
                     android:layout_width="@dimen/_55sdp"
                     android:layout_height="@dimen/_55sdp"
                     android:src="@drawable/user_unknown_icon"
+                    app:tint="@color/text_color"
                     app:civ_border_width="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +94,7 @@
                     android:layout_height="0dp"
                     android:layout_centerVertical="true"
                     android:visibility="invisible"
+                    app:tint="@color/text_color"
                     app:layout_constraintBottom_toBottomOf="@+id/userProfileImage"
                     app:layout_constraintEnd_toEndOf="@+id/userProfileImage"
                     app:layout_constraintStart_toStartOf="@+id/userProfileImage"
@@ -114,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/titillium_web"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_color"
                         android:textSize="@dimen/_14sdp"
                         android:textStyle="bold" />
 
@@ -124,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/titillium_web_light"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_color"
                         android:textSize="@dimen/_11sdp" />
 
                 </LinearLayout>
@@ -137,7 +140,7 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/titillium_web_light"
                 android:text="Mobile"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_13sdp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -162,8 +165,8 @@
                     android:inputType="number"
                     android:maxLength="13"
                     android:padding="@dimen/_13sdp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
                     android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -174,7 +177,7 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="@font/titillium_web_light"
                 android:text="Course"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_13sdp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -197,8 +200,8 @@
                     android:inputType="textCapWords"
                     android:padding="@dimen/_13sdp"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
                     android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -210,7 +213,7 @@
                 android:layout_marginTop="@dimen/_13sdp"
                 android:fontFamily="@font/titillium_web_light"
                 android:text="City"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_13sdp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -233,8 +236,8 @@
                     android:inputType="textCapWords"
                     android:padding="@dimen/_13sdp"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
                     android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -246,7 +249,7 @@
                 android:layout_marginTop="@dimen/_13sdp"
                 android:fontFamily="@font/titillium_web_light"
                 android:text="Year"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_13sdp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -269,8 +272,8 @@
                     android:inputType="textCapWords"
                     android:padding="@dimen/_13sdp"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
                     android:textSize="@dimen/_14sdp" />
 
             </com.google.android.material.textfield.TextInputLayout>

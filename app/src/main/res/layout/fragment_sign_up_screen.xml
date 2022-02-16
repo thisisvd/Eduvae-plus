@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Create Your Account"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_20sdp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/_13sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Fill in the following details to complete \nregistration."
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/_13sdp"
             android:fontFamily="@font/titillium_web_light"
             android:text="Name"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -76,8 +76,8 @@
                 android:hint="Your name"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
                 android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +88,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/titillium_web_light"
             android:text="Email Address"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,8 +111,8 @@
             android:hint="Your email"
             android:inputType="textEmailAddress"
             android:padding="@dimen/_13sdp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_color"
             android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -123,7 +123,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/titillium_web_light"
             android:text="Mobile"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -147,8 +147,8 @@
             android:inputType="number"
             android:maxLength="10"
             android:padding="@dimen/_13sdp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_color"
             android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -166,6 +166,8 @@
         android:backgroundTint="@color/button_gradient_end_color"
         android:padding="@dimen/_8sdp"
         android:text="Next >"
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/_14sdp"
         android:textSize="@dimen/_17sdp" />
 
     <LinearLayout
@@ -181,7 +183,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
             android:text="Already have an account? "
-            android:textColor="@color/white"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
         <TextView
