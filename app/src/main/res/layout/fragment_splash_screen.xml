@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/theme_color"
+    android:background="#030B30"
     tools:context=".ui.fragments.setupactivity.SplashScreenFragment">
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:layout_marginRight="@dimen/_35sdp"
             android:fontFamily="@font/titillium_web"
             android:text="Edugate"
-            android:textColor="@color/made_with_background"
+            android:textColor="@color/white"
             android:textSize="@dimen/_40sdp" />
 
     </LinearLayout>
@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:scaleType="fitEnd"
-        app:tint="@color/made_with_background"
         android:src="@drawable/splash_rectangle" />
 
     <TextView
@@ -59,7 +58,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:fontFamily="@font/titillium_web_light"
         android:text="Made With ❤ By Digitalinclined"
-        android:textColor="@color/made_with_text_color"
+        android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold" />
 

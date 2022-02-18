@@ -1,4 +1,4 @@
-package com.digitalinclined.edugate.ui.fragments.supportactivity
+package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,15 +7,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentPDFBinding
-import com.digitalinclined.edugate.ui.fragments.SupportActivity
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 
 class PDFFragment : Fragment() {
 
     // viewBinding
     private var _binding: FragmentPDFBinding? = null
     private val binding get() = _binding!!
+
+    // nav args
+    private val args: PDFFragmentArgs by navArgs()
 
     // previous Fragment
     var previousFragment: String? = null
@@ -29,13 +33,13 @@ class PDFFragment : Fragment() {
     ): View? {
         _binding = FragmentPDFBinding.inflate(inflater, container, false)
 
-        // change the title bar
-        (activity as SupportActivity).findViewById<TextView>(R.id.toolbarTitle).text = "PDF Viewer"
+        // getting values from args
+        previousFragment = args.previousFragment
+        fragmentPdfName = args.fragmentPdfName
+        pdfUri = args.pdfUri
 
-        // get fragment
-        previousFragment = (activity as SupportActivity).previousFragment
-        fragmentPdfName = (activity as SupportActivity).fragmentPdfName
-        pdfUri = (activity as SupportActivity).pdfUri
+        // change the title bar
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "PDF Viewer"
 
         return binding.root
     }

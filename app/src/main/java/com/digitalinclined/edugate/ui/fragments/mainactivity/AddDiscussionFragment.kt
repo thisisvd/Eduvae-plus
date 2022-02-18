@@ -12,9 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -33,8 +38,8 @@ class AddDiscussionFragment : Fragment() {
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
 
-    // temp firebase storage
-    private val storageRef = Firebase.storage.reference
+    // toggle button
+    private lateinit var toggle: ActionBarDrawerToggle
 
     // comp object
     companion object {
@@ -51,17 +56,18 @@ class AddDiscussionFragment : Fragment() {
         // firebase init
         firebaseAuth = Firebase.auth
 
+        // toggle btn toolbar setup
+        toggle = (activity as MainActivity).toggle
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        IS_BACK_TOOLBAR_BTN_ACTIVE = true
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-
-            // back button pressed
-            back.setOnClickListener {
-                findNavController().popBackStack()
-            }
 
             // submit discussion
             submitDiscussion.setOnClickListener {
@@ -77,6 +83,7 @@ class AddDiscussionFragment : Fragment() {
         }
     }
 
+    // select pdf from storage
     private fun selectPDFFromStorage() {
         val openStorageIntent = Intent(Intent.ACTION_GET_CONTENT)
         openStorageIntent.apply {

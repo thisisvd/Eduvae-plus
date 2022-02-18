@@ -110,8 +110,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         list.add(
             CarouselItem(
-//                imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-                imageDrawable = R.drawable.digens_img
+                imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
+//                imageDrawable = R.drawable.digens_img
             )
         )
 

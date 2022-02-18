@@ -5,6 +5,9 @@ object Constants {
     // Splash Screen Constant
     var IS_SPLASH_SCREEN_FIRST_SHOWED = true
 
+    // Back toolbar btn active
+    var IS_BACK_TOOLBAR_BTN_ACTIVE = false
+
     // Temporary memory for containing create user info till successful created account
     var TEMP_CREATE_USER_NAME: String? = null
     var TEMP_CREATE_USER_EMAIL: String? = null

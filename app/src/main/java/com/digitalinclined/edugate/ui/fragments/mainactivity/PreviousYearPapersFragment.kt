@@ -1,22 +1,19 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.PreviousYearsPaperAdapter
-import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentPreviousYearPapersBinding
 import com.digitalinclined.edugate.models.PreviousYearPapersDataClass
-import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.SupportActivity
 
 class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_papers) {
 
@@ -29,12 +26,22 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
     // Adapters
     lateinit var recyclerAdapter: PreviousYearsPaperAdapter
 
+    // toggle
+    lateinit var toggle: ActionBarDrawerToggle
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPreviousYearPapersBinding.bind(view)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Question Papers"
+
+        // toggle setup
+        toggle = (activity as MainActivity).toggle
+        toggle.isDrawerIndicatorEnabled = false
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // set up recycler view
         setupRecyclerView()
@@ -55,15 +62,17 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
                 setOnItemClickListener { strLink, value ->
 
                     if (value == "syllabusTV") {
-                        val intent = Intent(requireActivity(), SupportActivity::class.java)
-                        intent.putExtra("fragment",TAG)
-                        intent.putExtra("pdfName","syllabus")
-                        startActivity(intent)
+                        val bundle = bundleOf(
+                            "previousFragment" to "PreviousYearPapersFragment",
+                            "fragmentPdfName" to "syllabusTV"
+                        )
+                        findNavController().navigate(R.id.PDFFragment,bundle)
                     }else {
-                        val intent = Intent(requireActivity(), SupportActivity::class.java)
-                        intent.putExtra("fragment",TAG)
-                        intent.putExtra("pdfName","paper")
-                        startActivity(intent)
+                        val bundle = bundleOf(
+                            "previousFragment" to "PreviousYearPapersFragment",
+                            "fragmentPdfName" to "paper"
+                        )
+                        findNavController().navigate(R.id.PDFFragment,bundle)
                     }
                 }
             }

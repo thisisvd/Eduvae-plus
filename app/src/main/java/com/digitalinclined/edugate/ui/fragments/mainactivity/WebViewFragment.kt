@@ -1,4 +1,4 @@
-package com.digitalinclined.edugate.ui.fragments.supportactivity
+package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.databinding.FragmentPDFBinding
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentWebViewBinding
-import com.digitalinclined.edugate.ui.fragments.SupportActivity
+import com.digitalinclined.edugate.ui.fragments.MainActivity
 
 class WebViewFragment : Fragment() {
 
@@ -20,8 +22,14 @@ class WebViewFragment : Fragment() {
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding!!
 
+    // nav-args
+    private val args: WebViewFragmentArgs by navArgs()
+
     // url link
-    private var URL = ""
+    private var urlMain = ""
+
+    // toggle
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +38,17 @@ class WebViewFragment : Fragment() {
         _binding = FragmentWebViewBinding.inflate(inflater, container, false)
 
         // get url from intent
-        URL = (activity as SupportActivity).URL
+        urlMain = args.url
+
+        // toggle btn toolbar setup
+        toggle = (activity as MainActivity).toggle
+        toggle.isDrawerIndicatorEnabled = false
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // change the title bar
-        (activity as SupportActivity).findViewById<TextView>(R.id.toolbarTitle).text = "$URL..."
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "$urlMain..."
 
         return binding.root
     }
@@ -63,7 +78,7 @@ class WebViewFragment : Fragment() {
                 }
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
-                loadUrl(URL)
+                loadUrl(urlMain)
             }
 
         }

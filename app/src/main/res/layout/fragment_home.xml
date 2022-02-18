@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
+            android:text="User "
             android:textColor="@color/text_color"
             android:textSize="@dimen/_18sdp" />
 
@@ -50,23 +51,36 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp" />
 
-    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-        android:id="@+id/carousel"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
-        app:showNavigationButtons="false"
-        app:imageScaleType="fitXY"
-        app:carouselType="BLOCK"
-        app:carouselGravity="CENTER"
-        app:scalingFactor="0.15"
-        app:autoWidthFixing="true"
-        app:autoPlay="true"
-        app:autoPlayDelay="3000"
-        app:infiniteCarousel="true"
-        app:showTopShadow="false"
-        app:showBottomShadow="false"
-        app:touchToPause="true" />
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="@dimen/_14sdp">
+
+        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            app:autoPlay="true"
+            app:autoPlayDelay="3000"
+            app:autoWidthFixing="true"
+            app:carouselGravity="CENTER"
+            app:carouselType="SHOWCASE"
+            app:scaleOnScroll="true"
+            app:imageScaleType="fitXY"
+            app:infiniteCarousel="true"
+            app:scalingFactor="0.15"
+            app:showBottomShadow="true"
+            app:bottomShadowAlpha=".1"
+            app:showNavigationButtons="false"
+            app:showTopShadow="false"
+            app:touchToPause="true" />
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,7 +134,7 @@
                 android:fontFamily="@font/titillium_web"
                 android:text="Old Year\nQuestion\nPapers"
                 android:textAlignment="center"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>
@@ -150,7 +164,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/titillium_web"
                 android:text="Notes"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>
@@ -170,7 +184,7 @@
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/titillium_web"
                 android:text="Videos"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_18sdp" />
 
         </RelativeLayout>

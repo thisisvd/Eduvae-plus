@@ -9,7 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Theme working colors-->
-    <color name="theme_color">@color/white</color>
+    <color name="theme_color_unchangeable">#030B30</color>
+    <color name="theme_color">#030B30</color>
     <color name="navy_blue_color">#1045FF</color>
     <color name="light_blue_color">#02ADFF</color>
     <color name="edittext_stroke_color">#959595</color>
@@ -18,9 +19,11 @@
     <color name="button_gradient_end_color">#1045FF</color>
     <color name="button_gradient_start_color">#02ADFF</color>
 
-    <color name="text_color">@color/black</color>
-    <color name="made_with_text_color">@color/white</color>
-    <color name="made_with_background">#030B30</color>
-    <color name="view_line_color">@color/black</color>
+    <color name="text_color">@color/white</color>
+    <color name="nav_bar_color">@color/white</color>
+    <color name="made_with_text_color">@color/black</color>
+    <color name="made_with_background">@color/white</color>
+    <color name="recycler_view_color">@color/white</color>
+    <color name="view_line_color">@color/white</color>
 
 </resources>

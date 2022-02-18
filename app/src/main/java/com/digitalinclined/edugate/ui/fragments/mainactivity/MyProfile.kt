@@ -12,7 +12,10 @@ import android.system.Os.open
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +28,7 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ProgressButton
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
+import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
@@ -87,9 +91,20 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     private lateinit var progressButton: ProgressButton
     private lateinit var viewProgress: View
 
+    // toggle button
+    private lateinit var toggle: ActionBarDrawerToggle
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyprofileBinding.bind(view)
+
+        // change the title bar
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "My Profile"
+        toggle = (activity as MainActivity).toggle
+        toggle.isDrawerIndicatorEnabled = false
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // firebase init
         firebaseAuth = Firebase.auth
@@ -103,11 +118,6 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
         sharedPreferences = (requireActivity() as MainActivity).sharedPreferences
 
         binding.apply {
-
-            // back button pressed
-            back.setOnClickListener {
-                findNavController().popBackStack()
-            }
 
             // setting adapter method
             adapterForSpinners()

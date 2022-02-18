@@ -5,6 +5,6 @@
     <corners
         android:radius="@dimen/_7sdp" />
 
-    <solid android:color="@color/made_with_background"/>
+    <solid android:color="@color/recycler_view_color"/>
 
 </shape>

@@ -59,6 +59,11 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
         // initialize firebase
         firebaseAuth = FirebaseAuth.getInstance()
 
+        if (firebaseAuth.currentUser != null) {
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            requireActivity().finish()
+        }
+
         // init Loading Dialog
         dialog = Dialog(requireContext())
         dialog.apply {

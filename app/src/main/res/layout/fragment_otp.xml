@@ -215,7 +215,7 @@
                 android:fontFamily="@font/titillium_web_extralight"
                 android:text="or"
                 android:textAlignment="gravity"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textSize="@dimen/_15sdp" />
 
             <View

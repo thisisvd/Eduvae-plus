@@ -31,9 +31,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="8dp"
-                android:src="@drawable/user_unknown_icon"
-                app:iconTint="@color/text_color"
-                app:civ_border_width="0dp" />
+                android:src="@drawable/ic_round_person_24"
+                app:civ_border_color="@color/text_color"
+                app:civ_border_width="1dp"
+                app:iconTint="@color/text_color" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

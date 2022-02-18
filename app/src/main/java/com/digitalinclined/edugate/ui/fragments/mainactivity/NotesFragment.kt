@@ -1,24 +1,19 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentNotesBinding
-import com.digitalinclined.edugate.databinding.FragmentSyllabusBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.SupportActivity
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
@@ -31,12 +26,22 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
     // Adapters
     lateinit var recyclerAdapter: SubjectRecyclerAdapter
 
+    // toggle
+    lateinit var toggle: ActionBarDrawerToggle
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNotesBinding.bind(view)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
+
+        // toggle btn toolbar setup
+        toggle = (activity as MainActivity).toggle
+        toggle.isDrawerIndicatorEnabled = false
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // getting the name
         binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
@@ -47,9 +52,10 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         // on click listener
         recyclerAdapter.apply {
             setOnItemClickListener {
-                val intent = Intent(requireActivity(), SupportActivity::class.java)
-                intent.putExtra("fragment",TAG)
-                startActivity(intent)
+                val bundle = bundleOf(
+                    "previousFragment" to "NotesFragment"
+                )
+                findNavController().navigate(R.id.PDFFragment,bundle)
             }
         }
 

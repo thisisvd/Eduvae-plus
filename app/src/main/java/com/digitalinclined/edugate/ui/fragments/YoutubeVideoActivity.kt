@@ -1,11 +1,8 @@
 package com.digitalinclined.edugate.ui.fragments
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.ActivityYoutubeVideoBinding
-import com.digitalinclined.edugate.databinding.FragmentWebViewBinding
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer

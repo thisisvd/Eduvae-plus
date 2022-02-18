@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/theme_color"
     android:scrollbarThumbVertical="@null"
-    tools:context=".ui.fragments.supportactivity.AboutUsFragment">
+    tools:context=".ui.fragments.mainactivity.AboutUsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

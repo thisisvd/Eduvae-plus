@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
@@ -27,12 +28,22 @@ class TopicFragment : Fragment(R.layout.fragment_topics) {
     // Adapters
     lateinit var recyclerAdapter: SubjectRecyclerAdapter
 
+    // toggle
+    lateinit var toggle: ActionBarDrawerToggle
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTopicsBinding.bind(view)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Syllabus"
+
+        // toggle setup
+        toggle = (activity as MainActivity).toggle
+        toggle.isDrawerIndicatorEnabled = false
+        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+        toggle.setHomeAsUpIndicator(drawable)
+        Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // getting the name
         binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")

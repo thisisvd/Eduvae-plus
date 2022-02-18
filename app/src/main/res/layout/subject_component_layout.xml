@@ -27,7 +27,7 @@
             android:fontFamily="@font/titillium_web_semibold"
             android:gravity="center"
             android:text="E"
-            android:textColor="@color/black"
+            android:textColor="@color/made_with_text_color"
             android:textSize="@dimen/_20sdp" />
 
         <TextView

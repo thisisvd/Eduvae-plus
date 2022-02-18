@@ -16,13 +16,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
+import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
@@ -64,6 +68,12 @@ class MainActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private val dbReference = db.collection("users")
 
+    // toggle button
+    lateinit var toggle: ActionBarDrawerToggle
+
+    // live data toggle button
+    private var toggleEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -96,6 +106,15 @@ class MainActivity : AppCompatActivity() {
 
             // Navigation Drawer Listener
             navigationDrawerListener()
+
+            // toggle livedata observer
+            toggleEnabled.observe(this@MainActivity){ isToggleMenu ->
+                if(isToggleMenu) {
+                    val drawable = getDrawable(R.drawable.ic_baseline_menu_24)
+                    toggle.setHomeAsUpIndicator(drawable)
+                    IS_BACK_TOOLBAR_BTN_ACTIVE = false
+                }
+            }
 
         }
     }
@@ -165,18 +184,18 @@ class MainActivity : AppCompatActivity() {
                 .addOnDestinationChangedListener { _, destination, _ ->
 
                     when (destination.id) {
-
                         // when these fragments will open toolbar will not be visible
-                        R.id.myProfile, R.id.addDiscussionFragment -> {
-                            toolbar.visibility = View.GONE
-                            bottomNavigationView.visibility = View.GONE
-                            viewTop.visibility = View.GONE
+                        R.id.discussionFragment, R.id.homeFragment, R.id.subjectsFragment -> {
+                            // bottom nav bar visibility VISIBLE
+                            bottomNavigationView.visibility = View.VISIBLE
+                            viewBottom.visibility = View.VISIBLE
+                            toggleEnabled.postValue(true)
                         }
                         else -> {
-                            // toolbar visibility VISIBLE
-                            toolbar.visibility = View.VISIBLE
-                            bottomNavigationView.visibility = View.VISIBLE
-                            viewTop.visibility = View.VISIBLE
+                            // bottom nav bar visibility INVISIBLE/GONE
+                            bottomNavigationView.visibility = View.GONE
+                            viewBottom.visibility = View.GONE
+                            toggleEnabled.postValue(false)
                         }
 
                     }
@@ -188,16 +207,16 @@ class MainActivity : AppCompatActivity() {
     private fun navigationDrawerListener() {
         binding.apply {
             // nav drawer setup and adding toggle button
-            val toggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
+            toggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
             drawerLayout.addDrawerListener(toggle)
             toggle.drawerArrowDrawable.color =
                 ContextCompat.getColor(applicationContext, R.color.white)
-//        toggle.isDrawerIndicatorEnabled = false
-//        val drawable = ResourcesCompat.getDrawable(
-//            resources,
-//            R.drawable.nav_drawer_icon,applicationContext.theme
-//        )
-//        toggle.setHomeAsUpIndicator(drawable)
+            toggle.isDrawerIndicatorEnabled = false
+            val drawable = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ic_baseline_menu_24, applicationContext.theme
+            )
+            toggle.setHomeAsUpIndicator(drawable)
             toggle.syncState()
 
             // nav header close icon listener
@@ -236,10 +255,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     // University Portal
                     R.id.universityPortal -> {
-                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
-                        intent.putExtra("fragment","universityPortal")
-                        intent.putExtra("url_link","https://www.rgpv.ac.in/")
-                        startActivity(intent)
+                        val bundle = bundleOf(
+                            "url" to "https://www.rgpv.ac.in/",
+                        )
+                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
                     }
                     // Notification
@@ -249,17 +268,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     // Job Update
                     R.id.jobUpdates -> {
-                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
-                        intent.putExtra("fragment","jobUpdates")
-                        intent.putExtra("url_link","https://www.naukri.com/")
-                        startActivity(intent)
+                        val bundle = bundleOf(
+                            "url" to "https://www.naukri.com/",
+                        )
+                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
                     }
                     // About Us
                     R.id.aboutUs -> {
-                        val intent = Intent(this@MainActivity, SupportActivity::class.java)
-                        intent.putExtra("fragment","aboutUs")
-                        startActivity(intent)
+                        navHostFragment.findNavController().navigate(R.id.aboutUsFragment)
                         true
                     }
                     // Join Our Telegram
@@ -314,8 +331,17 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             return when (item.itemId) {
                 android.R.id.home -> {
-                    drawerLayout.openDrawer(GravityCompat.START)
-                    true
+                    if(IS_BACK_TOOLBAR_BTN_ACTIVE) {
+                        navHostFragment.navController.popBackStack()
+//                        toggle.isDrawerIndicatorEnabled = false
+                        val drawable = getDrawable(R.drawable.ic_baseline_menu_24)
+                        toggle.setHomeAsUpIndicator(drawable)
+                        IS_BACK_TOOLBAR_BTN_ACTIVE = false
+                        true
+                    } else {
+                        drawerLayout.openDrawer(GravityCompat.START)
+                        true
+                    }
                 }
                 else -> super.onOptionsItemSelected(item)
             }
