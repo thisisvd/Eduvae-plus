@@ -37,11 +37,13 @@ import com.digitalinclined.edugate.constants.Constants.USER_PROFILE_PHOTO_LINK
 import com.digitalinclined.edugate.constants.Constants.USER_YEAR
 import com.digitalinclined.edugate.databinding.ActivityMainBinding
 import com.digitalinclined.edugate.models.UserProfile
+import com.digitalinclined.edugate.utils.NetworkListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.io.IOException
@@ -71,6 +73,9 @@ class MainActivity : AppCompatActivity() {
     // toggle button
     lateinit var toggle: ActionBarDrawerToggle
 
+    // network listener
+    private lateinit var networkListener: NetworkListener
+
     // live data toggle button
     private var toggleEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
 
@@ -87,6 +92,9 @@ class MainActivity : AppCompatActivity() {
 
         // init shared pref
         sharedPreferences = this.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+
+        // check for network connectivity
+        checkForNetworkConnectivity()
 
         // FETCH CITY DB IN PRIMARY MEMORY
         readIndianCityJson()
@@ -116,6 +124,23 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+        }
+    }
+
+    // check for network connectivity
+    private fun checkForNetworkConnectivity() {
+        // network listener init and collecting values from mutableStateFlow
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(this@MainActivity)
+                .collect { status ->
+                    Log.d("NetworkListener",status.toString())
+                    if(status) {
+                        binding.noNetworkLayout.visibility = View.GONE
+                    } else {
+                        binding.noNetworkLayout.visibility = View.VISIBLE
+                    }
+                }
         }
     }
 
