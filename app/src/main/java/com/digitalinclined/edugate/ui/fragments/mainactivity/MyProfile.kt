@@ -215,7 +215,6 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
                 "city" to cityAutoTextView.text.toString(),
-                "profilephotolink" to USER_PROFILE_PHOTO_LINK
             )
 
             // create db in fireStore

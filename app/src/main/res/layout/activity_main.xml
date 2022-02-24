@@ -99,9 +99,25 @@
                     android:fontFamily="@font/titillium_web"
                     android:text="TURN ON WIFI"
                     android:textColor="@color/navy_blue_color"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9sdp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <TextView
+                    android:id="@+id/turnOnMobileNetwork"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/titillium_web"
+                    android:text="TURN ON MOBILE NETWORK"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="@color/navy_blue_color"
+                    android:textSize="@dimen/_9sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/turnOnWifi"
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

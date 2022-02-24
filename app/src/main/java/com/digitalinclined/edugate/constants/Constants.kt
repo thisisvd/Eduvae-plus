@@ -2,6 +2,9 @@ package com.digitalinclined.edugate.constants
 
 object Constants {
 
+    // API
+    const val BASE_URL = ""
+
     // Splash Screen Constant
     var IS_SPLASH_SCREEN_FIRST_SHOWED = true
 

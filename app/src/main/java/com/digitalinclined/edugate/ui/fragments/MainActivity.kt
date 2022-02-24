@@ -6,15 +6,14 @@ import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
@@ -75,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     // network listener
     private lateinit var networkListener: NetworkListener
+    private var isNetworkConnected = true
 
     // live data toggle button
     private var toggleEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -137,50 +137,76 @@ class MainActivity : AppCompatActivity() {
                     Log.d("NetworkListener",status.toString())
                     if(status) {
                         binding.noNetworkLayout.visibility = View.GONE
+                        isNetworkConnected = true
+                        fetchFirebaseUserData()
                     } else {
                         binding.noNetworkLayout.visibility = View.VISIBLE
+                        isNetworkConnected = false
                     }
                 }
         }
+
+        binding.apply {
+
+            // open wifi settings panel
+            turnOnWifi.setOnClickListener {
+                if(!isNetworkConnected) {
+                    startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                }
+            }
+
+            // open mobile settings panel
+            turnOnMobileNetwork.setOnClickListener {
+                if(!isNetworkConnected) {
+                    startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS))
+                }
+            }
+
+        }
+
     }
 
     // fetching the user data from firebase and saving it in to shared preferences
     fun fetchFirebaseUserData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            dbReference.document(firebaseAuth.currentUser!!.uid).get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                        val userProfile = document.toObject(UserProfile::class.java)!!
+        if(isNetworkConnected) {
+            lifecycleScope.launch(Dispatchers.IO) {
+                dbReference.document(firebaseAuth.currentUser!!.uid).get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                            val userProfile = document.toObject(UserProfile::class.java)!!
 
-                        if (userProfile != null) {
-                            sharedPreferences.edit()
-                                .putString(USER_NAME, userProfile.name)
-                                .putString(USER_EMAIL, userProfile.email)
-                                .putString(USER_PHONE, userProfile.phone)
-                                .putString(USER_COURSE, userProfile.course)
-                                .putString(USER_YEAR, userProfile.year)
-                                .putString(USER_CITY, userProfile.city)
-                                .putString(USER_PROFILE_PHOTO_LINK, userProfile.profilephotolink)
-                                .apply()
+                            if (userProfile != null) {
+                                sharedPreferences.edit()
+                                    .putString(USER_NAME, userProfile.name)
+                                    .putString(USER_EMAIL, userProfile.email)
+                                    .putString(USER_PHONE, userProfile.phone)
+                                    .putString(USER_COURSE, userProfile.course)
+                                    .putString(USER_YEAR, userProfile.year)
+                                    .putString(USER_CITY, userProfile.city)
+                                    .putString(
+                                        USER_PROFILE_PHOTO_LINK,
+                                        userProfile.profilephotolink
+                                    )
+                                    .apply()
 
-                            // Show snack bar when open main activity
-                            Snackbar.make(
-                                binding.root,
-                                "Logged in as ${userProfile.name}!",
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                                // Show snack bar when open main activity
+                                Snackbar.make(
+                                    binding.root,
+                                    "Logged in as ${userProfile.name}!",
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        } else {
+                            Log.d(TAG, "No such document")
                         }
-
-                    } else {
-                        Log.d(TAG, "No such document")
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d(TAG, "get failed with ", exception)
-                }
+                    .addOnFailureListener { exception ->
+                        Log.d(TAG, "get failed with ", exception)
+                    }
+            }
         }
-
     }
 
     // Bottom Navigation Bar Setup
