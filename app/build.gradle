@@ -69,6 +69,15 @@ dependencies {
     // browser dependency
     implementation "androidx.browser:browser:1.4.0"
 
+    // retrofit dependency
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
+
+    // Gson dependency
+    implementation 'com.google.code.gson:gson:2.8.9'
+
     // Navigation Component
     def nav_version = "2.3.5"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -84,10 +93,8 @@ dependencies {
     // OTP edit text
     implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx' // kotlin
 
-    // Image Carousel Dependency
-    // Circle Indicator (To fix the xml preview "Missing classes" error)
-    implementation 'me.relex:circleindicator:2.1.6'
-    implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.0.6'
+    // image slider
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
     // circular image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'

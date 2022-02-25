@@ -7,11 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.DiscussionFormListItemBinding
-import com.digitalinclined.edugate.databinding.SubjectComponentLayoutBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 
 class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {

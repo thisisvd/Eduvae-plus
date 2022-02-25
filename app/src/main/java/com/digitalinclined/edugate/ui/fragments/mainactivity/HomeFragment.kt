@@ -3,28 +3,34 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
+import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
+import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
+import com.digitalinclined.edugate.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
-import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -39,6 +45,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
+
+    // viewModel
+    private val viewModel: MainViewModel by activityViewModels()
+
+    // banner Image List
+    private var bannerList = arrayListOf<Banner>()
 
     // enable the options menu in activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,8 +71,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
 
-        // calling carousel method
-        carouselImageView()
+        // fetching banners
+        viewModel.getBanner()
+
+        // viewModelObservers
+        viewModelObservers()
 
         // user name for the top
         getUserName()
@@ -84,13 +99,43 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             // videos click listener
             videos.setOnClickListener {
-//                findNavController().navigate(R.id.action_homeFragment_to_chaptersScreenFragment)
-//                Toast.makeText(requireContext(),"Videos",Toast.LENGTH_SHORT).show()
                 startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
             }
 
         }
 
+    }
+
+    // viewModel Observers
+    private fun viewModelObservers() {
+        viewModel.apply {
+
+            // banners observers
+            getBannerDetail.observe(viewLifecycleOwner) { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        response.data?.let { bannerDetails ->
+                            if(bannerDetails.status == 200) {
+                                Log.d(TAG, "${bannerDetails.banners.size.toString()}")
+                                for(item in bannerDetails.banners) {
+                                    bannerList.add(item)
+                                }
+                            }
+                            if(bannerList.size > 0) {
+                                sliderImageView()
+                            }
+                        }
+                    }
+                    is Resource.Error -> {
+                        Log.d(TAG, "Error occurred while loading data! ${response.message}")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "Loading!")
+                    }
+                }
+            }
+
+        }
     }
 
     // get user name
@@ -101,34 +146,24 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    // Carousel image view container
-    private fun carouselImageView() {
+    // Slider image view container
+    private fun sliderImageView() {
+        binding.apply {
 
-        binding.carousel.registerLifecycle(lifecycle)
+            // Slider Image Adapter
+            val adapter = SliderImageAdapter()
 
-        val list = mutableListOf<CarouselItem>()
+            // setting up banners in the adapter list
+            for(banner in bannerList) {
+                adapter.addItem(banner)
+            }
 
-        list.add(
-            CarouselItem(
-                imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-//                imageDrawable = R.drawable.digens_img
-            )
-        )
-
-        list.add(
-            CarouselItem(
-//                imageUrl = "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
-                imageDrawable = R.drawable.digens_img
-            )
-        )
-
-        list.add(
-            CarouselItem(
-                imageDrawable = R.drawable.digens_img
-            )
-        )
-
-        binding.carousel.setData(list)
+            // adapter init
+            sliderView.setSliderAdapter(adapter)
+            sliderView.setIndicatorAnimation(IndicatorAnimationType.SWAP)
+            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+            sliderView.startAutoCycle()
+        }
     }
 
     // onPrepareOptionsMenu for Circle layout profile menu

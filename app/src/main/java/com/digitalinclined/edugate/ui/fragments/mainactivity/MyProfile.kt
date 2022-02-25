@@ -177,7 +177,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 .addOnSuccessListener {
                     Toast.makeText(
                         requireContext(),
-                        "Successfully Uploaded Image!",
+                        "Successfully updated profile picture!",
                         Toast.LENGTH_SHORT
                     ).show()
                     (requireActivity() as MainActivity).fetchFirebaseUserData()
@@ -198,9 +198,9 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                             .addOnFailureListener { e ->
                                 Log.w(TAG, "Error in uploaded url Successfully", e)
                             }
-
                     }
                 }
+
         }
 
     }
@@ -215,6 +215,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
                 "city" to cityAutoTextView.text.toString(),
+                "profilephotolink" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"")
             )
 
             // create db in fireStore

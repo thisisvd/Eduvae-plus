@@ -3,7 +3,7 @@ package com.digitalinclined.edugate.constants
 object Constants {
 
     // API
-    const val BASE_URL = ""
+    const val BASE_URL = "http://64.227.161.183/"
 
     // Splash Screen Constant
     var IS_SPLASH_SCREEN_FIRST_SHOWED = true
