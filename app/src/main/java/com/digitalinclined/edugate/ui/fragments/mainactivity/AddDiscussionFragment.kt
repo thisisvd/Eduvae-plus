@@ -1,13 +1,15 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Base64
+import android.util.Base64OutputStream
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +18,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+import java.io.*
 
 
 class AddDiscussionFragment : Fragment() {
@@ -99,26 +100,36 @@ class AddDiscussionFragment : Fragment() {
         if(requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedPdfFromStorage = data.data
 
-//            val fileName = File(selectedPdfFromStorage?.path).name
+            // file name from uri
             val fileName = queryName(requireContext(),selectedPdfFromStorage!!)
             Toast.makeText(requireContext(),fileName.toString(),Toast.LENGTH_SHORT).show()
 
-//            storageRef.child("images/${firebaseAuth.currentUser?.uid.toString()}.pdf")
-//                .putFile(selectedPdfFromStorage!!)
-//                .addOnSuccessListener {
-//                    Log.d("TAGUI","Successfully Uploaded PDF")
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "Successfully Uploaded PDF!",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                .addOnFailureListener {
-//                    Log.d("TAGUI","Failed to Upload PDF!")
-//                    Toast.makeText(requireContext(), "Failed to Upload PDF!", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
+            val auxFile = File(selectedPdfFromStorage.toString())
+
+            var base64File = getBase64FromPath(selectedPdfFromStorage)
+            Log.d("TAGU",base64File.toString())
         }
+    }
+
+    fun getBase64FromPath(uri: Uri) {
+
+        val iStream: InputStream? = requireActivity().contentResolver.openInputStream(uri)
+        val inputData: ByteArray = getBytes(iStream!!)
+
+        Log.d("TAGU",inputData.size.toString())
+
+    }
+
+    @Throws(IOException::class)
+    fun getBytes(inputStream: InputStream): ByteArray {
+        val byteBuffer = ByteArrayOutputStream()
+        val bufferSize = 1024
+        val buffer = ByteArray(bufferSize)
+        var len = 0
+        while (inputStream.read(buffer).also { len = it } != -1) {
+            byteBuffer.write(buffer, 0, len)
+        }
+        return byteBuffer.toByteArray()
     }
 
     // uri file name
