@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Base64
-import android.util.Base64OutputStream
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.BASE_64_STRING
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.io.*
-
 
 class AddDiscussionFragment : Fragment() {
 
@@ -107,7 +106,7 @@ class AddDiscussionFragment : Fragment() {
             val auxFile = File(selectedPdfFromStorage.toString())
 
             var base64File = getBase64FromPath(selectedPdfFromStorage)
-            Log.d("TAGU",base64File.toString())
+            Log.d("TAGU",selectedPdfFromStorage.path.toString())
         }
     }
 
@@ -116,7 +115,10 @@ class AddDiscussionFragment : Fragment() {
         val iStream: InputStream? = requireActivity().contentResolver.openInputStream(uri)
         val inputData: ByteArray = getBytes(iStream!!)
 
-        Log.d("TAGU",inputData.size.toString())
+        var getBase64String = Base64.encodeToString(inputData,Base64.NO_WRAP)
+        BASE_64_STRING = getBase64String
+
+        Log.d("TAGU",BASE_64_STRING)
 
     }
 

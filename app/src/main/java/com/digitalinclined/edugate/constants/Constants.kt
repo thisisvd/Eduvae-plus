@@ -28,4 +28,7 @@ object Constants {
     var USER_CITY = "USER_CITY"
     var USER_PROFILE_PHOTO_LINK = "USER_PROFILE_PHOTO_LINK"
 
+    // TEMP CONSTANT
+    var BASE_64_STRING = ""
+
 }
