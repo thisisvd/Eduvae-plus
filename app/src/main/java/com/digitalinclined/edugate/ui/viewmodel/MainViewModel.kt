@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.digitalinclined.edugate.restapi.APIClient
 import com.digitalinclined.edugate.restapi.APIInterface
 import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
+import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
 import com.digitalinclined.edugate.ui.viewmodel.repository.Repository
 import com.digitalinclined.edugate.utils.Resource
 import kotlinx.coroutines.launch
@@ -30,6 +31,9 @@ class MainViewModel(
     
     // banner details 
     var getBannerDetail: MutableLiveData<Resource<BannerResponse>> = MutableLiveData()
+
+    // notes details
+    var getNotesDetail: MutableLiveData<Resource<NotesResponse>> = MutableLiveData()
 
     init {
         repository = Repository(APIClient.api)
@@ -63,6 +67,39 @@ class MainViewModel(
             response.isSuccessful -> {
                 val banner = response.body()
                 Resource.Success(banner!!)
+            }
+            else -> {
+                Resource.Error(response.message())
+            }
+        }
+    }
+
+    // get banners from api
+    fun getNotes(course: String, semister: Int) = viewModelScope.launch {
+        getNotesDetail.value = Resource.Loading()
+
+        if(hasInternetConnection()) {
+            // Actually processing Data
+            try {
+                val response = repository.getNotes(course,semister)
+                getNotesDetail.value = handleNotesResponse(response)
+            } catch (e: Exception) {
+                getNotesDetail.value = Resource.Error("404 Not Found!")
+            }
+        } else {
+            getNotesDetail.value = Resource.Error("No Internet Connection!")
+        }
+    }
+
+    // handling error responses
+    private fun handleNotesResponse(response: Response<NotesResponse>): Resource<NotesResponse>? {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                Resource.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                val notes = response.body()
+                Resource.Success(notes!!)
             }
             else -> {
                 Resource.Error(response.message())

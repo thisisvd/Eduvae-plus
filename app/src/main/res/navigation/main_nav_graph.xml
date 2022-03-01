@@ -119,6 +119,9 @@
         <argument android:name="pdfUri"
             app:argType="string"
             android:defaultValue="null" />
+        <argument
+            android:name="Notes"
+            app:argType="com.digitalinclined.edugate.restapi.models.notes.Note" />
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"

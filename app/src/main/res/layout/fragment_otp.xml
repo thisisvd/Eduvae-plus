@@ -226,29 +226,35 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/googleVerification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_15sdp"
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:background="@drawable/round_google_login_background"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/googleVerification"
-                android:layout_width="@dimen/_37sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginRight="20dp"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:scaleType="fitXY"
-                android:src="@drawable/google_icon" />
+                android:src="@drawable/google_icon8" />
 
-            <ImageView
-                android:id="@+id/facebookVerification"
-                android:layout_width="@dimen/_37sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginLeft="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/facebook_icon" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_web"
+                android:text="Login with google"
+                android:layout_marginLeft="15dp"
+                android:textColor="#3F4542"
+                android:textSize="@dimen/_17sdp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

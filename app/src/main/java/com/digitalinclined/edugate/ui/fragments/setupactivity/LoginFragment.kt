@@ -183,7 +183,8 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             "course" to "",
             "year" to "",
             "city" to "",
-            "profilephotolink" to (photoUrlLink ?: "")
+            "profilephotolink" to (photoUrlLink ?: ""),
+            "following" to arrayListOf<String>()
         )
 
         // create db in fireStore

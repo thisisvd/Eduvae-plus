@@ -8,4 +8,5 @@ data class UserProfile(
     val year: String? = null,
     val city: String? = null,
     val profilephotolink: String? = null,
+    val following: ArrayList<String>? = null
 )

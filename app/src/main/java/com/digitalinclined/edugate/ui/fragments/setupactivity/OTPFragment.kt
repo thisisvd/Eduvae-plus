@@ -229,7 +229,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             "course" to "",
             "year" to "",
             "city" to "",
-            "profilephotolink" to (photoUrlLink ?: "")
+            "profilephotolink" to (photoUrlLink ?: ""),
+            "following" to arrayListOf<String>()
         )
 
         // create db in fireStore
@@ -418,7 +419,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             "course" to "",
             "year" to "",
             "city" to "",
-            "profilephotolink" to ""
+            "profilephotolink" to "",
+            "following" to arrayListOf<String>()
         )
 
         // create db in fireStore

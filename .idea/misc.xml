@@ -23,6 +23,7 @@
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/rectangle_brown_background.xml" value="0.14444444444444443" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/rectangle_no_network_background.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/recycler_view_white_background.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/drawable/round_google_login_background.xml" value="0.195" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/activity_setup.xml" value="0.16944444444444445" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/activity_splash_screen.xml" value="0.15729166666666666" />
@@ -58,6 +59,7 @@
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_web_view.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/fragment_year_of_papers.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/nav_drawer_header.xml" value="0.15539617486338797" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/notes_component_layout.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/notification_item_layout.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/previous_year_item_layout.xml" value="0.176" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/progress_btn_layout.xml" value="0.2" />
@@ -65,8 +67,10 @@
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/slider_image_view.xml" value="0.10261353898886033" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/layout/subject_component_layout.xml" value="0.152" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/menu/action_bar_menu.xml" value="0.176" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/menu/following_menu_item.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/menu/nav_bar_menu.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/menu/nav_drawer_menu.xml" value="0.1" />
+        <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/CollegeProjects/Edugate/app/src/main/res/menu/pdf_menu_item.xml" value="0.21052631578947367" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/drawable/button_blue.xml" value="0.1701388888888889" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/drawable/edittext_stroke.xml" value="0.17430555555555555" />
         <entry key="..\:/Users/Dell/Music/AndroidStudioProjects/Digitalinclined/Edugate/app/src/main/res/layout/activity_main.xml" value="0.16944444444444445" />

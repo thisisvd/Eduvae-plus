@@ -68,11 +68,6 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
         binding.apply {
 
-            // navigate to login screen
-            login.setOnClickListener {
-                findNavController().navigate(R.id.action_completeProfileFragment_to_loginFragment)
-            }
-
             // complete sign up button onClick listener
             completeButton.setOnClickListener {
                 if(!isAutoCompleteEmpty() && isEnteredValueTrue()) {

@@ -141,7 +141,7 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/OnBoardingLinearLayout"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:backgroundTint="@color/button_gradient_end_color"
@@ -150,32 +150,5 @@
         android:text="Complete Sign Up"
         android:textSize="@dimen/_17sdp"
         app:cornerRadius="@dimen/_14sdp" />
-
-    <LinearLayout
-        android:id="@+id/OnBoardingLinearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/titillium_web"
-            android:text="Already have an account? "
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_15sdp" />
-
-        <TextView
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/titillium_web"
-            android:text=" Login"
-            android:textColor="@color/secondary_text_color"
-            android:textSize="@dimen/_15sdp" />
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -9,4 +9,6 @@ class Repository(
     /** Direct API call's */
     suspend fun getBanners() = api.getBanner()
 
+    suspend fun getNotes(course: String, semister: Int) = api.getNotes(course, semister)
+
 }

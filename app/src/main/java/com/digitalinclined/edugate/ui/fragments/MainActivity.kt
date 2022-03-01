@@ -176,6 +176,13 @@ class MainActivity : AppCompatActivity() {
                             Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                             val userProfile = document.toObject(UserProfile::class.java)!!
 
+                            if(userProfile.following != null) {
+                                Log.d(TAG, "${userProfile.following!!.size.toString()}")
+                                for (i in userProfile.following!!) {
+                                    Log.d(TAG, i)
+                                }
+                            }
+
                             if (userProfile != null) {
                                 sharedPreferences.edit()
                                     .putString(USER_NAME, userProfile.name)

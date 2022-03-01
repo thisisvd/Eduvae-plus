@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.OpenableColumns
 import android.util.Base64
 import android.util.Log
@@ -107,6 +108,7 @@ class AddDiscussionFragment : Fragment() {
 
             var base64File = getBase64FromPath(selectedPdfFromStorage)
             Log.d("TAGU",selectedPdfFromStorage.path.toString())
+
         }
     }
 

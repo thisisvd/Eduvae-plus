@@ -164,7 +164,8 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
             "course" to "",
             "year" to "",
             "city" to "",
-            "profilephotolink" to (photoUrlLink ?: "")
+            "profilephotolink" to (photoUrlLink ?: ""),
+            "following" to arrayListOf<String>()
         )
 
         // create db in fireStore

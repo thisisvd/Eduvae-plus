@@ -1,9 +1,15 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
@@ -11,8 +17,16 @@ import com.digitalinclined.edugate.adapter.DiscussionRecyclerAdapter
 import com.digitalinclined.edugate.databinding.FragmentDiscussionBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
+
+    // TAG
+    private val TAG = "DiscussionFragment"
 
     // viewBinding
     private lateinit var binding: FragmentDiscussionBinding
@@ -20,9 +34,25 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     // Adapters
     private lateinit var recyclerAdapter: DiscussionRecyclerAdapter
 
+    // Firebase
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    // firebase db
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("users")
+
+    // enable the options menu in activity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view,savedInstanceState)
         binding = FragmentDiscussionBinding.bind(view)
+
+        // firebase init
+        firebaseAuth = Firebase.auth
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Discussion Form"
@@ -90,6 +120,16 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
         recyclerAdapter.differ.submitList(list)
     }
 
+    // add following IDs
+    private fun addFollowingIDs() {
+        dbReference.document(firebaseAuth.currentUser!!.uid)
+            .update("following", arrayListOf("C001","C003","C002"))
+            .addOnSuccessListener { Log.d(TAG, "Image Url uploaded Successfully!") }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error in uploaded url Successfully", e)
+            }
+    }
+
     // Recycler view setup
     private fun setupRecyclerView(){
         recyclerAdapter = DiscussionRecyclerAdapter()
@@ -103,5 +143,22 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
             }
         }
     }
-    
+
+    // option selector for Circle layout profile menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.following -> {
+                Toast.makeText(requireContext(),"FollowClicked!",Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // calling own menu for this fragment // (not required any more but not deleted because testing is not done)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.following_menu_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 }

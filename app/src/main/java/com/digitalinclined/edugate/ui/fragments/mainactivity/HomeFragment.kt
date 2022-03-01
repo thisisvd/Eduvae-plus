@@ -116,9 +116,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is Resource.Success -> {
                         response.data?.let { bannerDetails ->
                             if(bannerDetails.status == 200) {
-                                Log.d(TAG, "${bannerDetails.banners.size.toString()}")
+                                Log.d(TAG, "${bannerDetails.banners.size}")
                                 for(item in bannerDetails.banners) {
                                     bannerList.add(item)
+                                    Log.d(TAG, bannerList.size.toString())
                                 }
                             }
                             if(bannerList.size > 0) {
