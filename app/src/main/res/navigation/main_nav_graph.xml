@@ -55,12 +55,27 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_discussionFragment_to_followingFragment"
+            app:destination="@id/followingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/myProfile"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.MyProfile"
         android:label="fragment_myprofile"
-        tools:layout="@layout/fragment_myprofile" />
+        tools:layout="@layout/fragment_myprofile" >
+        <action
+            android:id="@+id/action_myProfile_to_followingFragment"
+            app:destination="@id/followingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/subjectsFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.SubjectsFragment"
@@ -133,5 +148,10 @@
             app:argType="string"
             android:defaultValue="null" />
     </fragment>
+    <fragment
+        android:id="@+id/followingFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.FollowingFragment"
+        android:label="fragment_following"
+        tools:layout="@layout/fragment_following" />
 
 </navigation>

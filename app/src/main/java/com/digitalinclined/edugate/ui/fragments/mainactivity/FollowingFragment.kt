@@ -1,0 +1,137 @@
+package com.digitalinclined.edugate.ui.fragments.mainactivity
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.adapter.FollowingRecyclerAdapter
+import com.digitalinclined.edugate.adapter.NotesRecyclerAdapter
+import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
+import com.digitalinclined.edugate.databinding.FragmentFollowingBinding
+import com.digitalinclined.edugate.databinding.FragmentPDFBinding
+import com.digitalinclined.edugate.models.UserFollowingProfile
+import com.digitalinclined.edugate.models.UserProfile
+import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class FollowingFragment : Fragment() {
+
+    // TAG
+    private val TAG = "FollowingFragment"
+
+    // viewBinding
+    private var _binding: FragmentFollowingBinding? = null
+    private val binding get() = _binding!!
+
+    // Adapters
+    lateinit var recyclerAdapter: FollowingRecyclerAdapter
+
+    // toggle button
+    private lateinit var toggle: ActionBarDrawerToggle
+
+    // firebase db
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("users")
+
+    // TEMP List of userFollowingProfile
+    private var followedUsersList = arrayListOf<UserFollowingProfile>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentFollowingBinding.inflate(inflater, container, false)
+        binding.apply {
+
+            // change the title bar
+            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Followings"
+
+            // toggle btn toolbar setup
+            toggle = (activity as MainActivity).toggle
+            val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+            toggle.setHomeAsUpIndicator(drawable)
+            Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
+
+            // setting up recycler view
+            setupRecyclerView()
+
+            // viewModel observers for fetching clients
+            viewModelObservers()
+
+        }
+        return binding.root
+    }
+
+    // viewModel Observers
+    private fun viewModelObservers() {
+
+        Log.d(TAG,FOLLOWING_USER_ID.size.toString())
+
+        // get all users from list
+        if(FOLLOWING_USER_ID.size > 0) {
+            followedUsersList.clear()
+            for(userID in FOLLOWING_USER_ID) {
+               fetchUsersFromFirebase(userID)
+            }
+        }
+
+    }
+
+    // fetch users from firebase
+    private fun fetchUsersFromFirebase(userID: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            dbReference.document(userID).get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val userProfile = document.toObject(UserFollowingProfile::class.java)!!
+                        Log.d(TAG, userProfile!!.name.toString())
+                        if (userProfile!!.name != null) {
+                            followedUsersList.add(userProfile!!)
+                            recyclerAdapter.differ.submitList(followedUsersList)
+                        }
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "get failed with ", exception)
+                }
+        }
+    }
+
+    // Recycler view setup
+    private fun setupRecyclerView(){
+        recyclerAdapter = FollowingRecyclerAdapter()
+        binding.apply {
+            recyclerView.apply {
+                adapter = recyclerAdapter
+                layoutManager = LinearLayoutManager(activity)
+            }
+        }
+        recyclerAdapter.setOnItemClickListener {
+            Toast.makeText(requireContext(),"Unfollowed!",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // on view destroy
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+}

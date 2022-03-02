@@ -24,6 +24,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
@@ -176,11 +177,11 @@ class MainActivity : AppCompatActivity() {
                             Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                             val userProfile = document.toObject(UserProfile::class.java)!!
 
-                            if(userProfile.following != null) {
-                                Log.d(TAG, "${userProfile.following!!.size.toString()}")
-                                for (i in userProfile.following!!) {
-                                    Log.d(TAG, i)
-                                }
+                            // add following users
+                            if (userProfile.following != null) {
+                                FOLLOWING_USER_ID.clear()
+                                Log.d(TAG, "${userProfile.following!!.size}")
+                                FOLLOWING_USER_ID.addAll(userProfile.following)
                             }
 
                             if (userProfile != null) {

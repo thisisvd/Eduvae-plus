@@ -1,32 +1,29 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.os.ParcelFileDescriptor.open
-import android.system.Os.bind
-import android.system.Os.open
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ProgressButton
-import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
@@ -36,26 +33,17 @@ import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE
 import com.digitalinclined.edugate.constants.Constants.USER_PROFILE_PHOTO_LINK
 import com.digitalinclined.edugate.constants.Constants.USER_YEAR
+import com.digitalinclined.edugate.constants.Constants.YEAR_LIST
 import com.digitalinclined.edugate.databinding.FragmentMyprofileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.common.collect.Range.open
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONArray
-import java.io.IOException
-import java.io.InputStream
-import java.nio.channels.AsynchronousFileChannel.open
-import java.nio.channels.AsynchronousServerSocketChannel.open
-import java.nio.channels.FileChannel.open
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
@@ -64,14 +52,6 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
     // viewBinding
     private lateinit var binding: FragmentMyprofileBinding
-
-    // ROUGH LIST
-    private val roughCourseList = arrayListOf(
-        "BBA", "MBA", "MCA", "B.TECH"
-    )
-    private val roughYearList = arrayListOf(
-        "1st Year", "2nd Year", "3rd Year", "4th Year"
-    )
 
     // profile picture uri
     private lateinit var imageURI: Uri
@@ -93,6 +73,12 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
+
+    // enable the options menu in activity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -209,7 +195,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     private fun updateInAnAccount() {
         binding.apply {
             val user = hashMapOf(
-                "name" to name.text.toString(),
+                "name" to nameTV.text.toString(),
                 "email" to sharedPreferences.getString(USER_EMAIL,""),
                 "phone" to phoneNumber.text.toString(),
                 "course" to chooseCourseAutoTextView.text.toString(),
@@ -220,7 +206,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
             // create db in fireStore
             dbReference.document(firebaseAuth.currentUser!!.uid)
-                .set(user)
+                .update(user as Map<String, Any>)
                 .addOnSuccessListener {
                     Log.d(TAG, "Update in server successful!")
                     progressButton.buttonSuccessfullyFinished("Saved!")
@@ -268,7 +254,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     private fun getUserDataFromSharedPreferences() {
         binding.apply {
 
-            name.text = sharedPreferences.getString(USER_NAME,"")
+            nameTV.text = sharedPreferences.getString(USER_NAME,"")
             if(sharedPreferences.getString(USER_CITY,"") != "") {
                 cityUpperText.text = "${sharedPreferences.getString(USER_CITY, "")}, India"
             }
@@ -301,7 +287,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             var adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
-                roughCourseList
+                COURSE_LIST
             )
 
             // course spinner adapter
@@ -316,7 +302,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
-                roughYearList
+                YEAR_LIST
             )
 
             // course spinner adapter
@@ -404,14 +390,14 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             }
 
             // checking for correct COURSE values
-            for (i in roughCourseList) {
+            for (i in COURSE_LIST) {
                 if (chooseCourseAutoTextView.text.toString() == i) {
                     resultCourse = true
                 }
             }
 
             // checking for correct YEAR values
-            for (i in roughYearList) {
+            for (i in YEAR_LIST) {
                 if (yearAutoTextView.text.toString() == i) {
                     resultYear = true
                 }
@@ -438,6 +424,23 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
         }
 
         return result
+    }
+
+    // option selector for Circle layout profile menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.following -> {
+                findNavController().navigate(R.id.action_myProfile_to_followingFragment)
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // calling own menu for this fragment // (not required any more but not deleted because testing is not done)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.following_menu_item, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
 }

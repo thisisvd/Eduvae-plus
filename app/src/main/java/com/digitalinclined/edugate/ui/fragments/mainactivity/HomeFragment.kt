@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.BANNER_IMAGES_LIST
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.restapi.models.banner.Banner
@@ -49,9 +50,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     // viewModel
     private val viewModel: MainViewModel by activityViewModels()
 
-    // banner Image List
-    private var bannerList = arrayListOf<Banner>()
-
     // enable the options menu in activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +70,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
 
         // fetching banners
-        viewModel.getBanner()
+        if(BANNER_IMAGES_LIST.size > 0) {
+            sliderImageView()
+        } else {
+            viewModel.getBanner()
+        }
 
         // viewModelObservers
         viewModelObservers()
@@ -116,13 +118,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     is Resource.Success -> {
                         response.data?.let { bannerDetails ->
                             if(bannerDetails.status == 200) {
+                                BANNER_IMAGES_LIST.clear()
                                 Log.d(TAG, "${bannerDetails.banners.size}")
                                 for(item in bannerDetails.banners) {
-                                    bannerList.add(item)
-                                    Log.d(TAG, bannerList.size.toString())
+                                    BANNER_IMAGES_LIST.add(item)
                                 }
                             }
-                            if(bannerList.size > 0) {
+                            if(BANNER_IMAGES_LIST.size > 0) {
                                 sliderImageView()
                             }
                         }
@@ -155,7 +157,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             val adapter = SliderImageAdapter()
 
             // setting up banners in the adapter list
-            for(banner in bannerList) {
+            for(banner in BANNER_IMAGES_LIST) {
                 adapter.addItem(banner)
             }
 

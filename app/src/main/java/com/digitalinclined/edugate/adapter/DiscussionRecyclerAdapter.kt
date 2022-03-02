@@ -57,7 +57,7 @@ class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.
             }
 
             // name
-            name.text = data.name
+            nameTV.text = data.name
 
             // follow / unfollow
             followUser.text = data.follow

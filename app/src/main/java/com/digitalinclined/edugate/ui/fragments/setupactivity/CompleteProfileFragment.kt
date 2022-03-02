@@ -6,17 +6,12 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
-import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_EMAIL
-import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_NAME
+import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
+import com.digitalinclined.edugate.constants.Constants.YEAR_LIST
 import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -26,10 +21,6 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
     // TAG
     private val TAG = "CompleteProfileFragment"
-
-    // ROUGH LIST -
-    private var roughCourseList = ArrayList<String>()
-    private var roughYearList = ArrayList<String>()
 
     // viewBinding
     private lateinit var binding: FragmentCompleteProfileBinding
@@ -46,32 +37,17 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCompleteProfileBinding.bind(view)
 
-        // implement ROUGH DATA to spinners
-        roughCourseList.add("BBA")
-        roughCourseList.add("MBA")
-        roughCourseList.add("MCA")
-        roughCourseList.add("B.TECH")
-
-        roughYearList.add("1st Year")
-        roughYearList.add("2nd Year")
-        roughYearList.add("3rd Year")
-        roughYearList.add("4th Year")
-
         // setting adapter method
         adapterForSpinners()
 
         // handle onBack pressed
         onBack()
 
-        // autocomplete checks
-//        autoCompleteTextsListeners()
-
         binding.apply {
 
             // complete sign up button onClick listener
             completeButton.setOnClickListener {
                 if(!isAutoCompleteEmpty() && isEnteredValueTrue()) {
-//                    Toast.makeText(requireContext(),"Done",Toast.LENGTH_SHORT).show()
                     updateAnAccount()
                 }
             }
@@ -108,7 +84,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             var adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
-                roughCourseList
+                COURSE_LIST
             )
 
             // course spinner adapter
@@ -123,7 +99,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
-                roughYearList
+                YEAR_LIST
             )
 
             // course spinner adapter
@@ -169,13 +145,13 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         var resultCourse = false
         var resultYear = false
         binding.apply {
-            for (i in roughCourseList) {
+            for (i in COURSE_LIST) {
                 if (chooseCourseAutoTextView.text.toString() == i) {
                     resultCourse = true
                 }
             }
 
-            for (i in roughYearList) {
+            for (i in YEAR_LIST) {
                 if (yearAutoTextView.text.toString() == i) {
                     resultYear = true
                 }

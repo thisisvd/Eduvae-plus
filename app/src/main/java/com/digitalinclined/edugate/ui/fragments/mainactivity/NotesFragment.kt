@@ -16,6 +16,7 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.NotesRecyclerAdapter
 import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.NOTES_TEMPORARY_LIST
 import com.digitalinclined.edugate.databinding.FragmentNotesBinding
 import com.digitalinclined.edugate.models.SubjectRecyclerData
 import com.digitalinclined.edugate.restapi.models.notes.Note
@@ -52,7 +53,9 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
 
         // calling notes
-        viewModel.getNotes("btech",5)
+        if(NOTES_TEMPORARY_LIST.size <= 0) {
+            viewModel.getNotes("btech", 5)
+        }
 
         // toggle btn toolbar setup
         toggle = (activity as MainActivity).toggle
@@ -62,7 +65,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // getting the name
-        binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
+        binding.nameTV.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
 
         // set up recycler view
         setupRecyclerView()
@@ -94,9 +97,11 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
                         progressBar.visibility = View.GONE
                         response.data?.let { notesDetails ->
                             if (notesDetails.status == 200) {
+                                NOTES_TEMPORARY_LIST.clear()
                                 if (notesDetails.notes.isNotEmpty()) {
+                                    NOTES_TEMPORARY_LIST.addAll(notesDetails.notes)
                                     Log.d(TAG, "${notesDetails.notes.size}")
-                                    recyclerAdapter.differ.submitList(notesDetails.notes)
+                                    recyclerAdapter.differ.submitList(NOTES_TEMPORARY_LIST)
                                 }
                             }
                         }
@@ -114,38 +119,6 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
         }
     }
-
-
-//    // saving file to external storage
-//    fun saveToExternalStorage(note: Note) {
-//        val fullPath = Environment.getExternalStorageDirectory().absolutePath + "/Edugate/notes"
-//
-//        var byteArray: ByteArray = Base64.decode(note.notesPDF, Base64.NO_WRAP)
-//
-//        Log.d("TAGU", Environment.getExternalStorageDirectory().absolutePath.toString())
-//
-//        // Date formatter
-//        var format = SimpleDateFormat("dd_mm_yyyy_hh_mm_")
-//        Log.d(TAG,"${format.format(Date())}${note.notesName}")
-//
-//        try {
-//            var dir = File(fullPath);
-//            if (!dir.exists()) {
-//                dir.mkdirs()
-//            }
-//            var file = File(fullPath, "${format.format(Date())}${note.notesName}")
-//            if (file.exists()) {
-//                file.delete()
-//            }
-//            file.createNewFile()
-//            var fOut = FileOutputStream(file)
-//            fOut.write(byteArray)
-//            fOut.flush()
-//            fOut.close()
-//        } catch (e: Exception) {
-//            Log.e("saveToExternalStorage()", e.message.toString())
-//        }
-//    }
 
     // Recycler view setup
     private fun setupRecyclerView(){

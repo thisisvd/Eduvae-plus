@@ -1,5 +1,9 @@
 package com.digitalinclined.edugate.constants
 
+import com.digitalinclined.edugate.models.UserFollowingProfile
+import com.digitalinclined.edugate.restapi.models.banner.Banner
+import com.digitalinclined.edugate.restapi.models.notes.Note
+
 object Constants {
 
     // API
@@ -14,6 +18,14 @@ object Constants {
     // Temporary memory for containing create user info till successful created account
     var TEMP_CREATE_USER_NAME: String? = null
     var TEMP_CREATE_USER_EMAIL: String? = null
+
+    // COURSE LIST AND YEAR LIST FOR STUDENT
+    val COURSE_LIST = arrayListOf(
+        "BBA", "MBA", "MCA", "B.TECH"
+    )
+    val YEAR_LIST = arrayListOf(
+        "1st Year", "2nd Year", "3rd Year", "4th Year"
+    )
 
     // Indian City CONSTANT DATA
     var INDIAN_CITY_DATA = arrayListOf<String>()
@@ -30,5 +42,14 @@ object Constants {
 
     // TEMP CONSTANT
     var BASE_64_STRING = ""
+
+    // Constant TEMP ARRAYLIST for FOLLOWING USERS ID
+    var FOLLOWING_USER_ID = arrayListOf<String>()
+
+    // Constant TEMP list for BANNER images API
+    var BANNER_IMAGES_LIST = arrayListOf<Banner>()
+
+    // Constant TEMP list for NOTES images API
+    var NOTES_TEMPORARY_LIST = arrayListOf<Note>()
 
 }

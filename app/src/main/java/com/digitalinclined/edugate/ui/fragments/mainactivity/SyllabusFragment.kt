@@ -44,7 +44,7 @@ class SyllabusFragment : Fragment(R.layout.fragment_syllabus) {
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // getting the name
-        binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
+        binding.nameTV.text = (requireActivity() as MainActivity).sharedPreferences.getString(Constants.USER_NAME,"")
 
         // set up recycler view
         setupRecyclerView()

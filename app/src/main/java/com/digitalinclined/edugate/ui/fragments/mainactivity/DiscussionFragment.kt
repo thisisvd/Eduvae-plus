@@ -148,7 +148,7 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.following -> {
-                Toast.makeText(requireContext(),"FollowClicked!",Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_discussionFragment_to_followingFragment)
                 true
             }
         }

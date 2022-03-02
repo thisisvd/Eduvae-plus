@@ -67,7 +67,7 @@
             app:errorTextColor="@color/red">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/name"
+                android:id="@+id/nameTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
@@ -91,16 +91,6 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/titillium_web"
-            app:errorEnabled="true"
-            android:hint=" "
-            app:errorTextColor="@color/red">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
@@ -114,6 +104,16 @@
             android:textColor="@color/text_color"
             android:textColorHint="@color/text_color"
             android:textSize="@dimen/_14sdp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_web"
+            app:errorEnabled="true"
+            android:hint=" "
+            app:errorTextColor="@color/red">
 
         </com.google.android.material.textfield.TextInputLayout>
 

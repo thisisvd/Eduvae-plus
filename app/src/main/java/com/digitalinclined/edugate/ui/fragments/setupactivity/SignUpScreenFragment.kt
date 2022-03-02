@@ -50,7 +50,7 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
                 }
 
                 // Setting up the user detail's to temporary memory
-                TEMP_CREATE_USER_NAME = name.text.toString()
+                TEMP_CREATE_USER_NAME = nameTV.text.toString()
                 TEMP_CREATE_USER_EMAIL = email.text.toString()
 
                 // navigate to OTP Fragment with carry data in bundle
@@ -72,7 +72,7 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
         binding.apply {
 
-            if (name.text.isNullOrEmpty()) {
+            if (nameTV.text.isNullOrEmpty()) {
                 isTextEmpty = true
                 nameLayout.error = "*Name can't be empty!"
             }
@@ -99,7 +99,7 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
     private fun isTextEmptyListeners() {
         binding.apply {
 
-            name.addTextChangedListener {
+            nameTV.addTextChangedListener {
                 if (it.isNullOrEmpty()) {
                     nameLayout.error = "*Name can't be empty!"
                 } else {
@@ -127,15 +127,6 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
 
     // handle onBack pressed
     private fun onBack() {
-//        requireActivity()
-//            .onBackPressedDispatcher
-//            .addCallback(requireActivity(), object : OnBackPressedCallback(true) {
-//                override fun handleOnBackPressed() {
-//                    findNavController().navigate(R.id.action_signUpScreenFragment_to_onBoardingScreenFragment)
-//                }
-//            }
-//            )
-
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
             findNavController().popBackStack(R.id.onBoardingScreenFragment,false)

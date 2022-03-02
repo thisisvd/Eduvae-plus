@@ -28,7 +28,6 @@
                 android:text="Toolbar"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:layout_marginRight="@dimen/_15sdp"
                 android:fontFamily="@font/titillium_web"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"

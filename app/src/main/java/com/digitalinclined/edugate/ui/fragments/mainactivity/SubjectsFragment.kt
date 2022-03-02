@@ -32,7 +32,7 @@ class SubjectsFragment : Fragment(R.layout.fragment_subjects) {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Subjects"
 
         // getting the name
-        binding.name.text = (requireActivity() as MainActivity).sharedPreferences.getString(
+        binding.nameTV.text = (requireActivity() as MainActivity).sharedPreferences.getString(
             Constants.USER_NAME,"")
 
         // set up recycler view
