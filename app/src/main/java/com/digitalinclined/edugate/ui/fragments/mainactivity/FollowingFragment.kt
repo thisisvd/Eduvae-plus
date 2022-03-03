@@ -13,16 +13,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.FollowingRecyclerAdapter
-import com.digitalinclined.edugate.adapter.NotesRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
 import com.digitalinclined.edugate.databinding.FragmentFollowingBinding
-import com.digitalinclined.edugate.databinding.FragmentPDFBinding
 import com.digitalinclined.edugate.models.UserFollowingProfile
-import com.digitalinclined.edugate.models.UserProfile
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +41,9 @@ class FollowingFragment : Fragment() {
 
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
+
+    // Firebase
+    private var firebaseAuth = Firebase.auth
 
     // firebase db
     private val db = Firebase.firestore
@@ -80,29 +82,32 @@ class FollowingFragment : Fragment() {
     // viewModel Observers
     private fun viewModelObservers() {
 
-        Log.d(TAG,FOLLOWING_USER_ID.size.toString())
-
-        // get all users from list
-        if(FOLLOWING_USER_ID.size > 0) {
-            followedUsersList.clear()
-            for(userID in FOLLOWING_USER_ID) {
-               fetchUsersFromFirebase(userID)
+        // following users list observer
+        FOLLOWING_USER_ID.observe(viewLifecycleOwner) { users ->
+            if(users.isNotEmpty()) {
+                Log.d(TAG,"Triggered list size : ${users.size}")
+                followedUsersList.clear()
+                for (userID in users) {
+                    fetchFollowingUsersFromFirebase(userID)
+                }
             }
         }
 
     }
 
-    // fetch users from firebase
-    private fun fetchUsersFromFirebase(userID: String) {
-        lifecycleScope.launch(Dispatchers.IO) {
+    // fetch particular users from firebase by using their UID
+    private fun fetchFollowingUsersFromFirebase(userID: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
             dbReference.document(userID).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         val userProfile = document.toObject(UserFollowingProfile::class.java)!!
+                        userProfile.userID = userID
                         Log.d(TAG, userProfile!!.name.toString())
                         if (userProfile!!.name != null) {
                             followedUsersList.add(userProfile!!)
                             recyclerAdapter.differ.submitList(followedUsersList)
+                            recyclerAdapter.notifyDataSetChanged()
                         }
                     } else {
                         Log.d(TAG, "No such document")
@@ -110,6 +115,22 @@ class FollowingFragment : Fragment() {
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
+                }
+        }
+        hideProgressBar()
+    }
+
+    // add following IDs
+    private fun deleteFollowingUserIDs(userFirebaseID: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            dbReference.document(firebaseAuth.currentUser!!.uid)
+                .update("following", FieldValue.arrayRemove(userFirebaseID))
+                .addOnSuccessListener {
+                    Log.d(TAG, "User Followed Successfully!")
+                    (activity as MainActivity).fetchFirebaseUserData()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error in following user Successfully", e)
                 }
         }
     }
@@ -123,9 +144,37 @@ class FollowingFragment : Fragment() {
                 layoutManager = LinearLayoutManager(activity)
             }
         }
-        recyclerAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(),"Unfollowed!",Toast.LENGTH_SHORT).show()
+
+        // on click listener
+        recyclerAdapter.setOnItemClickListener { userProfile ->
+            if(!userProfile.userID.isNullOrEmpty()) {
+                showAlertForUnFollowUser(userProfile.name!!.split(" ")[0], userProfile.userID!!)
+            }
         }
+    }
+
+    // show alert before deletion of users
+    private fun showAlertForUnFollowUser(name: String, userID: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Unfollow $name!")
+            .setMessage("Are you sure you want to unfollow $name from your following list?")
+            .setPositiveButton("Yes") { _, _ ->
+                deleteFollowingUserIDs(userID!!)
+                showProgressBar()
+            }
+            .setNegativeButton("No", null)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
+    }
+
+    // show progress bar
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    // hide progress bar
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
     // on view destroy

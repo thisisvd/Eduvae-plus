@@ -179,9 +179,8 @@ class MainActivity : AppCompatActivity() {
 
                             // add following users
                             if (userProfile.following != null) {
-                                FOLLOWING_USER_ID.clear()
                                 Log.d(TAG, "${userProfile.following!!.size}")
-                                FOLLOWING_USER_ID.addAll(userProfile.following)
+                                FOLLOWING_USER_ID.postValue(userProfile.following)
                             }
 
                             if (userProfile != null) {

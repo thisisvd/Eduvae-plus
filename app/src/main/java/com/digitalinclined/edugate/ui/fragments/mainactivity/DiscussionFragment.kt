@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +20,12 @@ import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
 
@@ -69,7 +73,7 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
 
             // view model init
             viewModelObservers()
-            
+
         }
 
     }
@@ -121,25 +125,27 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     }
 
     // add following IDs
-    private fun addFollowingIDs() {
-        dbReference.document(firebaseAuth.currentUser!!.uid)
-            .update("following", arrayListOf("C001","C003","C002"))
-            .addOnSuccessListener { Log.d(TAG, "Image Url uploaded Successfully!") }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error in uploaded url Successfully", e)
-            }
+    private fun addFollowingIDs(userFirebaseID: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            dbReference.document(firebaseAuth.currentUser!!.uid)
+                .update("following", FieldValue.arrayUnion(userFirebaseID))
+                .addOnSuccessListener {
+                    Log.d(TAG, "User Followed Successfully!")
+                    (activity as MainActivity).fetchFirebaseUserData()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error in following user Successfully", e)
+                }
+        }
     }
 
     // Recycler view setup
     private fun setupRecyclerView(){
         recyclerAdapter = DiscussionRecyclerAdapter()
         binding.apply {
-
-            val linearLayoutManager = LinearLayoutManager(activity)
-
             recyclerView.apply {
                 adapter = recyclerAdapter
-                layoutManager = linearLayoutManager
+                layoutManager = LinearLayoutManager(activity)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.constants
 
+import androidx.lifecycle.MutableLiveData
 import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.digitalinclined.edugate.restapi.models.notes.Note
@@ -44,7 +45,7 @@ object Constants {
     var BASE_64_STRING = ""
 
     // Constant TEMP ARRAYLIST for FOLLOWING USERS ID
-    var FOLLOWING_USER_ID = arrayListOf<String>()
+    var FOLLOWING_USER_ID = MutableLiveData<ArrayList<String>>()
 
     // Constant TEMP list for BANNER images API
     var BANNER_IMAGES_LIST = arrayListOf<Banner>()
