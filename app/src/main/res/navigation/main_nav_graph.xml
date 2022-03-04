@@ -153,5 +153,9 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.FollowingFragment"
         android:label="fragment_following"
         tools:layout="@layout/fragment_following" />
+    <fragment
+        android:id="@+id/completeProfileFragment2"
+        android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.CompleteProfileFragment"
+        android:label="CompleteProfileFragment" />
 
 </navigation>

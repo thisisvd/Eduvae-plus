@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -203,6 +204,15 @@ class MainActivity : AppCompatActivity() {
                                     "Logged in as ${userProfile.name}!",
                                     Snackbar.LENGTH_SHORT
                                 ).show()
+                            }
+
+                            if(userProfile.course.isNullOrEmpty() || userProfile.year.isNullOrEmpty()) {
+                                navHostFragment.navController.navigate(R.id.completeProfileFragment2)
+                                binding.apply {
+                                    toolbar.visibility = View.GONE
+                                    viewTop.visibility = View.GONE
+                                }
+
                             }
 
                         } else {

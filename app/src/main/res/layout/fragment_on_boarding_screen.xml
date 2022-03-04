@@ -51,7 +51,7 @@
 
         <LinearLayout
             android:id="@+id/googleVerification"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_15sdp"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:text="Login with google"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="@dimen/_18sdp"
                 android:textColor="#3F4542"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
