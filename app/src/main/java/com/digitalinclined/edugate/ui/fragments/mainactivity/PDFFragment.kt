@@ -1,13 +1,7 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.OpenableColumns
 import android.util.Base64
 import android.util.Log
 import android.view.*
@@ -15,11 +9,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.digitalinclined.edugate.Permissions
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants.BASE_64_STRING
 import com.digitalinclined.edugate.databinding.FragmentPDFBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import java.io.*
@@ -123,19 +115,17 @@ class PDFFragment : Fragment() {
     // saving file to external storage
     private fun saveToExternalStorage(pdfName: String, stringBase64: String, fragmentName: String) {
         // full storage path
-        val fullPath = Environment.getExternalStorageDirectory().absolutePath + "/Edugate/${fragmentName}"
+        val fullPath = requireContext().getExternalFilesDir(null)!!.path+ "/Edugate/${fragmentName}"
 
         // decode base64 string to byte array
         var byteArray: ByteArray = Base64.decode(stringBase64, Base64.NO_WRAP)
-
-        Log.d(TAG, Environment.getExternalStorageDirectory().absolutePath.toString())
 
         // Date formatter
         var format = SimpleDateFormat("dd_MM_yyyy_")
         Log.d(TAG,"${format.format(Date(System.currentTimeMillis()))}${pdfName}")
 
         try {
-            var dir = File(fullPath);
+            var dir = File(fullPath)
             if (!dir.exists()) {
                 dir.mkdirs()
             }
@@ -150,6 +140,7 @@ class PDFFragment : Fragment() {
             fOut.close()
         } catch (e: Exception) {
             Log.e(TAG, e.message.toString())
+            e.printStackTrace()
         }
     }
 
@@ -162,9 +153,13 @@ class PDFFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.download -> {
-                Toast.makeText(requireContext(),"Pdf Downloaded Successfully!", Toast.LENGTH_SHORT).show()
                 if(pdfName != null && fragmentPdfName != null && stringBase64 != null) {
-                    saveToExternalStorage(pdfName!!,stringBase64!!,fragmentName!!)
+                    if(Permissions().hasStoragePermissions(requireContext(),requireActivity())){
+                        saveToExternalStorage(pdfName!!,stringBase64!!,fragmentName!!)
+                        Toast.makeText(requireContext(),"Pdf Downloaded Successfully!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(),"Storage permission denied!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

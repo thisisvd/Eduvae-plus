@@ -10,6 +10,9 @@ object Constants {
     // API
     const val BASE_URL = "http://64.227.161.183/"
 
+    // PERMISSION
+    const val STORAGE_REQUEST_CODE = 101
+
     // Splash Screen Constant
     var IS_SPLASH_SCREEN_FIRST_SHOWED = true
 

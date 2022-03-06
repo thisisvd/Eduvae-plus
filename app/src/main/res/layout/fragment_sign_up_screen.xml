@@ -91,20 +91,6 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/_13sdp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/edittext_stroke"
-            android:fontFamily="@font/titillium_web"
-            android:hint="Your email"
-            android:inputType="textEmailAddress"
-            android:padding="@dimen/_13sdp"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/_14sdp" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -114,6 +100,20 @@
             app:errorEnabled="true"
             android:hint=" "
             app:errorTextColor="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edittext_stroke"
+                android:fontFamily="@font/titillium_web"
+                android:hint="Your email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
