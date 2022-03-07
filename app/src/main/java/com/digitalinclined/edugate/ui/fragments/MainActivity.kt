@@ -37,6 +37,7 @@ import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE
 import com.digitalinclined.edugate.constants.Constants.USER_PROFILE_PHOTO_LINK
+import com.digitalinclined.edugate.constants.Constants.USER_SEMESTER
 import com.digitalinclined.edugate.constants.Constants.USER_YEAR
 import com.digitalinclined.edugate.databinding.ActivityMainBinding
 import com.digitalinclined.edugate.models.UserProfile
@@ -193,6 +194,7 @@ class MainActivity : AppCompatActivity() {
                                     .putString(USER_PHONE, userProfile.phone)
                                     .putString(USER_COURSE, userProfile.course)
                                     .putString(USER_YEAR, userProfile.year)
+                                    .putString(USER_SEMESTER,userProfile.semester)
                                     .putString(USER_CITY, userProfile.city)
                                     .putString(
                                         USER_PROFILE_PHOTO_LINK,

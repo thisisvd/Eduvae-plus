@@ -9,8 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.digitalinclined.edugate.models.NotesMessage
 import com.digitalinclined.edugate.restapi.APIClient
-import com.digitalinclined.edugate.restapi.APIInterface
 import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
 import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
 import com.digitalinclined.edugate.ui.viewmodel.repository.Repository
@@ -34,6 +34,9 @@ class MainViewModel(
 
     // notes details
     var getNotesDetail: MutableLiveData<Resource<NotesResponse>> = MutableLiveData()
+
+    // add notes
+    var addNotesDetail: MutableLiveData<Resource<NotesMessage>> = MutableLiveData()
 
     init {
         repository = Repository(APIClient.api)
@@ -75,13 +78,13 @@ class MainViewModel(
     }
 
     // get banners from api
-    fun getNotes(course: String, semister: Int) = viewModelScope.launch {
+    fun getNotes(course: String, semester: Int) = viewModelScope.launch {
         getNotesDetail.value = Resource.Loading()
 
         if(hasInternetConnection()) {
             // Actually processing Data
             try {
-                val response = repository.getNotes(course,semister)
+                val response = repository.getNotes(course,semester)
                 getNotesDetail.value = handleNotesResponse(response)
             } catch (e: Exception) {
                 getNotesDetail.value = Resource.Error("404 Not Found!")
@@ -93,6 +96,39 @@ class MainViewModel(
 
     // handling error responses
     private fun handleNotesResponse(response: Response<NotesResponse>): Resource<NotesResponse>? {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                Resource.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                val notes = response.body()
+                Resource.Success(notes!!)
+            }
+            else -> {
+                Resource.Error(response.message())
+            }
+        }
+    }
+
+    // get banners from api
+    fun addNotes(course: String, semester: String, filename: String, pdfFile: MainViewModel.PDFFileDataClass) = viewModelScope.launch {
+        addNotesDetail.value = Resource.Loading()
+
+        if(hasInternetConnection()) {
+            // Actually processing Data
+            try {
+                val response = repository.addNotes(course,semester,filename, pdfFile)
+                addNotesDetail.value = handleAddNotesResponse(response)
+            } catch (e: Exception) {
+                addNotesDetail.value = Resource.Error("404 Not Found!")
+            }
+        } else {
+            addNotesDetail.value = Resource.Error("No Internet Connection!")
+        }
+    }
+
+    // handling error responses
+    private fun handleAddNotesResponse(response: Response<NotesMessage>): Resource<NotesMessage>? {
         return when {
             response.message().toString().contains("timeout") -> {
                 Resource.Error("Timeout")
@@ -122,7 +158,9 @@ class MainViewModel(
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }
-
     }
+
+    /** INNER CLASS FOR APIS */
+    inner class PDFFileDataClass(var file: String)
 
 }

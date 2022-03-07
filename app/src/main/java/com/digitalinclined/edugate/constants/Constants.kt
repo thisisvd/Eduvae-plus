@@ -30,6 +30,9 @@ object Constants {
     val YEAR_LIST = arrayListOf(
         "1st Year", "2nd Year", "3rd Year", "4th Year"
     )
+    val SEMESTER_LIST = arrayListOf(
+        "1", "2", "3", "4", "5", "6", "7", "8"
+    )
 
     // Indian City CONSTANT DATA
     var INDIAN_CITY_DATA = arrayListOf<String>()
@@ -40,6 +43,7 @@ object Constants {
     var USER_EMAIL = "USER_EMAIL"
     var USER_PHONE = "USER_PHONE"
     var USER_COURSE = "USER_COURSE"
+    var USER_SEMESTER = "USER_SEMESTER"
     var USER_YEAR = "USER_YEAR"
     var USER_CITY = "USER_CITY"
     var USER_PROFILE_PHOTO_LINK = "USER_PROFILE_PHOTO_LINK"

@@ -17,7 +17,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -139,8 +141,8 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
                 val user = firebaseAuth.currentUser
 
                 if(authResult.additionalUserInfo!!.isNewUser){
-                    Toast.makeText(requireContext(), "News User : ${user?.displayName}", Toast.LENGTH_SHORT).show()
-                    createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+                    dialog.dismiss()
+                    dialogForNewUser(user)
                 } else {
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
@@ -151,6 +153,28 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
                 Log.w(TAG_GOOGLE_SIGN_IN, "signInWithCredential:failure", exception)
                 dialog.dismiss()
             }
+    }
+
+    // dialog to check for account
+    private fun dialogForNewUser(user: FirebaseUser?){
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setTitle("Account don't Exists!")
+                .setMessage("No Account exists with this email. " +
+                        "Do you want to create a new account with this email?")
+            setPositiveButton("Create") { _,_ ->
+                dialog.show()
+                createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+            }
+            setNegativeButton("Go back") { _,_ ->
+                // signing out the authenticated user via (LOGIN)
+                firebaseAuth.currentUser!!.delete().addOnSuccessListener {
+                    Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
+                }
+                firebaseAuth.signOut()
+                findNavController().navigate(R.id.onBoardingScreenFragment)
+            }
+            setCancelable(false)
+        }.show()
     }
 
     // create a new account in fireStore for users [SIGN-UP CODE]
@@ -164,6 +188,7 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
             "course" to "",
             "year" to "",
             "city" to "",
+            "semester" to "",
             "profilephotolink" to (photoUrlLink ?: ""),
             "following" to arrayListOf<String>()
         )

@@ -166,6 +166,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                 firebaseAuth.currentUser!!.delete().addOnSuccessListener {
                     Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
                 }
+                firebaseAuth.signOut()
                 findNavController().navigate(R.id.onBoardingScreenFragment)
             }
             setCancelable(false)
@@ -183,6 +184,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             "course" to "",
             "year" to "",
             "city" to "",
+            "semester" to "",
             "profilephotolink" to (photoUrlLink ?: ""),
             "following" to arrayListOf<String>()
         )

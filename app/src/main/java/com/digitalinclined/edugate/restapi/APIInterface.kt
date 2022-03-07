@@ -3,6 +3,7 @@ package com.digitalinclined.edugate.restapi
 import com.digitalinclined.edugate.models.NotesMessage
 import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
 import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
+import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -24,13 +25,12 @@ interface APIInterface {
     ) : Response<NotesResponse>
 
     // add notes to server
-    @FormUrlEncoded
-    @POST("addnotes")
+    @POST("addnotesmbl")
     suspend fun addNotes(
-        @Field("file") encodedPDF: ByteArray,
-        @Field("course") course: String,
-        @Field("sem") semester: String,
-        @Field("filename") filename: String,
-    ): Call<NotesMessage>
+        @Query("course") course: String,
+        @Query("sem") semester: String,
+        @Query("filename") filename: String,
+        @Body pdfFile: MainViewModel.PDFFileDataClass
+    ): Response<NotesMessage>
 
 }

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
+import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST
 import com.digitalinclined.edugate.constants.Constants.YEAR_LIST
 import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -61,6 +62,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             val user = hashMapOf(
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
+                "semester" to semesterAutoTextView.text.toString()
             )
 
             // create db in fireStore
@@ -110,6 +112,21 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 //                setDropDownBackgroundResource(R.color.button_gradient_end_color);
             }
 
+            // adapter for year list
+            adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_list_view,
+                SEMESTER_LIST
+            )
+
+            // course spinner adapter
+            semesterAutoTextView.apply {
+                setAdapter(
+                    adapter
+                )
+//                setDropDownBackgroundResource(R.color.button_gradient_end_color);
+            }
+
         }
     }
 
@@ -124,6 +141,10 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             }
 
             if(yearAutoTextView.text.isNullOrEmpty()) {
+                result = true
+            }
+
+            if(semesterAutoTextView.text.isNullOrEmpty()) {
                 result = true
             }
         }
@@ -144,6 +165,8 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
         var result = true
         var resultCourse = false
         var resultYear = false
+        var resultSemester = false
+
         binding.apply {
             for (i in COURSE_LIST) {
                 if (chooseCourseAutoTextView.text.toString() == i) {
@@ -154,6 +177,12 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             for (i in YEAR_LIST) {
                 if (yearAutoTextView.text.toString() == i) {
                     resultYear = true
+                }
+            }
+
+            for (i in SEMESTER_LIST) {
+                if (semesterAutoTextView.text.toString() == i) {
+                    resultSemester = true
                 }
             }
 
@@ -168,6 +197,15 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
             if(!resultYear) {
                 yearAutoTextView.setText("")
+                Snackbar.make(binding.root ,
+                    "Please enter all fields!",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                result = false
+            }
+
+            if(!resultSemester) {
+                semesterAutoTextView.setText("")
                 Snackbar.make(binding.root ,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT

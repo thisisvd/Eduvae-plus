@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/button_gradient_end_color"
             android:padding="@dimen/_8sdp"
-            android:text="Upload"
+            android:text="Select File"
             android:layout_marginTop="@dimen/_15sdp"
             android:textSize="@dimen/_17sdp"
             app:cornerRadius="@dimen/_14sdp"

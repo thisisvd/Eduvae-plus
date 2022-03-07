@@ -23,15 +23,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ProgressButton
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
+import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE
 import com.digitalinclined.edugate.constants.Constants.USER_PROFILE_PHOTO_LINK
+import com.digitalinclined.edugate.constants.Constants.USER_SEMESTER
 import com.digitalinclined.edugate.constants.Constants.USER_YEAR
 import com.digitalinclined.edugate.constants.Constants.YEAR_LIST
 import com.digitalinclined.edugate.databinding.FragmentMyprofileBinding
@@ -120,6 +123,9 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                     progressButton.buttonActivated("Saving...")
                     if (isValuesUpdated()) {
                         updateInAnAccount()
+                    } else {
+                        progressButton.buttonActivated("Save Changes")
+                        Toast.makeText(requireContext(),"Error occurred please check for values again!",Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -201,6 +207,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
                 "city" to cityAutoTextView.text.toString(),
+                "semester" to semesterAutoTextView.text.toString(),
                 "profilephotolink" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"")
             )
 
@@ -242,6 +249,10 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 result = true
             }
 
+            if (semesterAutoTextView.text.toString() != sharedPreferences.getString(USER_SEMESTER, "")) {
+                result = true
+            }
+
             // ------ checks for image and name left ------
             // here!!!
 
@@ -262,6 +273,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             chooseCourseAutoTextView.setText(sharedPreferences.getString(USER_COURSE, ""))
             cityAutoTextView.setText(sharedPreferences.getString(USER_CITY, ""))
             yearAutoTextView.setText(sharedPreferences.getString(USER_YEAR, ""))
+            semesterAutoTextView.setText(sharedPreferences.getString(USER_SEMESTER, ""))
 
             // setting profile image
             val requestOptions = RequestOptions()
@@ -327,6 +339,19 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 //                setDropDownBackgroundResource(R.color.button_gradient_end_color);
             }
 
+            adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.drop_down_list_view,
+                SEMESTER_LIST
+            )
+
+            // city spinner adapter
+            semesterAutoTextView.apply {
+                setAdapter(
+                    adapter
+                )
+            }
+
         }
     }
 
@@ -352,6 +377,10 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 isTextEmpty = true
             }
 
+            if(semesterAutoTextView.text.isNullOrEmpty()) {
+                isTextEmpty = true
+            }
+
             if(isTextEmpty) {
                 // Snack bar on empty OTP
                 Snackbar.make(binding.root ,
@@ -370,6 +399,8 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
         var result = true
         var resultCourse = false
         var resultYear = false
+        var resultSemester = false
+
         binding.apply {
 
             // Activate the edittext listener's
@@ -403,6 +434,13 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 }
             }
 
+            // checking for correct SEMESTER values
+            for (i in SEMESTER_LIST) {
+                if (semesterAutoTextView.text.toString() == i) {
+                    resultSemester = true
+                }
+            }
+
             if(!resultCourse) {
                 chooseCourseAutoTextView.setText("")
                 Snackbar.make(binding.root ,
@@ -414,6 +452,15 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
             if(!resultYear) {
                 yearAutoTextView.setText("")
+                Snackbar.make(binding.root ,
+                    "Please enter all fields!",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                result = false
+            }
+
+            if(!resultSemester) {
+                semesterAutoTextView.setText("")
                 Snackbar.make(binding.root ,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT

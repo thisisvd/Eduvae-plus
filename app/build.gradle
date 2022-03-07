@@ -111,6 +111,4 @@ dependencies {
     // youtube library Implementation
     implementation files('libs\\YouTubeAndroidPlayerApi.jar')
 
-    implementation 'com.koushikdutta.ion:ion:3.0.8'
-
 }

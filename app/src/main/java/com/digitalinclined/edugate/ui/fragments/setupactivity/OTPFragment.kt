@@ -212,6 +212,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 firebaseAuth.currentUser!!.delete().addOnSuccessListener {
                     Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
                 }
+                firebaseAuth.signOut()
                 findNavController().navigate(R.id.onBoardingScreenFragment)
             }
             setCancelable(false)
@@ -229,6 +230,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             "course" to "",
             "year" to "",
             "city" to "",
+            "semester" to "",
             "profilephotolink" to (photoUrlLink ?: ""),
             "following" to arrayListOf<String>()
         )
@@ -333,6 +335,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             .addOnFailureListener { e ->
                 // login failed
                 progressButton.buttonFailed("Verify")
+                Toast.makeText(requireContext(),"Wrong OTP Code!", Toast.LENGTH_SHORT).show()
                 Log.d(TAG,"${e.message}")
             }
     }
@@ -419,6 +422,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             "course" to "",
             "year" to "",
             "city" to "",
+            "semester" to "",
             "profilephotolink" to "",
             "following" to arrayListOf<String>()
         )

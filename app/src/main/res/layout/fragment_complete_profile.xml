@@ -134,6 +134,50 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:fontFamily="@font/titillium_web_light"
+            android:text="Semester"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/_13sdp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/semesterAutoTextViewLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:hintEnabled="false"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/edittext_stroke"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:boxStrokeColor="@color/transparent"
+            app:endIconTint="@color/edittext_stroke_color"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp" >
+
+            <AutoCompleteTextView
+                android:id="@+id/semesterAutoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_web"
+                android:hint="Choose Semester"
+                android:textColorHint="@color/text_color"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_14sdp"
+                android:inputType="textCapWords"
+                android:padding="@dimen/_13sdp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
