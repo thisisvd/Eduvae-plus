@@ -3,6 +3,7 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -15,12 +16,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
+import com.digitalinclined.edugate.constants.Constants.USER_COURSE
+import com.digitalinclined.edugate.constants.Constants.USER_SEMESTER
 import com.digitalinclined.edugate.databinding.FragmentUploadVideoBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
+import com.digitalinclined.edugate.utils.Resource
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
 
@@ -34,6 +41,24 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
 
     // toggle
     lateinit var toggle: ActionBarDrawerToggle
+
+    // Shared Preference
+    private lateinit var sharedPreferences: SharedPreferences
+
+    // course variable
+    private var course: String? = ""
+
+    // semester variable
+    private var semester: String? = ""
+
+    // pdf filename
+    private var filename: String? = ""
+
+    // base64 string filename
+    private var base64String: String? = ""
+
+    // viewModel
+    private val viewModel: MainViewModel by activityViewModels()
 
     // arrayList
     private val uploadList = arrayListOf("Question Paper", "Notes", "Sample Paper")
@@ -51,6 +76,11 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
             // change the title bar
             (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Upload A Video"
 
+            // shared preferences
+            sharedPreferences = (activity as MainActivity).sharedPreferences
+            course = sharedPreferences.getString(USER_COURSE,"")!!.lowercase()
+            semester = sharedPreferences.getString(USER_SEMESTER,"")
+
             // toggle btn toolbar setup
             toggle = (activity as MainActivity).toggle
             toggle.isDrawerIndicatorEnabled = false
@@ -61,17 +91,54 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
             // adapter init
             adapterForSpinners()
 
+            // view Model Observers
+            viewModelObservers()
+
             // upload
             upload.setOnClickListener {
-                Toast.makeText(requireContext(),"Will open gallery and select pdf to upload",Toast.LENGTH_SHORT).show()
                 if(upload.text == "Upload!") {
-
-                } else {
+                    if (!course.isNullOrEmpty() && !semester.isNullOrEmpty()) {
+                        viewModel.addNotes(course!!,semester!!,filename!!,base64String!!)
+                        progressBar.visibility = View.VISIBLE
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Please add an appropriate course and semester in your profile!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }else {
                     selectPDFFromStorage()
                 }
             }
 
         }
+    }
+
+    // viewModel observers
+    private fun viewModelObservers() {
+
+        // notes added view model observer
+        viewModel.addNotesDetail.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { message ->
+                        if(message.message == "added") {
+                            findNavController().popBackStack()
+                            Toast.makeText(requireContext(),"Successfully uploaded!",Toast.LENGTH_SHORT).show()
+                            binding.progressBar.visibility = View.INVISIBLE
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    Log.d(TAG, "Error occurred while loading data! ${response.message}")
+                }
+                is Resource.Loading -> {
+                    Log.d(TAG, "Loading!")
+                }
+            }
+        }
+
     }
 
     // select pdf from storage
@@ -91,11 +158,16 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
+
+            // refreshing file name and base64 string
+            filename = ""
+            base64String = ""
+
             val selectedPdfFromStorage = data.data
 
             // file name from uri
-            val fileName = queryName(requireContext(),selectedPdfFromStorage!!)
-            Toast.makeText(requireContext(),fileName.toString(),Toast.LENGTH_SHORT).show()
+            val fileNameTemp = queryName(requireContext(),selectedPdfFromStorage!!)
+            Toast.makeText(requireContext(),fileNameTemp.toString(),Toast.LENGTH_SHORT).show()
 
             // get file
             try {
@@ -106,7 +178,22 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
                 // encoding file to base64 string
                 var getBase64String = Base64.encodeToString(inputData, Base64.NO_WRAP)
 
-                Log.d(TAG,"$fileName : $getBase64String")
+                if(!fileNameTemp.isNullOrEmpty()) {
+                    filename = fileNameTemp
+                }
+
+                if(!getBase64String.isNullOrEmpty()) {
+                    base64String = getBase64String
+                }
+
+                Log.d(TAG,"$fileNameTemp : $getBase64String")
+
+                if(!filename.isNullOrEmpty() && !base64String.isNullOrEmpty()) {
+                    binding.apply {
+                        upload.text = "Upload!"
+                        questionTimeMarkTV.text = "File Attached : ${if(filename!!.length > 33) "${filename!!.take(33)}..." else filename}"
+                    }
+                }
 
             } catch (e : Exception) {
                 e.printStackTrace()

@@ -1,7 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
-import android.os.Environment
 import android.util.Base64
 import android.util.Log
 import android.view.*
@@ -10,7 +9,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.digitalinclined.edugate.Permissions
+import com.digitalinclined.edugate.utils.Permissions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentPDFBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -72,27 +71,30 @@ class PDFFragment : Fragment() {
             if(previousFragment != null) {
                 when (previousFragment) {
                     "SyllabusFragment" -> {
+                        Toast.makeText(requireContext(),"This is vd!",Toast.LENGTH_SHORT).show()
                     }
                     "NotesFragment" -> {
                         // change the title bar
                         val note = args.notes
-                        if (note.notesPDF != null) {
-                            // setting toolbar name
-                            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
-                                note.notesName
+                        if(note != null) {
+                            if (note.notesPDF != null) {
+                                // setting toolbar name
+                                (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+                                    note.notesName
 
-                            // set up PDF BASE VARIABLES INIT
-                            pdfName = note.notesName
-                            stringBase64 = note.notesPDF
-                            fragmentName = "Notes"
+                                // set up PDF BASE VARIABLES INIT
+                                pdfName = note.notesName
+                                stringBase64 = note.notesPDF
+                                fragmentName = "Notes"
 
-                            // string base 64 to byte array
-                            var base64StringAsByteArray =
-                                Base64.decode(note.notesPDF, Base64.NO_WRAP)
+                                // string base 64 to byte array
+                                var base64StringAsByteArray =
+                                    Base64.decode(note.notesPDF, Base64.NO_WRAP)
 
-                            // loading a pdf view
-                            pdfView.fromBytes(base64StringAsByteArray)
-                                .load()
+                                // loading a pdf view
+                                pdfView.fromBytes(base64StringAsByteArray)
+                                    .load()
+                            }
                         }
                     }
                     "PreviousYearPapersFragment" -> {
@@ -106,7 +108,8 @@ class PDFFragment : Fragment() {
                         pdfView.fromUri(pdfUri.toUri())
                             .defaultPage(0)
                             .spacing(10)
-                            .load()                    }
+                            .load()
+                    }
                 }
             }
         }

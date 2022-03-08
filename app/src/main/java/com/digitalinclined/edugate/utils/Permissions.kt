@@ -1,4 +1,4 @@
-package com.digitalinclined.edugate
+package com.digitalinclined.edugate.utils
 
 import android.app.Activity
 import android.content.Context

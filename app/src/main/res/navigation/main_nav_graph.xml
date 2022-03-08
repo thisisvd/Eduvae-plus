@@ -136,7 +136,9 @@
             android:defaultValue="null" />
         <argument
             android:name="Notes"
-            app:argType="com.digitalinclined.edugate.restapi.models.notes.Note" />
+            app:argType="com.digitalinclined.edugate.restapi.models.notes.Note"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"

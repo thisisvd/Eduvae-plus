@@ -110,8 +110,13 @@ class MainViewModel(
         }
     }
 
-    // get banners from api
-    fun addNotes(course: String, semester: String, filename: String, pdfFile: MainViewModel.PDFFileDataClass) = viewModelScope.launch {
+    // add notes to ai
+    fun addNotes(course: String, semester: String, filename: String, pdfFile: String) = viewModelScope.launch {
+        addNotesSafeCall(course,semester, filename, PDFFileDataClass(pdfFile))
+    }
+
+    // add notes from api safe call
+    private suspend fun addNotesSafeCall(course: String, semester: String, filename: String, pdfFile: MainViewModel.PDFFileDataClass) = viewModelScope.launch {
         addNotesDetail.value = Resource.Loading()
 
         if(hasInternetConnection()) {

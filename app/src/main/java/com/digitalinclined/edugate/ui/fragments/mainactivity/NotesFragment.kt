@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Environment
 import android.util.Base64
@@ -7,6 +8,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -42,6 +44,15 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
     // toggle
     lateinit var toggle: ActionBarDrawerToggle
 
+    // Shared Preference
+    private lateinit var sharedPreferences: SharedPreferences
+
+    // course variable
+    private var course: String? = ""
+
+    // semester variable
+    private var semester: String? = ""
+
     // view model
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -52,9 +63,22 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
 
+        // shared preferences
+        sharedPreferences = (activity as MainActivity).sharedPreferences
+        course = sharedPreferences.getString(Constants.USER_COURSE,"")!!.lowercase()
+        semester = sharedPreferences.getString(Constants.USER_SEMESTER,"")
+
         // calling notes
         if(NOTES_TEMPORARY_LIST.size <= 0) {
-            viewModel.getNotes("btech", 5)
+            if (!course.isNullOrEmpty() && !semester.isNullOrEmpty()) {
+                viewModel.getNotes(course!!, semester!!.toInt())
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Please add an appropriate course and semester in your profile!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         // toggle btn toolbar setup
@@ -94,7 +118,6 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
             viewModel.getNotesDetail.observe(viewLifecycleOwner) { response ->
                 when (response) {
                     is Resource.Success -> {
-                        progressBar.visibility = View.GONE
                         response.data?.let { notesDetails ->
                             if (notesDetails.status == 200) {
                                 NOTES_TEMPORARY_LIST.clear()
@@ -102,12 +125,15 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
                                     NOTES_TEMPORARY_LIST.addAll(notesDetails.notes)
                                     Log.d(TAG, "${notesDetails.notes.size}")
                                     recyclerAdapter.differ.submitList(NOTES_TEMPORARY_LIST)
+                                } else {
+                                    noNotesInList.visibility = View.VISIBLE
                                 }
+                                progressBar.visibility = View.GONE
                             }
                         }
                     }
                     is Resource.Error -> {
-                        progressBar.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
                         Log.d(TAG, "Error occurred while loading data! ${response.message}")
                     }
                     is Resource.Loading -> {

@@ -25,7 +25,7 @@ object Constants {
 
     // COURSE LIST AND YEAR LIST FOR STUDENT
     val COURSE_LIST = arrayListOf(
-        "BBA", "MBA", "MCA", "B.TECH"
+        "BBA", "MBA", "MCA", "BTECH"
     )
     val YEAR_LIST = arrayListOf(
         "1st Year", "2nd Year", "3rd Year", "4th Year"
