@@ -130,7 +130,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
             // code verify with input code
             viewProgress.setOnClickListener{
-                val code = otpEdittext.text.toString().trim()
+                val code = otpView.text.toString().trim()
                 if(TextUtils.isEmpty(code)) {
                     // Snack bar on empty OTP
                     Snackbar.make(binding.root ,
@@ -255,7 +255,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 Log.d(TAG,"OnVerificationComplete")
 
                 val code = phoneAuthCredential.smsCode.toString()
-                binding.otpEdittext.setText(code)
+                binding.otpView.setText(code)
 
                 signInWIthPhoneAuthCredential(phoneAuthCredential)
             }

@@ -110,7 +110,7 @@ class MainViewModel(
         }
     }
 
-    // add notes to ai
+    // add notes to api (server)
     fun addNotes(course: String, semester: String, filename: String, pdfFile: String) = viewModelScope.launch {
         addNotesSafeCall(course,semester, filename, PDFFileDataClass(pdfFile))
     }

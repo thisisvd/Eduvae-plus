@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,141 +42,40 @@
         android:textColor="@color/button_gradient_start_color"
         android:textSize="@dimen/_25sdp" />
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--        <EditText-->
-<!--            android:layout_width="@dimen/_40sdp"-->
-<!--            android:layout_height="@dimen/_40sdp"-->
-<!--            android:gravity="center"-->
-<!--            android:imeOptions="actionNext"-->
-<!--            android:importantForAutofill="no"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="1"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_marginLeft="3sp"-->
-<!--            android:layout_marginRight="2sp"-->
-<!--            android:background="@drawable/edittext_stroke"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="@dimen/_20sdp"-->
-<!--            android:textStyle="bold"-->
-<!--            tools:ignore="LabelFor" />-->
-
-<!--    </LinearLayout>-->
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/otpEdittext"
+    <com.chaos.view.PinView
+        android:id="@+id/otpView"
+        style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:cursorVisible="true"
         android:hint="------"
-        android:maxLength="6"
-        android:textSize="@dimen/_18sdp"
-        android:background="@android:color/transparent"
         android:inputType="phone"
-        android:letterSpacing="0.8"
-        android:padding="@dimen/_10sdp"
-        android:textAlignment="center"
+        android:maxLength="6"
+        android:padding="10dp"
         android:textColor="@color/text_color"
-        android:textColorHint="#c5c5c5" />
+        android:textSize="@dimen/_18sdp"
+        app:cursorColor="@color/text_color"
+        app:cursorWidth="2dp"
+        app:hideLineWhenFilled="false"
+        app:itemCount="6"
+        app:itemHeight="48dp"
+        app:itemRadius="4dp"
+        app:itemSpacing="0dp"
+        app:itemWidth="48dp"
+        app:lineColor="#C7C7C7"
+        app:lineWidth="1dp"
+        app:viewType="rectangle" />
 
     <TextView
         android:id="@+id/resend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/titillium_web"
-        android:text="Resend"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/titillium_web"
+        android:text="Resend"
         android:textColor="@color/secondary_text_color"
         android:textSize="@dimen/_15sdp" />
 
@@ -231,14 +131,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_15sdp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:gravity="center"
             android:background="@drawable/round_google_login_background"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="11dp"
+            android:paddingTop="8dp"
+            android:paddingRight="11dp"
+            android:paddingBottom="8dp">
 
             <ImageView
                 android:layout_width="@dimen/_32sdp"
@@ -249,9 +149,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
                 android:fontFamily="@font/titillium_web"
                 android:text="Login with google"
-                android:layout_marginLeft="@dimen/_18sdp"
                 android:textColor="#3F4542"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />
