@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.digitalinclined.edugate.models.NotesMessage
 import com.digitalinclined.edugate.restapi.APIClient
 import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
+import com.digitalinclined.edugate.restapi.models.branches.BranchesModel
 import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
 import com.digitalinclined.edugate.ui.viewmodel.repository.Repository
 import com.digitalinclined.edugate.utils.Resource
@@ -28,7 +29,10 @@ class MainViewModel(
 
     // main repository
     private val repository: Repository
-    
+
+    // banner details
+    var getBranchesFromAPI: MutableLiveData<Resource<BranchesModel>> = MutableLiveData()
+
     // banner details 
     var getBannerDetail: MutableLiveData<Resource<BannerResponse>> = MutableLiveData()
 
@@ -43,6 +47,38 @@ class MainViewModel(
     }
 
     /** MAIN API CALLS */
+    // get branches from api
+    fun getBranches() = viewModelScope.launch {
+        getBranchesFromAPI.postValue(Resource.Loading())
+
+        if(hasInternetConnection()) {
+            // Actually processing Data
+            try {
+                val response = repository.getBranches()
+                getBranchesFromAPI.value = handleGetBranches(response)
+            } catch (e: Exception) {
+                getBranchesFromAPI.value = Resource.Error("404 Not Found!")
+            }
+        } else {
+            getBranchesFromAPI.value = Resource.Error("No Internet Connection!")
+        }
+    }
+
+    // handling error responses
+    private fun handleGetBranches(response: Response<BranchesModel>): Resource<BranchesModel>? {
+        return when {
+            response.message().toString().contains("timeout") -> {
+                Resource.Error("Timeout")
+            }
+            response.isSuccessful -> {
+                val banner = response.body()
+                Resource.Success(banner!!)
+            }
+            else -> {
+                Resource.Error(response.message())
+            }
+        }
+    }
 
     // get banners from api
     fun getBanner() = viewModelScope.launch {

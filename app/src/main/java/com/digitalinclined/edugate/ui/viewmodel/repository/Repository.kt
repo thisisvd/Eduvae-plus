@@ -9,6 +9,9 @@ class Repository(
 
     /** Direct API call's */
 
+    // get branches fro api
+    suspend fun getBranches() = api.getBranches()
+
     // get banners from api
     suspend fun getBanners() = api.getBanner()
 

@@ -2,6 +2,7 @@ package com.digitalinclined.edugate.restapi
 
 import com.digitalinclined.edugate.models.NotesMessage
 import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
+import com.digitalinclined.edugate.restapi.models.branches.BranchesModel
 import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import retrofit2.Call
@@ -32,5 +33,9 @@ interface APIInterface {
         @Query("filename") filename: String,
         @Body pdfFile: MainViewModel.PDFFileDataClass
     ): Response<NotesMessage>
+
+    // get branches
+    @GET("getbranch")
+    suspend fun getBranches() : Response<BranchesModel>
 
 }

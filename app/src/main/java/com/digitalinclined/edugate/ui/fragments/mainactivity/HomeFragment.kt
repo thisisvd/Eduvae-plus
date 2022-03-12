@@ -126,13 +126,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                             if(BANNER_IMAGES_LIST.size > 0) {
                                 sliderImageView()
+                                binding.webViewProgressBar.visibility = View.GONE
                             }
                         }
                     }
                     is Resource.Error -> {
+                        binding.webViewProgressBar.visibility = View.GONE
                         Log.d(TAG, "Error occurred while loading data! ${response.message}")
                     }
                     is Resource.Loading -> {
+                        binding.webViewProgressBar.visibility = View.VISIBLE
                         Log.d(TAG, "Loading!")
                     }
                 }

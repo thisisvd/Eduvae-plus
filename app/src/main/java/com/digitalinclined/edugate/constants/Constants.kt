@@ -24,9 +24,8 @@ object Constants {
     var TEMP_CREATE_USER_EMAIL: String? = null
 
     // COURSE LIST AND YEAR LIST FOR STUDENT
-    val COURSE_LIST = arrayListOf(
-        "BBA", "MBA", "MCA", "BTECH"
-    )
+    val COURSE_LIST = arrayListOf<String>()
+
     val YEAR_LIST = arrayListOf(
         "1st Year", "2nd Year", "3rd Year", "4th Year"
     )

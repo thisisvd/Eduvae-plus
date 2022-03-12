@@ -7,12 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
+import androidx.fragment.app.activityViewModels
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
 import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST
 import com.digitalinclined.edugate.constants.Constants.YEAR_LIST
 import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
+import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -34,15 +38,23 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
     private val db = Firebase.firestore
     private val dbReference = db.collection("users")
 
+    // viewModel
+    private val viewModel: MainViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCompleteProfileBinding.bind(view)
+
+        // getting branches from api
+        viewModel.getBranches()
 
         // setting adapter method
         adapterForSpinners()
 
         // handle onBack pressed
         onBack()
+
+        viewModelObservers()
 
         binding.apply {
 
@@ -53,6 +65,57 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
                 }
             }
 
+        }
+    }
+
+    // view model observers
+    private fun viewModelObservers() {
+
+        // view model from
+        viewModel.getBranchesFromAPI.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { branches ->
+
+                        if(branches.branch.isNotEmpty()) {
+                            for(branch in branches.branch) {
+                                COURSE_LIST.add(branch.branch)
+                            }
+
+                            if(COURSE_LIST.size > 0) {
+                                binding.webViewProgressBar.visibility = View.GONE
+
+                                Log.d(TAG, COURSE_LIST.toString())
+                                // adapter for course list
+                                var adapter = ArrayAdapter(
+                                    requireContext(),
+                                    R.layout.drop_down_list_view,
+                                    COURSE_LIST
+                                )
+
+                                // course spinner adapter
+                                binding.chooseCourseAutoTextView.apply {
+                                    setAdapter(
+                                        adapter
+                                    )
+                                }
+                            }
+
+                        }
+
+
+
+                    }
+                }
+                is Resource.Error -> {
+                    binding.webViewProgressBar.visibility = View.GONE
+                    Log.d(TAG, "Error occurred while loading data! ${response.message}")
+                }
+                is Resource.Loading -> {
+                    binding.webViewProgressBar.visibility = View.VISIBLE
+                    Log.d(TAG, "Loading!")
+                }
+            }
         }
     }
 
@@ -82,23 +145,23 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
     private fun adapterForSpinners(){
         binding.apply {
 
-            // adapter for course list
-            var adapter = ArrayAdapter(
-                requireContext(),
-                R.layout.drop_down_list_view,
-                COURSE_LIST
-            )
-
-            // course spinner adapter
-            chooseCourseAutoTextView.apply {
-                setAdapter(
-                    adapter
-                )
-//                setDropDownBackgroundResource(R.color.button_gradient_end_color);
-            }
+//            // adapter for course list
+//            var adapter = ArrayAdapter(
+//                requireContext(),
+//                R.layout.drop_down_list_view,
+//                COURSE_LIST
+//            )
+//
+//            // course spinner adapter
+//            chooseCourseAutoTextView.apply {
+//                setAdapter(
+//                    adapter
+//                )
+////                setDropDownBackgroundResource(R.color.button_gradient_end_color);
+//            }
 
             // adapter for year list
-            adapter = ArrayAdapter(
+            var adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
                 YEAR_LIST

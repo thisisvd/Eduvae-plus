@@ -62,18 +62,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:hintEnabled="false"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/edittext_stroke"
+            app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
             app:boxCornerRadiusBottomStart="@dimen/_10sdp"
             app:boxCornerRadiusTopEnd="@dimen/_10sdp"
             app:boxCornerRadiusTopStart="@dimen/_10sdp"
             app:boxStrokeColor="@color/transparent"
+            app:boxStrokeWidth="0dp"
             app:endIconTint="@color/edittext_stroke_color"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxStrokeWidth="0dp" >
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/chooseCourseAutoTextView"
@@ -81,11 +81,11 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Course"
-                android:textColorHint="@color/text_color"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -106,18 +106,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:hintEnabled="false"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/edittext_stroke"
+            app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
             app:boxCornerRadiusBottomStart="@dimen/_10sdp"
             app:boxCornerRadiusTopEnd="@dimen/_10sdp"
             app:boxCornerRadiusTopStart="@dimen/_10sdp"
             app:boxStrokeColor="@color/transparent"
+            app:boxStrokeWidth="0dp"
             app:endIconTint="@color/edittext_stroke_color"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxStrokeWidth="0dp" >
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/yearAutoTextView"
@@ -125,11 +125,11 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Year"
-                android:textColorHint="@color/text_color"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -150,18 +150,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:hintEnabled="false"
             android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/edittext_stroke"
+            app:boxBackgroundColor="@android:color/transparent"
             app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
             app:boxCornerRadiusBottomStart="@dimen/_10sdp"
             app:boxCornerRadiusTopEnd="@dimen/_10sdp"
             app:boxCornerRadiusTopStart="@dimen/_10sdp"
             app:boxStrokeColor="@color/transparent"
+            app:boxStrokeWidth="0dp"
             app:endIconTint="@color/edittext_stroke_color"
-            app:boxBackgroundColor="@android:color/transparent"
-            app:boxStrokeWidth="0dp" >
+            app:hintEnabled="false">
 
             <AutoCompleteTextView
                 android:id="@+id/semesterAutoTextView"
@@ -169,11 +169,11 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Choose Semester"
-                android:textColorHint="@color/text_color"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_14sdp"
                 android:inputType="textCapWords"
                 android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -194,5 +194,15 @@
         android:text="Complete Sign Up"
         android:textSize="@dimen/_17sdp"
         app:cornerRadius="@dimen/_14sdp" />
+
+    <ProgressBar
+        android:id="@+id/webViewProgressBar"
+        style="@android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/text_color"
+        android:indeterminateTintMode="src_atop" />
 
 </RelativeLayout>
