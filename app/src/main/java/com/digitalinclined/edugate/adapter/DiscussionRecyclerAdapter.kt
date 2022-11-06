@@ -1,17 +1,30 @@
 package com.digitalinclined.edugate.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.DiscussionFormListItemBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 
-class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
+class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
+
+    // temp followers list
+    private var followersList = ArrayList<String>()
+
+    // add Followers In The List
+    fun addFollowersInTheList(list: ArrayList<String>){
+        followersList.addAll(list)
+    }
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<DiscussionDataClass>() {
@@ -60,7 +73,12 @@ class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.
             nameTV.text = data.name
 
             // follow / unfollow
-            followUser.text = data.follow
+            followUser.text = if(checkForExistFollower(data.userID.toString())){
+                followUser.setTextColor(ContextCompat.getColor(context, R.color.green_color))
+                "Following"
+            } else {
+                "Follow"
+            }
 
             // course and year
             courseYear.text = "${data.course} ${data.courseYear}"
@@ -83,11 +101,21 @@ class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.
             // comment
             comments.text = data.comment.toString()
 
-            root.setOnClickListener {
-                onItemClickListener?.let { it(data) }
+            followUser.setOnClickListener {
+                onItemClickListener?.let { it(data,followUser) }
             }
         }
 
+    }
+
+    // check for existing follower
+    private fun checkForExistFollower(id: String): Boolean {
+        for(item in followersList) {
+            if(item == id) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun getItemCount() = differ.currentList.size
@@ -96,9 +124,9 @@ class DiscussionRecyclerAdapter: RecyclerView.Adapter<DiscussionRecyclerAdapter.
     inner class DiscussionViewHolder(val binding: DiscussionFormListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     // On click listener
-    private var onItemClickListener: ((DiscussionDataClass) -> Unit)? = null
+    private var onItemClickListener: ((DiscussionDataClass, view: TextView) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (DiscussionDataClass) -> Unit) {
+    fun setOnItemClickListener(listener: (DiscussionDataClass, view: TextView) -> Unit) {
         onItemClickListener = listener
     }
 

@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -20,18 +21,20 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.BANNER_IMAGES_LIST
+import com.digitalinclined.edugate.constants.Constants.FETCHED_DATA_CLASS
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
-import com.digitalinclined.edugate.restapi.models.banner.Banner
+import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
-import com.digitalinclined.edugate.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -46,6 +49,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
+
+    // firebase db
+    private val db = Firebase.firestore
+    private val dbReference = db.collection("extraData")
 
     // viewModel
     private val viewModel: MainViewModel by activityViewModels()
@@ -70,14 +77,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
 
         // fetching banners
-        if(BANNER_IMAGES_LIST.size > 0) {
+        if(FETCHED_DATA_CLASS != null) {
             sliderImageView()
         } else {
-            viewModel.getBanner()
+            lifecycleScope.launch(Dispatchers.IO) {
+                dbReference.document("data").get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            Log.d("REALTAG", "DocumentSnapshot data: ${document.data}")
+                            FETCHED_DATA_CLASS = document.toObject(FetchDataClass::class.java)!!
+                            if (FETCHED_DATA_CLASS != null) {
+                                Log.d("REALTAG", FETCHED_DATA_CLASS!!.banner!!.size.toString())
+                                sliderImageView()
+                            }
+                        }
+                    }
+            }
         }
-
-        // viewModelObservers
-        viewModelObservers()
 
         // user name for the top
         getUserName()
@@ -108,42 +124,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
-    // viewModel Observers
-    private fun viewModelObservers() {
-        viewModel.apply {
-
-            // banners observers
-            getBannerDetail.observe(viewLifecycleOwner) { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        response.data?.let { bannerDetails ->
-                            if(bannerDetails.status == 200) {
-                                BANNER_IMAGES_LIST.clear()
-                                Log.d(TAG, "${bannerDetails.banners.size}")
-                                for(item in bannerDetails.banners) {
-                                    BANNER_IMAGES_LIST.add(item)
-                                }
-                            }
-                            if(BANNER_IMAGES_LIST.size > 0) {
-                                sliderImageView()
-                                binding.webViewProgressBar.visibility = View.GONE
-                            }
-                        }
-                    }
-                    is Resource.Error -> {
-                        binding.webViewProgressBar.visibility = View.GONE
-                        Log.d(TAG, "Error occurred while loading data! ${response.message}")
-                    }
-                    is Resource.Loading -> {
-                        binding.webViewProgressBar.visibility = View.VISIBLE
-                        Log.d(TAG, "Loading!")
-                    }
-                }
-            }
-
-        }
-    }
-
     // get user name
     private fun getUserName() {
         binding.apply {
@@ -157,11 +137,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
 
             // Slider Image Adapter
-            val adapter = SliderImageAdapter()
+            val adapter = SliderImageAdapter(webViewProgressBar)
 
             // setting up banners in the adapter list
-            for(banner in BANNER_IMAGES_LIST) {
-                adapter.addItem(banner)
+            if(FETCHED_DATA_CLASS != null) {
+                for (banner in FETCHED_DATA_CLASS!!.banner!!) {
+                    adapter.addItem(banner)
+                }
             }
 
             // adapter init

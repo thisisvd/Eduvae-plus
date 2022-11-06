@@ -1,6 +1,7 @@
 package com.digitalinclined.edugate.constants
 
 import androidx.lifecycle.MutableLiveData
+import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.digitalinclined.edugate.restapi.models.notes.Note
@@ -55,6 +56,7 @@ object Constants {
 
     // Constant TEMP list for BANNER images API
     var BANNER_IMAGES_LIST = arrayListOf<Banner>()
+    var FETCHED_DATA_CLASS: FetchDataClass? = null
 
     // Constant TEMP list for NOTES images API
     var NOTES_TEMPORARY_LIST = arrayListOf<Note>()

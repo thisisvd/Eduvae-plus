@@ -33,9 +33,6 @@ class MainViewModel(
     // banner details
     var getBranchesFromAPI: MutableLiveData<Resource<BranchesModel>> = MutableLiveData()
 
-    // banner details 
-    var getBannerDetail: MutableLiveData<Resource<BannerResponse>> = MutableLiveData()
-
     // notes details
     var getNotesDetail: MutableLiveData<Resource<NotesResponse>> = MutableLiveData()
 
@@ -77,23 +74,6 @@ class MainViewModel(
             else -> {
                 Resource.Error(response.message())
             }
-        }
-    }
-
-    // get banners from api
-    fun getBanner() = viewModelScope.launch {
-        getBannerDetail.value = Resource.Loading()
-
-        if(hasInternetConnection()) {
-            // Actually processing Data
-            try {
-                val response = repository.getBanners()
-                getBannerDetail.value = handleBannerResponse(response)
-            } catch (e: Exception) {
-                getBannerDetail.value = Resource.Error("404 Not Found!")
-            }
-        } else {
-            getBannerDetail.value = Resource.Error("No Internet Connection!")
         }
     }
 

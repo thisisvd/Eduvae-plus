@@ -1,20 +1,18 @@
 package com.digitalinclined.edugate.adapter
 
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import coil.load
 import com.digitalinclined.edugate.databinding.SliderImageViewBinding
-import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.smarteist.autoimageslider.SliderViewAdapter
-import java.io.ByteArrayInputStream
-import java.io.InputStream
 
-class SliderImageAdapter: SliderViewAdapter<SliderImageAdapter.SliderAdapterViewHolder>() {
+class SliderImageAdapter(var webViewProgressBar: ProgressBar): SliderViewAdapter<SliderImageAdapter.SliderAdapterViewHolder>() {
   
-    private var mBanner : MutableList<Banner> = ArrayList()
+    private var mBanner : MutableList<String> = ArrayList()
 
-    fun addItem(Banner : Banner) {
+    fun addItem(Banner : String) {
         mBanner.add(Banner)
         notifyDataSetChanged()
     }
@@ -33,12 +31,8 @@ class SliderImageAdapter: SliderViewAdapter<SliderImageAdapter.SliderAdapterView
 
         holder!!.binding.apply {
 
-            val stringBlobData = data.banner
-            val decodedString: ByteArray = Base64.decode(stringBlobData, Base64.NO_WRAP)
-            val inputStream: InputStream = ByteArrayInputStream(decodedString)
-            val bitmap = BitmapFactory.decodeStream(inputStream)
-
-            ivAutoImageSlider.setImageBitmap(bitmap)
+            ivAutoImageSlider.load(data)
+            webViewProgressBar.visibility = View.GONE
 
         }
 

@@ -1,15 +1,16 @@
 package com.digitalinclined.edugate.models
 
 data class DiscussionDataClass(
-    val name: String? = null,
-    val follow: String? = null,
-    val course: String? = null,
-    val courseYear: String? = null,
-    val publishedDate: String? = null,
-    val userImage: String? = null,
-    val title: String? = null,
-    val content: String? = null,
-    val pdfName: String? = null,
-    val likes: Int? = null,
-    val comment: Int? = null,
-    )
+   val userID: String? = "",
+   val comment: Int? = 0,
+   val content: String? = "",
+   val course: String? = "",
+   val courseYear: String? = "",
+   val likes: Int? = 0,
+   val name: String? = "",
+   val pdfFile: String? = "",
+   val pdfName: String? = "",
+   val publishedDate: String? = "",
+   val title: String? = "",
+   val userImage: String? = "",
+)
