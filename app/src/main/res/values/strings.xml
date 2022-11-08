@@ -10,6 +10,6 @@
 
     <string name="viewPaper"><b><u>View Paper</u></b></string>
     <string name="viewDetails"><b><u>View Details</u></b></string>
-    <string name="uploadVideoText">Upload a video as your contribution and <u>get rewarded</u></string>
+    <string name="uploadVideoText">Upload a pdf as your contribution and <u>get rewarded</u></string>
 
 </resources>

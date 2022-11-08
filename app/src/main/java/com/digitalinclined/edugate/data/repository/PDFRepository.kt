@@ -16,5 +16,9 @@ class PDFRepository(
         pdfDataDao.insertData(pdfData)
     }
 
+    // delete all data
+    fun deleteAllPDF() {
+        pdfDataDao.deleteAllPDF()
+    }
 
 }

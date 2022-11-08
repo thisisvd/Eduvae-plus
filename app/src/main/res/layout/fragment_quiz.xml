@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.mainactivity.QuizFragment">
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:fontFamily="@font/titillium_web"
+        android:text="Let's play a quiz!"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/_24sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/titillium_web_light"
+        android:text="Improve your knowledge by playing quizzes..."
+        android:textSize="@dimen/_11sdp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

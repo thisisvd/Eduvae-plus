@@ -97,8 +97,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             dialog.apply {
                 setContentView(R.layout.custom_dialog)
                 setCancelable(false)
-                if(dialog.window != null){
-                    dialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
+                if(window != null){
+                    window!!.setBackgroundDrawable(ColorDrawable(0))
                 }
             }
 

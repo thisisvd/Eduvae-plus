@@ -6,10 +6,15 @@
         android:icon="@drawable/home_icon"
         android:title="Home"/>
 
+<!--    <item-->
+<!--        android:id="@+id/classroomFragment"-->
+<!--        android:icon="@drawable/topic_icon"-->
+<!--        android:title="Classroom" />-->
+
     <item
-        android:id="@+id/subjectsFragment"
+        android:id="@+id/quizPerformingFragment"
         android:icon="@drawable/topic_icon"
-        android:title="Subjects" />
+        android:title="Classroom" />
 
     <item
         android:id="@+id/discussionFragment"

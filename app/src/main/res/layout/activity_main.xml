@@ -179,7 +179,7 @@
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/titillium_web_light"
-            android:text="Made With ❤ By Digitalinclined"
+            android:text="Made With ❤ For Students"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />
 

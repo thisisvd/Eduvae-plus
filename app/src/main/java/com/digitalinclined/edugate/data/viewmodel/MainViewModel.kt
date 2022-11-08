@@ -27,6 +27,13 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    // delete data
+    fun deleteAllPDF() {
+        viewModelScope.launch {
+            repository.deleteAllPDF()
+        }
+    }
+
     // get pdf
     fun getSelectedPdf(id: String): LiveData<PDFDataRoom> = repository.getSelectedPDF(id)
 

@@ -1,12 +1,15 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Base64.NO_WRAP
@@ -15,6 +18,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
@@ -62,6 +66,9 @@ class AddDiscussionFragment : Fragment() {
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
 
+    // alert progress dialog
+    private lateinit var dialog: Dialog
+
     // comp object
     companion object {
         private const val PDF_SELECTION_CODE = 99
@@ -87,9 +94,20 @@ class AddDiscussionFragment : Fragment() {
 
         // toggle btn toolbar setup
         toggle = (activity as MainActivity).toggle
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Add a Discussion"
         val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
         toggle.setHomeAsUpIndicator(drawable)
         IS_BACK_TOOLBAR_BTN_ACTIVE = true
+
+        // init Loading Dialog
+        dialog = Dialog(requireContext())
+        dialog.apply {
+            setContentView(R.layout.custom_dialog)
+            setCancelable(false)
+            if(window != null){
+                window!!.setBackgroundDrawable(ColorDrawable(0))
+            }
+        }
 
         return binding.root
     }
@@ -101,6 +119,7 @@ class AddDiscussionFragment : Fragment() {
             // submit discussion
             submitDiscussion.setOnClickListener {
                 if(verifyDataFromUser(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName)) {
+                    dialog.show()
                     uploadingPDFAndAddToServer()
                 } else {
                     Snackbar.make(it,"Please fill all fields!",Snackbar.LENGTH_LONG).show()
@@ -122,29 +141,22 @@ class AddDiscussionFragment : Fragment() {
                 if (pdfBase64FileData.isNotEmpty()) {
                     val currentPDFIDName = System.currentTimeMillis().toString()
                     insertData(PDFDataRoom(0, currentPDFIDName, pdfBase64FileName,pdfBase64FileData))
-                    textButton.setOnClickListener {
-                        viewModel.getSelectedPdf(currentPDFIDName).observe(viewLifecycleOwner) {
-                            Log.d("LOGI",it.title)
+
+                    val timer = object: CountDownTimer(10000, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            if((millisUntilFinished/1000) == 7L){
+                                getSelectedPdf(currentPDFIDName).observe(viewLifecycleOwner) { pdfId ->
+                                    addToServer(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName,pdfId.uniqueID)
+                                }
+                            }
+                        }
+
+                        override fun onFinish() {
+                            dialog.dismiss()
+                            Snackbar.make(binding.root,"Error occurred!",Snackbar.LENGTH_LONG).show()
                         }
                     }
-
-//            pdfStoredClass.pdfObserver.observe(viewLifecycleOwner) { response ->
-//                when (response) {
-//                    is Resource.Success -> {
-//                        response.data?.let { pdfLink ->
-//                            addToServer(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName,pdfLink)
-//                        }
-//                    }
-//                    is Resource.Error -> {
-//                        discussionProgressBar.visibility = View.GONE
-//                        Log.d(TAG, "Error occurred while loading data! ${response.message}")
-//                    }
-//                    is Resource.Loading -> {
-//                        discussionProgressBar.visibility = View.VISIBLE
-//                        Log.d(TAG, "Loading!")
-//                    }
-//                }
-//            }
+                    timer!!.start()
                 }
             }
         }
@@ -173,14 +185,14 @@ class AddDiscussionFragment : Fragment() {
                 .set(discussionData)
                 .addOnSuccessListener {
                     Log.d(TAG, "Update in server successful!")
-                    Toast.makeText(requireContext(),"Discussion Submitted!",Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root,"Discussion Submitted!",Snackbar.LENGTH_LONG).show()
                     findNavController().popBackStack()
-                    discussionProgressBar.visibility = View.GONE
+                    dialog.dismiss()
                 }
                 .addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
                     Snackbar.make(binding.discussionTitle,"Error occurred please try again!",Snackbar.LENGTH_LONG).show()
-                    discussionProgressBar.visibility = View.GONE
+                    dialog.dismiss()
                 }
         }
     }

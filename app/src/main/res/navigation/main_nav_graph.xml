@@ -171,5 +171,15 @@
             android:name="pdfLink"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/classroomFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.ClassroomFragment"
+        android:label="fragment_classroom"
+        tools:layout="@layout/fragment_classroom" />
+    <fragment
+        android:id="@+id/quizPerformingFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.QuizPerformingFragment"
+        android:label="fragment_quiz_performing"
+        tools:layout="@layout/fragment_quiz_performing" />
 
 </navigation>

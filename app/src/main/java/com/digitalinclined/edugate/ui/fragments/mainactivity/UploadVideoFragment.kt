@@ -74,7 +74,7 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
         binding.apply {
 
             // change the title bar
-            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Upload A Video"
+            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Upload to Contribute"
 
             // shared preferences
             sharedPreferences = (activity as MainActivity).sharedPreferences

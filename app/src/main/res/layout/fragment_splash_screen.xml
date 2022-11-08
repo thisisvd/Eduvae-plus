@@ -57,7 +57,7 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:fontFamily="@font/titillium_web_light"
-        android:text="Made With ❤ By Digitalinclined"
+        android:text="Made With ❤ For Students"
         android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
         android:textStyle="bold" />

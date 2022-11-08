@@ -10,10 +10,16 @@ import com.digitalinclined.edugate.data.model.PDFDataRoom
 @Dao
 interface PDFDataDao {
 
+    // insert data
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertData(pdfDataRoom: PDFDataRoom)
+
+    // select single item
     @Query("SELECT * FROM PDF_TABLE_NAME WHERE uniqueID=:keyId")
     fun getSelectedPDF(keyId: String) : LiveData<PDFDataRoom>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertData(pdfDataRoom: PDFDataRoom)
+    // delete all item
+    @Query("DELETE FROM PDF_TABLE_NAME")
+    fun deleteAllPDF()
 
 }

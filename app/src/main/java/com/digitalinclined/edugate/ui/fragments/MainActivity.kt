@@ -166,9 +166,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS))
                 }
             }
-
         }
-
     }
 
     // fetching the user data from firebase and saving it in to shared preferences
@@ -257,7 +255,7 @@ class MainActivity : AppCompatActivity() {
 
                     when (destination.id) {
                         // when these fragments will open toolbar will not be visible
-                        R.id.discussionFragment, R.id.homeFragment, R.id.subjectsFragment -> {
+                        R.id.discussionFragment, R.id.homeFragment, R.id.quizPerformingFragment -> {
                             // bottom nav bar visibility VISIBLE
                             bottomNavigationView.visibility = View.VISIBLE
                             viewBottom.visibility = View.VISIBLE
