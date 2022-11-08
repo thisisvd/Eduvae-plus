@@ -7,11 +7,10 @@ import android.content.SharedPreferences
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.os.SystemClock
 import android.provider.OpenableColumns
 import android.text.TextUtils
-import android.util.Base64
+import android.util.Base64.NO_WRAP
+import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +18,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.BASE_64_STRING
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
+import com.digitalinclined.edugate.data.model.PDFDataRoom
+import com.digitalinclined.edugate.data.viewmodel.MainViewModel
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -42,6 +45,9 @@ class AddDiscussionFragment : Fragment() {
     // viewBinding
     private var _binding: FragmentAddDiscussionBinding? = null
     private val binding get() = _binding!!
+
+    // view models
+    private val viewModel: MainViewModel by viewModels()
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
@@ -63,7 +69,8 @@ class AddDiscussionFragment : Fragment() {
 
     // pdf file
     private var pdfBase64FileName: String = ""
-    private var pdfBase64File: String = ""
+    private var pdfBase64FileData: String = ""
+    private var pdfFileStorageLocation: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,7 +101,7 @@ class AddDiscussionFragment : Fragment() {
             // submit discussion
             submitDiscussion.setOnClickListener {
                 if(verifyDataFromUser(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName)) {
-                    addToServer(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName)
+                    uploadingPDFAndAddToServer()
                 } else {
                     Snackbar.make(it,"Please fill all fields!",Snackbar.LENGTH_LONG).show()
                 }
@@ -108,8 +115,43 @@ class AddDiscussionFragment : Fragment() {
         }
     }
 
+    // uploading pdf file
+    private fun uploadingPDFAndAddToServer() {
+        binding.apply {
+            viewModel.apply {
+                if (pdfBase64FileData.isNotEmpty()) {
+                    val currentPDFIDName = System.currentTimeMillis().toString()
+                    insertData(PDFDataRoom(0, currentPDFIDName, pdfBase64FileName,pdfBase64FileData))
+                    textButton.setOnClickListener {
+                        viewModel.getSelectedPdf(currentPDFIDName).observe(viewLifecycleOwner) {
+                            Log.d("LOGI",it.title)
+                        }
+                    }
+
+//            pdfStoredClass.pdfObserver.observe(viewLifecycleOwner) { response ->
+//                when (response) {
+//                    is Resource.Success -> {
+//                        response.data?.let { pdfLink ->
+//                            addToServer(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName,pdfLink)
+//                        }
+//                    }
+//                    is Resource.Error -> {
+//                        discussionProgressBar.visibility = View.GONE
+//                        Log.d(TAG, "Error occurred while loading data! ${response.message}")
+//                    }
+//                    is Resource.Loading -> {
+//                        discussionProgressBar.visibility = View.VISIBLE
+//                        Log.d(TAG, "Loading!")
+//                    }
+//                }
+//            }
+                }
+            }
+        }
+    }
+
     // add to server
-    private fun addToServer(title: String, description: String, pdfBaseName: String) {
+    private fun addToServer(title: String, description: String, pdfBaseName: String, pdfFileLink: String) {
         binding.apply {
             val discussionData = hashMapOf(
                 "name" to sharedPreferences.getString(Constants.USER_NAME,""),
@@ -120,7 +162,7 @@ class AddDiscussionFragment : Fragment() {
                 "title" to title,
                 "content" to description,
                 "pdfName" to pdfBaseName,
-                "pdfFile" to "pdfBase64File",
+                "pdfFile" to pdfFileLink,
                 "likes" to 4,
                 "comment" to 10,
                 "userID" to firebaseAuth.currentUser?.uid.toString()
@@ -133,12 +175,13 @@ class AddDiscussionFragment : Fragment() {
                     Log.d(TAG, "Update in server successful!")
                     Toast.makeText(requireContext(),"Discussion Submitted!",Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
+                    discussionProgressBar.visibility = View.GONE
                 }
                 .addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
                     Snackbar.make(binding.discussionTitle,"Error occurred please try again!",Snackbar.LENGTH_LONG).show()
+                    discussionProgressBar.visibility = View.GONE
                 }
-
         }
     }
 
@@ -162,9 +205,12 @@ class AddDiscussionFragment : Fragment() {
             val fileName = queryName(requireContext(),selectedPdfFromStorage!!)
             Toast.makeText(requireContext(),fileName.toString(),Toast.LENGTH_SHORT).show()
             pdfBase64FileName = fileName.toString()
-            pdfBase64File = getBase64FromPath(selectedPdfFromStorage)
+            pdfFileStorageLocation = selectedPdfFromStorage
+
+            pdfBase64FileData = getBase64FromPath(selectedPdfFromStorage)
 
             Log.d("TAGU",selectedPdfFromStorage.path.toString())
+            Log.d("TAGU",pdfBase64FileName)
 
             // file name view
             binding.attachFile.visibility = View.GONE
@@ -178,7 +224,7 @@ class AddDiscussionFragment : Fragment() {
         val iStream: InputStream? = requireActivity().contentResolver.openInputStream(uri)
         val inputData: ByteArray = getBytes(iStream!!)
 
-        var getBase64String = Base64.encodeToString(inputData,Base64.NO_WRAP)
+        var getBase64String = encodeToString(inputData,NO_WRAP)
         Log.d(TAG,getBase64String)
 
         return getBase64String
@@ -210,7 +256,7 @@ class AddDiscussionFragment : Fragment() {
     private fun verifyDataFromUser(title: String, description: String, pdfFileName: String): Boolean {
         return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(pdfFileName)) {
             false
-        } else !(title.isEmpty() || description.isEmpty() || description.isEmpty())
+        } else !(title.isEmpty() || description.isEmpty() || pdfFileName.isEmpty())
     }
 
     override fun onDestroy() {

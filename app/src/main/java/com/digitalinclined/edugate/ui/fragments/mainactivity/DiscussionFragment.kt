@@ -1,6 +1,5 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,19 +8,17 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.DiscussionRecyclerAdapter
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
 import com.digitalinclined.edugate.databinding.FragmentDiscussionBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
-import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +26,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -138,10 +134,22 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
         }
 
         // on click listener
-        recyclerAdapter.setOnItemClickListener { discussionData, textView ->
-            addFollowingIDs(discussionData.userID.toString(), textView)
+        recyclerAdapter.apply {
+            setOnFollowItemClickListener { discussionData, textView ->
+                addFollowingIDs(discussionData.userID.toString(), textView)
+            }
+            setOnPdfItemClickListener { link ->
+                if (link.isNotEmpty()) {
+                    val bundle = bundleOf(
+                        "pdfLink" to link
+                    )
+                    findNavController().navigate(
+                        R.id.action_discussionFragment_to_PDFWebViewFragment,
+                        bundle
+                    )
+                }
+            }
         }
-
         // followers observers
         FOLLOWING_USER_ID.observe(viewLifecycleOwner) {
             Log.d(TAG, it.size.toString())

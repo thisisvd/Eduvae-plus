@@ -61,4 +61,8 @@ object Constants {
     // Constant TEMP list for NOTES images API
     var NOTES_TEMPORARY_LIST = arrayListOf<Note>()
 
+    // ROOM CONSTANTS
+    const val PDF_TABLE_NAME = "PDF_TABLE_NAME"
+    const val PDF_DATABASE_NAME = "PDF_DATABASE_NAME"
+
 }

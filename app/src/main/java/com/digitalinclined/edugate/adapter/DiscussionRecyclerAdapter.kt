@@ -2,7 +2,6 @@ package com.digitalinclined.edugate.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -101,8 +100,16 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             // comment
             comments.text = data.comment.toString()
 
+            // pdf click listener
+            discussLL2.setOnClickListener {
+                pdfItemClickListener?.let {
+                    it(data.pdfFile!!)
+                }
+            }
+
+            // follow user click listener
             followUser.setOnClickListener {
-                onItemClickListener?.let { it(data,followUser) }
+                followItemClickListener?.let { it(data,followUser) }
             }
         }
 
@@ -123,11 +130,17 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
     // Inner Class ViewHolder
     inner class DiscussionViewHolder(val binding: DiscussionFormListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    // On click listener
-    private var onItemClickListener: ((DiscussionDataClass, view: TextView) -> Unit)? = null
+    // On follow click listener
+    private var followItemClickListener: ((DiscussionDataClass, view: TextView) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (DiscussionDataClass, view: TextView) -> Unit) {
-        onItemClickListener = listener
+    fun setOnFollowItemClickListener(listener: (DiscussionDataClass, view: TextView) -> Unit) {
+        followItemClickListener = listener
     }
 
+    // On pdf click listener
+    private var pdfItemClickListener: ((pdfLink: String) -> Unit)? = null
+
+    fun setOnPdfItemClickListener(listener: (pdfLink: String) -> Unit) {
+        pdfItemClickListener = listener
+    }
 }

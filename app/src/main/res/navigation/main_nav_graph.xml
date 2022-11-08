@@ -62,6 +62,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_discussionFragment_to_PDFWebViewFragment"
+            app:destination="@id/PDFWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/myProfile"
@@ -159,5 +162,14 @@
         android:id="@+id/completeProfileFragment2"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.CompleteProfileFragment"
         android:label="CompleteProfileFragment" />
+    <fragment
+        android:id="@+id/PDFWebViewFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PDFWebViewFragment"
+        android:label="fragment_p_d_f_web_view"
+        tools:layout="@layout/fragment_p_d_f_web_view" >
+        <argument
+            android:name="pdfLink"
+            app:argType="string" />
+    </fragment>
 
 </navigation>
