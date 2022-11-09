@@ -90,6 +90,10 @@ class FollowingFragment : Fragment() {
                 for (userID in users) {
                     fetchFollowingUsersFromFirebase(userID)
                 }
+            } else {
+                binding.progressBar.visibility = View.GONE
+                followedUsersList.clear()
+                recyclerAdapter.differ.submitList(followedUsersList)
             }
         }
 
@@ -108,13 +112,16 @@ class FollowingFragment : Fragment() {
                             followedUsersList.add(userProfile!!)
                             recyclerAdapter.differ.submitList(followedUsersList)
                             recyclerAdapter.notifyDataSetChanged()
+                            binding.progressBar.visibility = View.GONE
                         }
                     } else {
                         Log.d(TAG, "No such document")
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
+                    binding.progressBar.visibility = View.GONE
                 }
         }
         hideProgressBar()
@@ -126,11 +133,13 @@ class FollowingFragment : Fragment() {
             dbReference.document(firebaseAuth.currentUser!!.uid)
                 .update("following", FieldValue.arrayRemove(userFirebaseID))
                 .addOnSuccessListener {
-                    Log.d(TAG, "User Followed Successfully!")
+                    Log.d(TAG, "User UnFollowed Successfully!")
                     (activity as MainActivity).fetchFirebaseUserData()
+                    binding.progressBar.visibility = View.GONE
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error in following user Successfully", e)
+                    binding.progressBar.visibility = View.GONE
                 }
         }
     }

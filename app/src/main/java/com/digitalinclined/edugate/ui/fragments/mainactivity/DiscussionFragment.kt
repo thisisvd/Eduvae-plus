@@ -12,13 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.DiscussionRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
-import com.digitalinclined.edugate.data.viewmodel.MainViewModel
+import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentDiscussionBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -41,9 +40,6 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
 
     // Adapters
     private lateinit var recyclerAdapter: DiscussionRecyclerAdapter
-
-    // view models
-    private val viewModel: MainViewModel by viewModels()
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
@@ -102,10 +98,12 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
                         } else {
                             Snackbar.make(binding.root,"No discussions in the lists!", Snackbar.LENGTH_LONG).show()
                         }
+                        binding.progressBar.visibility = View.GONE
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
                     Snackbar.make(binding.root,"Error occurred!",Snackbar.LENGTH_LONG).show()
+                    binding.progressBar.visibility = View.GONE
                 }
         }
     }

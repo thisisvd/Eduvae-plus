@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.DiscussionFormListItemBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
+import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 
 class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
 
@@ -83,7 +84,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             courseYear.text = "${data.course} ${data.courseYear}"
 
             // date
-            date.text = data.publishedDate
+            date.text = DateTimeFormatFetcher().getDateTime(data.publishedDate!!.toLong())
 
             // title
             title.text = data.title

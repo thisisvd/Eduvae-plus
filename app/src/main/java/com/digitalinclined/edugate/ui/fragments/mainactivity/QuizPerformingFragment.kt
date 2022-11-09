@@ -34,7 +34,7 @@ class QuizPerformingFragment : Fragment() {
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val dbReference = Firebase.firestore.collection("quizData")
+    private val dbReference = Firebase.firestore
 
     // instance vars
     private var selectedOption: String = ""
@@ -71,28 +71,8 @@ class QuizPerformingFragment : Fragment() {
     }
 
     private fun fetchQuizFromServer() {
-        lifecycleScope.launch{
-            dbReference.document("OvEgbCKdaRFOB8FYiLha").get()
-                .addOnSuccessListener { documentResult ->
-                    if (documentResult != null) {
-                        val dataClass = documentResult.toObject(QuizDataClass::class.java)!!
-                        if(dataClass.quizName != null) {
-                            Log.d("TAGH", dataClass.options!!.size.toString())
-                            binding.apply {
-                                dataClass.apply {
-                                    optionBtn1.text = dataClass.options[0]
-                                    optionBtn2.text = dataClass.options[1]
-                                    optionBtn3.text = dataClass.options[2]
-                                    optionBtn4.text = dataClass.options[3]
-                                    questionTv.text = dataClass.quizName
-                                    questionName = dataClass.options[dataClass.correctAnswer!!]
-                                }
-                            }
-                        }
-                    }
-                }.addOnFailureListener {
-                    Toast.makeText(requireContext(),"Failed",Toast.LENGTH_SHORT).show()
-                }
+        lifecycleScope.launch {
+
         }
     }
 

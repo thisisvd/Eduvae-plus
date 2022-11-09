@@ -63,16 +63,11 @@ class WebViewFragment : Fragment() {
 
                     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                         super.onPageStarted(view, url, favicon)
-                        webViewProgressBar.apply {
-                            visibility = View.VISIBLE
-                        }
                     }
 
                     override fun onPageCommitVisible(view: WebView?, url: String?) {
                         super.onPageCommitVisible(view, url)
-                        webViewProgressBar.apply {
-                            visibility = View.GONE
-                        }
+                        webViewProgressBar.visibility = View.GONE
                     }
 
                 }

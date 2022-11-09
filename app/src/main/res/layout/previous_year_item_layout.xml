@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -62,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll1"
+            android:singleLine="true"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/titillium_web_semibold"
@@ -69,39 +72,9 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
 
-        <RelativeLayout
-            android:id="@+id/Rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/paperTitleTV">
-
-            <TextView
-                android:id="@+id/questionTimeMarkTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/titillium_web"
-                android:text="19 Qs . 90 mins, 80 marks"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15sdp" />
-
-            <TextView
-                android:id="@+id/viewPaper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:fontFamily="@font/titillium_web"
-                android:text="@string/viewPaper"
-                android:textAlignment="center"
-                android:textColor="@color/light_blue_color"
-                android:textSize="@dimen/_15sdp" />
-
-        </RelativeLayout>
-
     </RelativeLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,20 +95,25 @@
             android:text="Syllabus"
             android:textAlignment="center"
             android:textColor="@color/light_blue_color"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/languageMediumTV"
+            android:id="@+id/viewPaper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:fontFamily="@font/titillium_web_semibold"
-            android:text="English, Hindi"
+            android:fontFamily="@font/titillium_web"
+            android:text="@string/viewPaper"
             android:textAlignment="center"
             android:textColor="@color/light_blue_color"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/syllabusTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/syllabusTV" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

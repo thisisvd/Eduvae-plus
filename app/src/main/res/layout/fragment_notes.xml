@@ -5,8 +5,7 @@
     android:id="@+id/news_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_color"
-    tools:context=".ui.fragments.mainactivity.SyllabusFragment">
+    android:background="@color/theme_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/news_appbarloyout"
@@ -17,7 +16,6 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <TextView
@@ -26,8 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_15sdp"
                 android:fontFamily="@font/titillium_web_semibold"
-                android:gravity="center"
-                android:textAlignment="center"
+                android:text="Free Notes"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_20sdp" />
 
@@ -39,6 +36,8 @@
         android:id="@+id/recyclerView"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:layout_height="wrap_content"
         android:overScrollMode="never"/>
 

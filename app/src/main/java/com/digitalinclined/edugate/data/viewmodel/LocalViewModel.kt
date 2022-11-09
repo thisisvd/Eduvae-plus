@@ -4,14 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.digitalinclined.edugate.data.PDFDataDao
 import com.digitalinclined.edugate.data.PDFDatabase
 import com.digitalinclined.edugate.data.model.PDFDataRoom
 import com.digitalinclined.edugate.data.repository.PDFRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class LocalViewModel(application: Application): AndroidViewModel(application) {
 
     private val toDoDao = PDFDatabase.getDatabase(application).pdfDataDao()
     private val repository: PDFRepository

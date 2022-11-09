@@ -6,12 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.mainactivity.QuizPerformingFragment">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -109,8 +104,6 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next_button"

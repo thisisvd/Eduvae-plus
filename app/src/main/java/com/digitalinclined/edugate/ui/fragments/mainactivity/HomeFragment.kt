@@ -101,13 +101,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
 
             // syllabus click listener
-            syllabus.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_syllabusFragment)
+            quizButton.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_quizPerformingFragment)
             }
 
             // oldYearPaper click listener
             oldYearPaper.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_yearOfPapersFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_previousYearPapersFragment)
             }
 
             // notes click listener
@@ -119,9 +119,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             videos.setOnClickListener {
                 startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
             }
-
         }
-
     }
 
     // get user name

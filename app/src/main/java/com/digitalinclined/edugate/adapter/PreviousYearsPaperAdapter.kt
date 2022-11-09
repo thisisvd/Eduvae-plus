@@ -1,27 +1,30 @@
 package com.digitalinclined.edugate.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.digitalinclined.edugate.databinding.PreviousYearItemLayoutBinding
-import com.digitalinclined.edugate.models.PreviousYearPapersDataClass
+import com.digitalinclined.edugate.models.QuestionsNotesDataClass
+import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
+import com.google.android.material.snackbar.Snackbar
 
-class PreviousYearsPaperAdapter: RecyclerView.Adapter<PreviousYearsPaperAdapter.PreviousYearsPaperViewHolder>(){
+class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<PreviousYearsPaperAdapter.PreviousYearsPaperViewHolder>(){
 
     // Diff Util Call Back
-    private val differCallback = object : DiffUtil.ItemCallback<PreviousYearPapersDataClass>() {
+    private val differCallback = object : DiffUtil.ItemCallback<QuestionsNotesDataClass>() {
         override fun areItemsTheSame(
-            oldItem: PreviousYearPapersDataClass,
-            newItem: PreviousYearPapersDataClass
+            oldItem: QuestionsNotesDataClass,
+            newItem: QuestionsNotesDataClass
         ): Boolean {
-            return oldItem.paperTitle == newItem.paperTitle
+            return oldItem.timestamp == newItem.timestamp
         }
 
         override fun areContentsTheSame(
-            oldItem: PreviousYearPapersDataClass,
-            newItem: PreviousYearPapersDataClass
+            oldItem: QuestionsNotesDataClass,
+            newItem: QuestionsNotesDataClass
         ): Boolean {
             return oldItem == newItem
         }
@@ -46,34 +49,27 @@ class PreviousYearsPaperAdapter: RecyclerView.Adapter<PreviousYearsPaperAdapter.
         holder.binding.apply {
             data.apply {
 
-                // set is paper free or not
-                if (isFree!!){
-                    isPaperFree.text = "FREE"
-                } else {
-                    isPaperFree.text = "PREMIUM"
-                }
-
                 // set year date of paper
-                monthYearTV.text = date
+                monthYearTV.text = DateTimeFormatFetcher().getDateTime(timestamp!!.toLong())
 
                 // set title of paper
-                paperTitleTV.text = paperTitle
+                paperTitleTV.text = paperName
 
-                // questionTimeMarkTV
-                questionTimeMarkTV.text = "${noOfQuestions}Qs. $paperTime min, $totalMarks marks"
-
-                // set paper language medium
-                languageMediumTV.text = languageMedium
+                // change & disable text for itemView
+                if(itemView == "notes") {
+                    syllabusTV.visibility = View.GONE
+                    viewPaper.text = "View Notes"
+                }
 
                 // set on Click listeners
                 // set paper link
                 viewPaper.setOnClickListener {
-                    onItemClickListener?.let { it(data.viewPaperLink!!, "viewPaper") }
+                    onItemClickListener?.let { it(pdfFileId!!, "viewPaper") }
                 }
 
                 // set syllabus
                 syllabusTV.setOnClickListener {
-                    onItemClickListener?.let { it(data.syllabus!!, "syllabusTV") }
+                    Snackbar.make(it,"No syllabus found!",Snackbar.LENGTH_SHORT).show()
                 }
 
             }

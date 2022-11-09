@@ -311,7 +311,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             }
 
             // adapter for year list
-            adapter = ArrayAdapter(
+            val yearAdapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
                 YEAR_LIST
@@ -320,12 +320,12 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             // course spinner adapter
             yearAutoTextView.apply {
                 setAdapter(
-                    adapter
+                    yearAdapter
                 )
 //                setDropDownBackgroundResource(R.color.button_gradient_end_color);
             }
 
-            adapter = ArrayAdapter(
+            val cityAdapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
                 INDIAN_CITY_DATA
@@ -334,12 +334,12 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             // city spinner adapter
             cityAutoTextView.apply {
                 setAdapter(
-                    adapter
+                    cityAdapter
                 )
 //                setDropDownBackgroundResource(R.color.button_gradient_end_color);
             }
 
-            adapter = ArrayAdapter(
+            val semesterAdapter = ArrayAdapter(
                 requireContext(),
                 R.layout.drop_down_list_view,
                 SEMESTER_LIST
@@ -348,7 +348,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             // city spinner adapter
             semesterAutoTextView.apply {
                 setAdapter(
-                    adapter
+                    semesterAdapter
                 )
             }
 

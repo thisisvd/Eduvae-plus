@@ -47,7 +47,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import java.io.IOException
@@ -255,7 +254,7 @@ class MainActivity : AppCompatActivity() {
 
                     when (destination.id) {
                         // when these fragments will open toolbar will not be visible
-                        R.id.discussionFragment, R.id.homeFragment, R.id.quizPerformingFragment -> {
+                        R.id.discussionFragment, R.id.homeFragment, R.id.classroomFragment -> {
                             // bottom nav bar visibility VISIBLE
                             bottomNavigationView.visibility = View.VISIBLE
                             viewBottom.visibility = View.VISIBLE
@@ -310,17 +309,26 @@ class MainActivity : AppCompatActivity() {
                 when(item.itemId) {
                     // Previous Question Papers
                     R.id.previousQuestionPapers -> {
-                        navHostFragment.findNavController().navigate(R.id.previousYearPapersFragment,null,navBuilder.build())
+                        val bundle = bundleOf(
+                            "url" to "https://www.rgpvonline.com/",
+                        )
+                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
                     }
                     // Syllabus
-                    R.id.syllabus -> {
-                        navHostFragment.findNavController().navigate(R.id.syllabusFragment,null,navBuilder.build())
+                    R.id.quizButton -> {
+                        val bundle = bundleOf(
+                            "url" to "https://www.rgpv.ac.in/uni/frm_viewscheme.aspx",
+                        )
+                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
                     }
                     // Notes
                     R.id.notes -> {
-                        navHostFragment.findNavController().navigate(R.id.notesFragment,null,navBuilder.build())
+                        val bundle = bundleOf(
+                            "url" to "https://www.rgpvnotes.in/",
+                        )
+                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
                     }
                     // University Portal

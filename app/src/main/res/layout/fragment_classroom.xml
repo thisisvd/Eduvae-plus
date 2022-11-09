@@ -72,7 +72,7 @@
                         android:background="@drawable/white_round_curve_background"
                         android:padding="10dp"
                         android:layout_marginRight="@dimen/_12sdp"
-                        android:src="@drawable/ic_baseline_check_24"
+                        android:src="@drawable/classroom_icon1"
                         app:layout_constraintBottom_toTopOf="@+id/open1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/first_tv" />
@@ -154,7 +154,7 @@
                         android:background="@drawable/white_round_curve_background"
                         android:padding="10dp"
                         android:layout_marginRight="@dimen/_12sdp"
-                        android:src="@drawable/ic_baseline_check_24"
+                        android:src="@drawable/classroom_icon2"
                         app:layout_constraintBottom_toTopOf="@+id/open2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/second_tv" />
@@ -247,7 +247,7 @@
                         android:background="@drawable/white_round_curve_background"
                         android:padding="10dp"
                         android:layout_marginRight="@dimen/_12sdp"
-                        android:src="@drawable/ic_baseline_check_24"
+                        android:src="@drawable/classroom_icon4"
                         app:layout_constraintBottom_toTopOf="@+id/open3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/third_tv" />
@@ -342,7 +342,7 @@
                         android:layout_marginRight="@dimen/_12sdp"
                         android:background="@drawable/white_round_curve_background"
                         android:padding="10dp"
-                        android:src="@drawable/ic_baseline_check_24"
+                        android:src="@drawable/classroom_icon3"
                         app:layout_constraintBottom_toTopOf="@+id/open4"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/four_tv" />

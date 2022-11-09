@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.data.viewmodel.MainViewModel
+import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentPDFWebViewBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +28,7 @@ class PDFWebViewFragment : Fragment() {
     private val binding get() = _binding!!
 
     // view models
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: LocalViewModel by viewModels()
 
     // args
     private val args: PDFWebViewFragmentArgs by navArgs()
@@ -60,9 +60,13 @@ class PDFWebViewFragment : Fragment() {
             if (args.pdfLink.isNotEmpty()) {
                 // loading a pdf view
                 viewModel.getSelectedPdf(args.pdfLink).observe(viewLifecycleOwner) {
-                    var getBytes = Base64.decode(it.fileData, Base64.NO_WRAP)
-                    Log.d(TAG,"$it : $getBytes")
-                    pdfView.fromBytes(getBytes).load()
+                    if(it != null) {
+                        var getBytes = Base64.decode(it.fileData, Base64.NO_WRAP)
+                        Log.d(TAG, "$it : $getBytes")
+                        pdfView.fromBytes(getBytes).load()
+                    } else {
+                        pdfView.fromAsset("machine_learning.pdf").load()
+                    }
                 }
             } else {
                 Snackbar.make(binding.root, "Failed to load pdf!", Snackbar.LENGTH_SHORT).show()

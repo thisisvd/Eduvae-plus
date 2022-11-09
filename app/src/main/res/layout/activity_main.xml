@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Toolbar"
                 android:maxLines="1"
+                android:layout_marginEnd="12sp"
                 android:ellipsize="end"
                 android:fontFamily="@font/titillium_web"
                 android:layout_gravity="center_horizontal"

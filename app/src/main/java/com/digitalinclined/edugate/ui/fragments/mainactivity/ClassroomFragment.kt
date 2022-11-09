@@ -1,18 +1,31 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.InputType
+import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentClassroomBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ClassroomFragment : Fragment() {
+
+    // TAG
+    private val TAG = "ClassroomFragment"
 
     // binding
     private var _binding: FragmentClassroomBinding? = null
@@ -66,25 +79,25 @@ class ClassroomFragment : Fragment() {
     private fun setUpOnCLickListeners() {
         binding.apply {
             open1.setOnClickListener {
-                startProgressCountDown()
+                startProgressCountDown(firstTv.text.toString(),"#FEF8E2",firstLastUpdateTv.text.toString(),R.drawable.classroom_icon1)
             }
 
             open2.setOnClickListener {
-                startProgressCountDown()
+                startProgressCountDown(secondTv.text.toString(),"#E7FAE9",secondLastUpdateTv.text.toString(),R.drawable.classroom_icon2)
             }
 
             open3.setOnClickListener {
-                startProgressCountDown()
+                startProgressCountDown(thirdTv.text.toString(),"#EEF9FF",thirdLastUpdateTv.text.toString(),R.drawable.classroom_icon4)
             }
 
             open4.setOnClickListener {
-                startProgressCountDown()
+                startProgressCountDown(fourTv.text.toString(),"#FDEBF9",fourLastUpdateTv.text.toString(),R.drawable.classroom_icon3)
             }
         }
     }
 
     // start count down for progress
-    private fun startProgressCountDown() {
+    private fun startProgressCountDown(classroomName: String, classColor: String, classDueDate: String, imageInt: Int) {
         dialog.show()
         if(timer != null) {
             timer!!.cancel()
@@ -94,7 +107,13 @@ class ClassroomFragment : Fragment() {
 
             override fun onFinish() {
                 dialog.dismiss()
-                Snackbar.make(binding.root,"Can't connect to the classroom!",Snackbar.LENGTH_SHORT).show()
+                val bundle = bundleOf(
+                    "classroomName" to classroomName,
+                    "classColor" to classColor,
+                    "classDueDate" to classDueDate,
+                    "imageInt" to imageInt,
+                )
+                findNavController().navigate(R.id.action_classroomFragment_to_openClassroomFragment,bundle)
             }
         }
         timer!!.start()
@@ -104,11 +123,38 @@ class ClassroomFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.add_new_classroom -> {
-                Snackbar.make(binding.root,"Loading!...",Snackbar.LENGTH_SHORT).show()
+                showClassroomLinkDialog()
                 true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // new classroom link dialog
+    private fun showClassroomLinkDialog(){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Join new classroom!")
+        val input = EditText(requireContext())
+        input.hint = "Enter classroom link"
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+        builder.setPositiveButton("OK") { _, _ ->
+            dialog.show()
+            if(timer != null) {
+                timer!!.cancel()
+            }
+            timer = object: CountDownTimer(3000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {}
+
+                override fun onFinish() {
+                    dialog.dismiss()
+                    Snackbar.make(binding.root, "Can't connect to the classroom!", Snackbar.LENGTH_SHORT).show()
+                }
+            }
+            timer!!.start()
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        builder.show()
     }
 
     // calling own menu for this fragment // (not required any more but not deleted because testing is not done)

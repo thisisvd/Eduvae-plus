@@ -23,16 +23,14 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.data.model.PDFDataRoom
-import com.digitalinclined.edugate.data.viewmodel.MainViewModel
+import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentAddDiscussionBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -51,7 +49,7 @@ class AddDiscussionFragment : Fragment() {
     private val binding get() = _binding!!
 
     // view models
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: LocalViewModel by viewModels()
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
@@ -153,7 +151,6 @@ class AddDiscussionFragment : Fragment() {
 
                         override fun onFinish() {
                             dialog.dismiss()
-                            Snackbar.make(binding.root,"Error occurred!",Snackbar.LENGTH_LONG).show()
                         }
                     }
                     timer!!.start()
@@ -271,9 +268,8 @@ class AddDiscussionFragment : Fragment() {
         } else !(title.isEmpty() || description.isEmpty() || pdfFileName.isEmpty())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
-
 }
