@@ -1,28 +1,24 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.databinding.FragmentClassroomBinding
 import com.digitalinclined.edugate.databinding.FragmentQuizPerformingBinding
-import com.digitalinclined.edugate.models.DiscussionDataClass
-import com.digitalinclined.edugate.models.QuizDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
 
 
 class QuizPerformingFragment : Fragment() {
@@ -31,16 +27,17 @@ class QuizPerformingFragment : Fragment() {
     private var _binding: FragmentQuizPerformingBinding? = null
     private val binding get() = _binding!!
 
+    // args
+    private val args: QuizPerformingFragmentArgs by navArgs()
+
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private val dbReference = Firebase.firestore
-
-    // instance vars
+    // global questions counts
     private var selectedOption: String = ""
-    private var counter: Int = 1
-
-    private var questionName: String = ""
+    private var counter: Int = 0
+    private var correctAnswerCounter: Int = 0
+    private var correctOption: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,13 +63,44 @@ class QuizPerformingFragment : Fragment() {
             setUpClickListeners()
 
             // fetch quiz
-            fetchQuizFromServer()
+            if(args != null) {
+                fetchQuizFromServer()
+            }
         }
     }
 
     private fun fetchQuizFromServer() {
-        lifecycleScope.launch {
+        binding.apply {
 
+            // un-selecting all radio button
+            for (i in 0 until quizRadioGroup.childCount) {
+                (quizRadioGroup.getChildAt(i) as RadioButton).isChecked = false
+
+//                (quizRadioGroup.getChildAt(i) as RadioButton).isSelected = false
+            }
+
+            // remove selected option
+            selectedOption = ""
+
+            if (counter < args.quizze.quizTotalNumbers) {
+                // update question number
+                questionNumberTv.text = "Question ${counter + 1}/${args.quizze.quizTotalNumbers}"
+
+                // update question
+                questionTv.text = args.quizze.quizQuestions[counter].question
+
+                // update options
+                for (item in args.quizze.quizQuestions[0].options) {
+                    for (i in 0 until quizRadioGroup.childCount) {
+                        (quizRadioGroup.getChildAt(i) as RadioButton).text =
+                            args.quizze.quizQuestions[counter].options[i]
+                    }
+                }
+
+                // update correct option
+                correctOption =
+                    args.quizze.quizQuestions[counter].options[args.quizze.quizQuestions[counter].answer]
+            }
         }
     }
 
@@ -81,24 +109,47 @@ class QuizPerformingFragment : Fragment() {
 
             // radio click listener
             quizRadioGroup.setOnCheckedChangeListener { radioGroup, i ->
-                selectedOption = binding.root.findViewById<RadioButton>(i).text.toString()
+                binding.root.findViewById<RadioButton>(i).apply {
+                    selectedOption = this.text.toString()
+                }
             }
 
             // next listener
             nextButton.setOnClickListener {
-                if(counter < 6) {
-                    if(selectedOption == questionName) {
-                        Toast.makeText(requireContext(), selectedOption, Toast.LENGTH_SHORT).show()
-                        selectedOption = ""
+
+                if ((counter+1) == (args.quizze.quizTotalNumbers - 1)) {
+                    nextButton.text = "Submit"
+                }
+
+                if (counter < (args.quizze.quizTotalNumbers-1)) {
+                    if(selectedOption != "") {
+                        if (selectedOption == correctOption) {
+                            correctAnswerCounter++
+                        }
                         counter++
+                        fetchQuizFromServer()
                     } else {
-                        Toast.makeText(requireContext(), "Wrong2", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "Please select an option", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(requireContext(), "end", Toast.LENGTH_SHORT).show()
-                }
+                    makeSubmitDialog()                }
             }
         }
+    }
+
+    // make submit dialog
+    private fun makeSubmitDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle("Quiz result")
+            setMessage("Your score is ${correctAnswerCounter+1} out of 5.")
+            setCancelable(false)
+            setPositiveButton("OK"){ dialog, _ ->
+                dialog.dismiss()
+                findNavController().popBackStack()
+            }
+        }
+        builder.show()
     }
 
     override fun onDestroyView() {

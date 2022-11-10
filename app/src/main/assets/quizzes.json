@@ -1,0 +1,277 @@
+{
+	"totalQuizzes": 1,
+	"quizzes": [{
+				"quizName": "Data Structure Quiz",
+				"quizQuestions": [{
+						"question": "Which one of the following is an application of Stack Data Structure?",
+						"answer": 3,
+						"options": [
+							"Managing function calls",
+							"The stock span problem",
+							"Arithmetic expression evaluation",
+							"All of the above"
+						]
+					},
+					{
+						"question": "Which one of the following is an application of Queue Data Structure?",
+						"answer": 3,
+						"options": [
+							"When a resource is shared among multiple consumers.",
+							"When data is transferred asynchronously (data not necessarily received at same rate as sent) ",
+							"Load Balancing",
+							"All of the above"
+						]
+					},
+					{
+						"question": "Which of the following sorting algorithms can be used to sort a random linked list with minimum time complexity?",
+						"answer": 3,
+						"options": [
+							"Insertion Sort",
+							"Quick Sort",
+							"Heap Sort",
+							"Merge Sort"
+						]
+					},
+					{
+						"question": "Which of the following is true about linked list implementation of stack?",
+						"answer": 3,
+						"options": [
+							"MIn push operation, if new nodes are inserted at the beginning of linked list, then in pop operation, nodes must be removed from end.",
+							"In push operation, if new nodes are inserted at the end, then in pop operation, nodes must be removed from the beginning.",
+							"Both of the above",
+							"None of the above"
+						]
+					},
+					{
+						"question": "Which of the following is an advantage of adjacency list representation over adjacency matrix representation of a graph?",
+						"answer": 3,
+						"options": [
+							"In adjacency list representation, space is saved for sparse graphs.",
+							"DFS and BSF can be done in O(V + E) time for adjacency list representation. These operations take O(V^2) time in adjacency matrix representation. Here is V and E are number of vertices and edges respectively.",
+							"Adding a vertex in adjacency list representation is easier than adjacency matrix representation.",
+							"All of the above"
+						]
+					}
+				],
+				"quizTotalNumbers": 5
+		},
+		{
+			"quizName": "Computer Networks Quiz",
+			"quizQuestions": [{
+				"question": "What does PoP stand for?",
+				"answer": 1,
+				"options": [
+					"Pre Office Protocol",
+					"Post Office Protocol",
+					"Protocol of Post",
+					"None"
+				]
+			},
+				{
+					"question": "What is the port number of PoP?",
+					"answer": 2,
+					"options": [
+						"35",
+						"43",
+						"110",
+						"25"
+					]
+				},
+				{
+					"question": "What is the number of layers in the OSI model?",
+					"answer": 2,
+					"options": [
+						"2 layers",
+						"4 layers",
+						"7 layers",
+						"9 layers"
+					]
+				},
+				{
+					"question": "The full form of OSI is?",
+					"answer": 3,
+					"options": [
+						"Operating System interface",
+						"Optical System interconnection",
+						"Operating System Internet",
+						"Open system interconnection"
+					]
+				},
+				{
+					"question": "Identify the layer which provides service to the user.",
+					"answer": 1,
+					"options": [
+						"Session layer",
+						"Application layer",
+						"Presentation layer",
+						"Physical layer"
+					]
+				}
+			],
+			"quizTotalNumbers": 5
+		},
+		{
+			"quizName": "DBMS Quiz",
+			"quizQuestions": [{
+				"question": "Which of the following is the full form of DDL?",
+				"answer": 0,
+				"options": [
+					"Data definition language",
+					"Data derivation language",
+					"Dynamic data language",
+					"Detailed data language"
+				]
+			},
+				{
+					"question": "Which of the following is the property of transaction that protects data from system failure?",
+					"answer": 2,
+					"options": [
+						"Atomicity",
+						"Isolation",
+						"Durability",
+						"Consistency"
+					]
+				},
+				{
+					"question": "Which of the following is preserved in execution of transaction in isolation??",
+					"answer": 3,
+					"options": [
+						"Atomicity",
+						"Isolation",
+						"Durability",
+						"Consistency"
+					]
+				},
+				{
+					"question": "Which normalization form is based on the transitive dependency?",
+					"answer": 2,
+					"options": [
+						"1NF",
+						"2NF",
+						"3NF",
+						"BCNF"
+					]
+				},
+				{
+					"question": "Which is the lowest level of abstraction that describes how the data are actually stored?",
+					"answer": 1,
+					"options": [
+						"Physical",
+						"Abstract",
+						"View",
+						"User"
+					]
+				}
+			],
+			"quizTotalNumbers": 5
+		},
+		{
+			"quizName": "Machine Learning Quiz",
+			"quizQuestions": [{
+				"question": "Among the following option identify the one which is not a type of learning.",
+				"answer": 0,
+				"options": [
+					"Semi unsupervised learning",
+					"Supervised learning",
+					"Reinforcement learning",
+					"Unsupervised learning"
+				]
+			},
+				{
+					"question": "Identify the kind of learning algorithm for “facial identities for facial expressions.",	"answer": 1,
+					"options": [
+						"Prediction",
+						"Recognition patterns",
+						"Recognizing anomalies",
+						"Generating patterns"
+					]
+				},
+				{
+					"question": "Identify the model which is trained with data in only a single batch.",					"answer": 2,
+					"options": [
+						"Offline learning",
+						"Batch learning",
+						"Both A and B",
+						"None"
+					]
+				},
+				{
+					"question": "What is the application of machine learning methods to a large database called?",
+					"answer": 2,
+					"options": [
+						"Big data computing",
+						"Internet of things",
+						"Data mining",
+						"Artificial intelligence"
+					]
+				},
+				{
+					"question": "Identify the type of learning in which labeled training data is used.",
+					"answer": 1,
+					"options": [
+						"Semi unsupervised learning",
+						"Supervised learning",
+						"Reinforcement learning",
+						"Unsupervised learning"
+					]
+				}
+			],
+			"quizTotalNumbers": 5
+		},
+		{
+			"quizName": "Spring Boot Quiz",
+			"quizQuestions": [{
+				"question": "Which are the modules of core container?",
+				"answer": 0,
+				"options": [
+					"Beans, Core, Context, SpEL",
+					"Core, Context, ORM, Web",
+					"Core, Context, Aspects, Test",
+					"Bean, Core, Context, Test"
+				]
+			},
+				{
+					"question": "What is singleton scope?",
+					"answer": 0,
+					"options": [
+						"This scopes the bean definition to a single instance per Spring IoC container.",
+						"This scopes the bean definition to a single instance per HTTP Request.",
+						"This scopes the bean definition to a single instance per HTTP Session.",
+						"This scopes the bean definition to a single instance per HTTP Application/ Global session."
+					]
+				},
+				{
+					"question": "What is default scope of bean in Spring framework?",
+					"answer": 0,
+					"options": [
+						"singleton",
+						"prototype",
+						"request",
+						"session"
+					]
+				},
+				{
+					"question": "What is constructor mode of autowiring?",
+					"answer": 3,
+					"options": [
+						"Autowiring by property name. Spring tries to match and wire its properties with the beans defined by the same names in the configuration file.",
+						"Spring first tries to wire using autowire by constructor, if it does not work, Spring tries to autowire by byType",
+						"Autowiring by property type. Spring tries to match and wire a property if its type matches with exactly one of the beans name in configuration file.",
+						"Similar to byType, but type applies to constructor arguments. If there is not exactly one bean of the constructor argument type in the container, a fatal error is raised."
+					]
+				},
+				{
+					"question": "What is ContextRefreshedEvent event?",
+					"answer": 3,
+					"options": [
+						"This event is published when the Servlet Context is either initialized or refreshed",
+						"This event is published when the HTTP Request is received.",
+						"This event is published when the HTTP Response is returned",
+						"This event is published when the ApplicationContext is either initialized or refreshed"
+					]
+				}
+			],
+			"quizTotalNumbers": 5
+		}
+	]
+}

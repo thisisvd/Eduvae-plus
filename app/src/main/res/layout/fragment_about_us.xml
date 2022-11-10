@@ -11,50 +11,163 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_20sdp" >
+        android:padding="@dimen/_20sdp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="@dimen/_69sdp"
-            android:layout_height="@dimen/_69sdp"
-            android:src="@drawable/splash_logo" />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginRight="@dimen/_35sdp"
-            android:fontFamily="@font/titillium_web"
-            android:text="Edugate"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_25sdp" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="@dimen/_69sdp"
+                android:layout_height="@dimen/_69sdp"
+                android:src="@drawable/splash_logo" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/titillium_web"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa ultrices bibendum tempus nisi volutpat. Tincidunt dignissim amet sit tempor eleifend nascetur donec. Euismod quisque pulvinar nunc dui. Pulvinar sagittis consequat lacus, lobortis sodales. Amet, neque dictum nibh tortor quisque senectus dolor. Auctor est in dignissim dignissim vestibulum, fames. Pellentesque vulputate nec elit, quisque. Nibh aenean blandit duis justo, velit mattis. Diam dignissim ut semper id semper.
-Tempor leo enim, laoreet suspendisse libero auctor. Cum praesent integer tincidunt sed natoque cras consequat felis quis. Dui, enim tempus dui posuere. Dignissim libero, enim, sit natoque elementum quam mauris urna. Cursus pulvinar consequat facilisi erat bibendum amet aliquet. Odio eget nisl aliquam phasellus proin egestas odio mattis. Sed suscipit bibendum integer ut at nulla magnis scelerisque. Aliquam et a, tincidunt ultrices sed. Elementum et sed auctor quis dignissim quis."
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/_14sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/_35sdp"
+                android:fontFamily="@font/titillium_web"
+                android:text="Edugate"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_25sdp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_baseline_arrow_circle_down_24"
+                    app:tint="@color/navy_blue_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/titillium_web_semibold"
+                    android:text="Version 1.0 @ 2022"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_baseline_description_24"
+                    app:tint="@color/navy_blue_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/titillium_web_semibold"
+                    android:text="Application Description"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/titillium_web"
+                android:text="@string/about_app_description"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    android:src="@drawable/ic_baseline_people_24"
+                    app:tint="@color/navy_blue_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:fontFamily="@font/titillium_web_semibold"
+                    android:text="Contributer's"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_16sdp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/akash_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="Akash Kumar Kanojiya"
+                android:textColor="@color/light_blue_color"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:id="@+id/vd_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="Vimal Kant Dubey"
+                android:textColor="@color/light_blue_color"
+                android:textSize="@dimen/_12sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="Copyright © 2022 Educate. All rights reserved."
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

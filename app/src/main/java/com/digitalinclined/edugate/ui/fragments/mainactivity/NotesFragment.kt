@@ -2,41 +2,26 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Environment
-import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.adapter.NotesRecyclerAdapter
 import com.digitalinclined.edugate.adapter.PreviousYearsPaperAdapter
-import com.digitalinclined.edugate.adapter.SubjectRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.NOTES_TEMPORARY_LIST
-import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentNotesBinding
 import com.digitalinclined.edugate.models.QuestionsNotesDataClass
-import com.digitalinclined.edugate.models.SubjectRecyclerData
-import com.digitalinclined.edugate.restapi.models.notes.Note
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
-import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
@@ -141,5 +126,4 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
             }
         }
     }
-
 }

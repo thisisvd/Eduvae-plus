@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -40,6 +41,9 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
 
     // Adapters
     private lateinit var recyclerAdapter: DiscussionRecyclerAdapter
+
+    // toggle button
+    private lateinit var toggle: ActionBarDrawerToggle
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth

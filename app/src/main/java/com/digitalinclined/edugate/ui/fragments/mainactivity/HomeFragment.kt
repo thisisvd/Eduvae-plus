@@ -102,7 +102,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             // syllabus click listener
             quizButton.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_quizPerformingFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_quizFragment)
             }
 
             // oldYearPaper click listener
