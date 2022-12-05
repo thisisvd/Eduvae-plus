@@ -44,7 +44,7 @@ Retrofit / Navigation / Glide
 
 ## License
 
-[Apache License](https://github.com/thisisvd/FitMe-App/blob/master/LICENSE)
+[Apache License](https://github.com/thisisvd/Edugate/blob/master/LICENSE)
 
 ## Copyright
 
