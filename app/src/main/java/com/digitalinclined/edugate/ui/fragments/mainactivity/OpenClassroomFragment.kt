@@ -3,26 +3,25 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.adapter.ClassroomRecyclerAdapter
-import com.digitalinclined.edugate.adapter.PreviousYearsPaperAdapter
+import com.digitalinclined.edugate.adapter.ClassroomDiscussionRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.databinding.FragmentClassroomBinding
 import com.digitalinclined.edugate.databinding.FragmentOpenClassroomBinding
 import com.digitalinclined.edugate.models.ClassroomObjectsDataClass
-import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -39,13 +38,19 @@ class OpenClassroomFragment : Fragment() {
     private val binding get() = _binding!!
 
     // Adapters
-    lateinit var recyclerAdapter: ClassroomRecyclerAdapter
+    lateinit var recyclerAdapter: ClassroomDiscussionRecyclerAdapter
 
     // toggle button
     private lateinit var toggle: ActionBarDrawerToggle
 
     // args
     private val args: OpenClassroomFragmentArgs by navArgs()
+
+    // enable the options menu in activity
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +89,7 @@ class OpenClassroomFragment : Fragment() {
     private fun fetchClassroomFromFirebase() {
         var discussionsList = ArrayList<ClassroomObjectsDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom").get()
+            Firebase.firestore.collection("classroom/${args.classroomID}/discussionsmaterial").get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
@@ -93,6 +98,7 @@ class OpenClassroomFragment : Fragment() {
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")
+                        discussionsList.reverse()
                         if (discussionsList.isNotEmpty()) {
                             recyclerAdapter.differ.submitList(discussionsList)
                         } else {
@@ -116,20 +122,20 @@ class OpenClassroomFragment : Fragment() {
             constraintLayout2.setBackgroundColor(Color.parseColor(args.classColor))
 
             // class room name
-            firstTv.text = args.classroomName
+            classroomNameTv.text = args.classroomName
 
             // due date
-            firstLastUpdateTv.text = args.classDueDate
+            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classDueDate.toLong())}"
 
             // image
-            imageView1.setImageResource(args.imageInt)
+            imageView1.setImageResource(R.drawable.classroom_icon1)
 
         }
     }
 
     // Recycler view setup
     private fun setupRecyclerView(){
-        recyclerAdapter = ClassroomRecyclerAdapter()
+        recyclerAdapter = ClassroomDiscussionRecyclerAdapter()
         binding.apply {
             classroomDiscussionRecyclerView.apply {
                 adapter = recyclerAdapter
@@ -147,9 +153,28 @@ class OpenClassroomFragment : Fragment() {
         }
     }
 
+    // option selector for Circle layout profile menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.add_new_discussion_classroom -> {
+                val bundle = bundleOf(
+                    "classroomID" to args.classroomID
+                )
+                findNavController().navigate(R.id.action_openClassroomFragment_to_addClassroomDiscussionFragment,bundle)
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    // calling own menu for this fragment
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.add_discussion_classroom_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

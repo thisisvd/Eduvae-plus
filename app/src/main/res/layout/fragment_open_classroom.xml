@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/first_tv"
+            android:id="@+id/classroom_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView1" />
 
         <TextView
-            android:id="@+id/first_last_update_tv"
+            android:id="@+id/classroom_last_update_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
@@ -50,8 +50,8 @@
             android:textSize="@dimen/_8sdp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/imageView1"
-            app:layout_constraintEnd_toEndOf="@+id/first_tv"
-            app:layout_constraintTop_toBottomOf="@+id/first_tv" />
+            app:layout_constraintEnd_toEndOf="@+id/classroom_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/classroom_name_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

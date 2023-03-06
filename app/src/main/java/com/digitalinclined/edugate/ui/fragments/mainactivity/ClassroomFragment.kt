@@ -2,7 +2,6 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,17 +9,25 @@ import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.adapter.ClassroomDiscussionRecyclerAdapter
+import com.digitalinclined.edugate.adapter.ClassroomRecyclerAdapter
+import com.digitalinclined.edugate.constants.Constants.JOINED_CLASSROOM_LIST
 import com.digitalinclined.edugate.databinding.FragmentClassroomBinding
+import com.digitalinclined.edugate.models.ClassroomDetailsClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ClassroomFragment : Fragment() {
 
@@ -30,6 +37,9 @@ class ClassroomFragment : Fragment() {
     // binding
     private var _binding: FragmentClassroomBinding? = null
     private val binding get() = _binding!!
+
+    // recycler adapter
+    private lateinit var recyclerAdapter: ClassroomRecyclerAdapter
 
     // alert progress dialog
     private lateinit var dialog: Dialog
@@ -70,53 +80,55 @@ class ClassroomFragment : Fragment() {
                 }
             }
 
-            // on click listeners
-            setUpOnCLickListeners()
+            // setup recycler
+            setupRecyclerView()
+
+            // fetch classrooms data
+            fetchClassroomFromFirebase()
         }
     }
 
-    // on click listeners
-    private fun setUpOnCLickListeners() {
-        binding.apply {
-            open1.setOnClickListener {
-                startProgressCountDown(firstTv.text.toString(),"#FEF8E2",firstLastUpdateTv.text.toString(),R.drawable.classroom_icon1)
-            }
+    // fetch classrooms data from firebase
+    private fun fetchClassroomFromFirebase() {
+        if (!JOINED_CLASSROOM_LIST.isNullOrEmpty()) {
+            var classroomList = ArrayList<ClassroomDetailsClass>()
+            lifecycleScope.launch(Dispatchers.IO) {
+                Firebase.firestore.collection("classroom").get()
+                    .addOnSuccessListener { documentResult ->
+                        if (documentResult != null) {
+                            Log.d(
+                                TAG,
+                                "DocumentSnapshot data size : ${documentResult.documents.size}"
+                            )
+                            for (document in documentResult) {
+                                val dataClass =
+                                    document.toObject(ClassroomDetailsClass::class.java)!!
+                                if (JOINED_CLASSROOM_LIST.contains(dataClass.classroomID)) {
+                                    classroomList.add(dataClass)
+                                }
+                            }
 
-            open2.setOnClickListener {
-                startProgressCountDown(secondTv.text.toString(),"#E7FAE9",secondLastUpdateTv.text.toString(),R.drawable.classroom_icon2)
-            }
+                            Log.d(TAG, "List size : ${classroomList.size}")
 
-            open3.setOnClickListener {
-                startProgressCountDown(thirdTv.text.toString(),"#EEF9FF",thirdLastUpdateTv.text.toString(),R.drawable.classroom_icon4)
-            }
+                            if (classroomList.isNotEmpty()) {
+                                recyclerAdapter.differ.submitList(classroomList)
+                            } else {
+                                Snackbar.make(
+                                    binding.root,
+                                    "No Classroom available!",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
 
-            open4.setOnClickListener {
-                startProgressCountDown(fourTv.text.toString(),"#FDEBF9",fourLastUpdateTv.text.toString(),R.drawable.classroom_icon3)
+//                        binding.progressBar.visibility = View.GONE
+                        }
+                    }.addOnFailureListener { e ->
+                        Log.d(TAG, "Error adding document", e)
+                        Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
+//                    binding.progressBar.visibility = View.GONE
+                    }
             }
         }
-    }
-
-    // start count down for progress
-    private fun startProgressCountDown(classroomName: String, classColor: String, classDueDate: String, imageInt: Int) {
-        dialog.show()
-        if(timer != null) {
-            timer!!.cancel()
-        }
-        timer = object: CountDownTimer(4000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-
-            override fun onFinish() {
-                dialog.dismiss()
-                val bundle = bundleOf(
-                    "classroomName" to classroomName,
-                    "classColor" to classColor,
-                    "classDueDate" to classDueDate,
-                    "imageInt" to imageInt,
-                )
-                findNavController().navigate(R.id.action_classroomFragment_to_openClassroomFragment,bundle)
-            }
-        }
-        timer!!.start()
     }
 
     // option selector for Circle layout profile menu
@@ -135,8 +147,13 @@ class ClassroomFragment : Fragment() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Join new classroom!")
         val input = EditText(requireContext())
-        input.hint = "Enter classroom link"
-        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.apply {
+            hint = "Enter classroom link"
+            inputType = InputType.TYPE_CLASS_TEXT
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(16, 0, 16, 0)
+            this.layoutParams = params
+        }
         builder.setView(input)
         builder.setPositiveButton("OK") { _, _ ->
             dialog.show()
@@ -155,6 +172,31 @@ class ClassroomFragment : Fragment() {
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         builder.show()
+    }
+
+    // Recycler view setup
+    private fun setupRecyclerView(){
+        recyclerAdapter = ClassroomRecyclerAdapter()
+        binding.apply {
+            classroomRecyclerView.apply {
+                adapter = recyclerAdapter
+                layoutManager = LinearLayoutManager(activity)
+            }
+        }
+
+        // on click listener
+        recyclerAdapter.apply {
+            setClassroomOnItemClickListener { dataClass ->
+                val bundle = bundleOf(
+                    "classroomName" to dataClass.classroomName,
+                    "classColor" to dataClass.classColor,
+                    "classDueDate" to dataClass.classDueDate,
+                    "imageInt" to 1234,
+                    "classroomID" to dataClass.classroomID
+                )
+                findNavController().navigate(R.id.action_classroomFragment_to_openClassroomFragment,bundle)
+            }
+        }
     }
 
     // calling own menu for this fragment // (not required any more but not deleted because testing is not done)

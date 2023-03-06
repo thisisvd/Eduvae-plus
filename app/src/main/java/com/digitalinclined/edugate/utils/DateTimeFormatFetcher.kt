@@ -10,4 +10,8 @@ class DateTimeFormatFetcher {
         return SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(timestamp)
     }
 
+    // get time and date
+    fun getDateWithIncludedTime(timestamp: Long): String {
+        return SimpleDateFormat("MMM dd, yyyy hh:mm", Locale.getDefault()).format(timestamp)
+    }
 }

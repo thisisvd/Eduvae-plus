@@ -198,6 +198,12 @@
             app:argType="string" />
         <argument android:name="imageInt"
             app:argType="integer" />
+        <argument
+            android:name="classroomID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_openClassroomFragment_to_addClassroomDiscussionFragment"
+            app:destination="@id/addClassroomDiscussionFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -207,6 +213,13 @@
         <action
             android:id="@+id/action_quizFragment_to_quizPerformingFragment"
             app:destination="@id/quizPerformingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addClassroomDiscussionFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AddClassroomDiscussionFragment"
+        android:label="AddClassroomDiscussionFragment" >
+        <argument android:name="classroomID"
+            app:argType="string" />
     </fragment>
 
 </navigation>

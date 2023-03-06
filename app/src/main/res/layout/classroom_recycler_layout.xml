@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/classroom_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/classroom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FEF8E2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <ImageView
+                android:id="@+id/classroom_icon_img"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/white_round_curve_background"
+                android:padding="10dp"
+                android:src="@drawable/classroom_icon1"
+                app:layout_constraintBottom_toTopOf="@+id/open_classroom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/classroom_name_tv" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open_classroom"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:backgroundTint="@color/button_gradient_end_color"
+                android:text="Open"
+                android:textColor="@color/white"
+                app:cornerRadius="@dimen/_11sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/classroom_last_update_tv"
+                app:layout_constraintTop_toBottomOf="@+id/classroom_last_update_tv" />
+
+            <TextView
+                android:id="@+id/classroom_name_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="Data structures and algorithms"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/classroom_icon_img"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/classroom_last_update_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="Last updated on - Nov 8, 2022"
+                android:textColor="#6A736B"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/classroom_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/classroom_name_tv" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_web_semibold"
+                android:text="PENDING WORK LEFT - 18%"
+                android:textColor="@color/red"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/open_classroom"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

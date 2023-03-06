@@ -29,6 +29,7 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
+import com.digitalinclined.edugate.constants.Constants.JOINED_CLASSROOM_LIST
 import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
 import com.digitalinclined.edugate.constants.Constants.STORAGE_REQUEST_CODE
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
@@ -182,6 +183,11 @@ class MainActivity : AppCompatActivity() {
                             if (userProfile.following != null) {
                                 Log.d(TAG, "${userProfile.following!!.size}")
                                 FOLLOWING_USER_ID.postValue(userProfile.following)
+                            }
+
+                            // add classroom list
+                            if (userProfile.joinedClassrooms != null){
+                                JOINED_CLASSROOM_LIST.addAll(userProfile.joinedClassrooms)
                             }
 
                             if (userProfile != null) {

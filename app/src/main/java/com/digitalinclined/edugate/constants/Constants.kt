@@ -54,6 +54,9 @@ object Constants {
     // Constant TEMP ARRAYLIST for FOLLOWING USERS ID
     var FOLLOWING_USER_ID = MutableLiveData<ArrayList<String>>()
 
+    // constant - join classroom list
+    var JOINED_CLASSROOM_LIST = ArrayList<String>()
+
     // Constant TEMP list for BANNER images API
     var BANNER_IMAGES_LIST = arrayListOf<Banner>()
     var FETCHED_DATA_CLASS: FetchDataClass? = null

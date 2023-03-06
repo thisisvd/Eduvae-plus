@@ -1,9 +1,9 @@
 package com.digitalinclined.edugate.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,24 +11,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.databinding.ClassroomItemLayoutBinding
-import com.digitalinclined.edugate.models.ClassroomObjectsDataClass
+import com.digitalinclined.edugate.databinding.ClassroomRecyclerLayoutBinding
+import com.digitalinclined.edugate.models.ClassroomDetailsClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
 
 class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
 
     // Diff Util Call Back
-    private val differCallback = object : DiffUtil.ItemCallback<ClassroomObjectsDataClass>() {
+    private val differCallback = object : DiffUtil.ItemCallback<ClassroomDetailsClass>() {
         override fun areItemsTheSame(
-            oldItem: ClassroomObjectsDataClass,
-            newItem: ClassroomObjectsDataClass
+            oldItem: ClassroomDetailsClass,
+            newItem: ClassroomDetailsClass
         ): Boolean {
-            return oldItem.timestamp == newItem.timestamp
+            return oldItem.classroomName == newItem.classroomName
         }
 
         override fun areContentsTheSame(
-            oldItem: ClassroomObjectsDataClass,
-            newItem: ClassroomObjectsDataClass
+            oldItem: ClassroomDetailsClass,
+            newItem: ClassroomDetailsClass
         ): Boolean {
             return oldItem == newItem
         }
@@ -38,7 +39,7 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
     val differ = AsyncListDiffer(this,differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassroomViewHolder {
-        val binding = ClassroomItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ClassroomRecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ClassroomViewHolder(binding)
     }
 
@@ -50,50 +51,21 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
         holder.binding.apply {
 
             // Image View
-            val requestOptions = RequestOptions()
-            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
-            requestOptions.centerCrop()
-            if(data.userImage != null) {
-                Glide.with(root)
-                    .load(data.userImage)
-                    .apply(requestOptions)
-                    .into(classroomUserImageView)
-            }
+            // code here to load image...
 
-            // name
-            classroomUsernameTv.text = data.userName
+            // classroom name
+            classroomNameTv.text = data.classroomName
 
-            // timestamp
-            postTime.text = DateTimeFormatFetcher().getDateTime(data.timestamp!!.toLong())
+            // due date
+            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(data.classDueDate!!.toLong())}"
 
-            // pdf
-            if(!data.pdfNameStored.isNullOrEmpty()) {
-                classroomPdfView.visibility = View.VISIBLE
-                pdfName.text = data.pdfNameStored
-                classroomPdfView.setOnClickListener {
-                    onClassroomItemClickListener?.let {
-                        it(data.pdfNameStored!!)
-                    }
-                }
-            }
-
-            // image
-            if(!data.imageLink.isNullOrEmpty()) {
-                classroomImageView.visibility = View.VISIBLE
-                Glide.with(root)
-                    .load(data.imageLink)
-                    .apply(requestOptions)
-                    .into(classroomImage)
-            }
-
-            // discussion
-            classroomDiscussionTv.text = data.description
+            // classroom color
+            classroomLayout.setBackgroundColor(Color.parseColor(data.classColor))
 
             // click listener
-            likeIcon1.setOnClickListener {
-                Snackbar.make(it,"Post appreciated",Snackbar.LENGTH_SHORT).show()
+            openClassroom.setOnClickListener {
+                onClassroomItemClickListener?.let { it(data) }
             }
-
         }
 
     }
@@ -101,12 +73,12 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class ClassroomViewHolder(val binding: ClassroomItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ClassroomViewHolder(val binding: ClassroomRecyclerLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     // On click listener
-    private var onClassroomItemClickListener: ((String) -> Unit)? = null
+    private var onClassroomItemClickListener: ((ClassroomDetailsClass) -> Unit)? = null
 
-    fun setClassroomOnItemClickListener(listener: (String) -> Unit) {
+    fun setClassroomOnItemClickListener(listener: (ClassroomDetailsClass) -> Unit) {
         onClassroomItemClickListener = listener
     }
 }

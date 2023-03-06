@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -61,6 +62,17 @@
         app:layout_constraintStart_toStartOf="@+id/classroom_user_image_view"
         app:layout_constraintTop_toBottomOf="@+id/classroom_user_image_view">
 
+        <TextView
+            android:id="@+id/classroom_discussion_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="Awsome book about cooking"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
         <LinearLayout
             android:id="@+id/classroom_pdf_view"
             android:layout_width="match_parent"
@@ -109,17 +121,6 @@
                 android:src="@color/navy_blue_color" />
 
         </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/classroom_discussion_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_8sdp"
-            android:layout_weight="1"
-            android:fontFamily="@font/titillium_web"
-            android:text="Awsome book about cooking"
-            android:textColor="@color/text_color"
-            android:textSize="16sp" />
 
     </LinearLayout>
 

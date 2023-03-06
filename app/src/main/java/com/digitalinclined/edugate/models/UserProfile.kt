@@ -9,5 +9,6 @@ data class UserProfile(
     val city: String? = null,
     val semester: String? = null,
     val profilephotolink: String? = null,
-    val following: ArrayList<String>? = null
+    val following: ArrayList<String>? = null,
+    val joinedClassrooms: ArrayList<String>? = null
 )
