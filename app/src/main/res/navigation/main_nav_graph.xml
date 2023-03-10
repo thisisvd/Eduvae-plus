@@ -204,6 +204,9 @@
         <action
             android:id="@+id/action_openClassroomFragment_to_addClassroomDiscussionFragment"
             app:destination="@id/addClassroomDiscussionFragment" />
+        <argument
+            android:name="iconColor"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -221,5 +224,4 @@
         <argument android:name="classroomID"
             app:argType="string" />
     </fragment>
-
 </navigation>

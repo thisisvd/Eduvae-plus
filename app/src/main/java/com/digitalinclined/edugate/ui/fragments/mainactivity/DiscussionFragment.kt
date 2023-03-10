@@ -11,14 +11,12 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.DiscussionRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
-import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentDiscussionBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity

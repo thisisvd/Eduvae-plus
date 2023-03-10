@@ -102,6 +102,11 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                 startActivityForResult(intent, RC_SIGN_IN)
             }
 
+            // admin login
+            adminLogin.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_adminLoginFragment)
+            }
+
         }
 
     }

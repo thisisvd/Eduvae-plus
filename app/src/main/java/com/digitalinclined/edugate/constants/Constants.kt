@@ -11,6 +11,9 @@ object Constants {
     // API
     const val BASE_URL = "http://64.227.161.183/"
 
+    // admin
+    var ADMIN_USER_NAME = "Admin"
+
     // PERMISSION
     const val STORAGE_REQUEST_CODE = 101
 

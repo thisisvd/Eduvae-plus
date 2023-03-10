@@ -1,10 +1,9 @@
-package com.digitalinclined.edugate.ui.fragments.mainactivity
+package com.digitalinclined.edugate.ui.fragments.adminpanel
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -15,9 +14,7 @@ import android.util.Base64.NO_WRAP
 import android.util.Base64.encodeToString
 import android.util.Log
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,15 +22,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
+import com.digitalinclined.edugate.constants.Constants.ADMIN_USER_NAME
 import com.digitalinclined.edugate.data.model.PDFDataRoom
 import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentAddClassroomDiscussionBinding
-import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -43,7 +37,7 @@ import kotlinx.coroutines.launch
 import java.io.*
 import java.util.*
 
-class AddClassroomDiscussionFragment : Fragment() {
+class AdminAddClassroomDiscussionFragment : Fragment() {
 
     // TAG
     private val TAG = "AddClassDiscussionFragment"
@@ -59,19 +53,13 @@ class AddClassroomDiscussionFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
 
     // nav-args
-    private val args: AddClassroomDiscussionFragmentArgs by navArgs()
+    private val args: AdminAddClassroomDiscussionFragmentArgs by navArgs()
 
     // firebase db
     private val db = Firebase.firestore
     private lateinit var dbReference: CollectionReference
     private val dbReferenceUpdateTime = db.collection("classroom")
     private val storageRef = Firebase.storage.reference
-
-    // shared Preferences
-    private lateinit var sharedPreferences: SharedPreferences
-
-    // toggle button
-    private lateinit var toggle: ActionBarDrawerToggle
 
     // alert progress dialog
     private lateinit var dialog: Dialog
@@ -97,18 +85,10 @@ class AddClassroomDiscussionFragment : Fragment() {
     ): View? {
         _binding = FragmentAddClassroomDiscussionBinding.inflate(inflater, container, false)
 
-        // sharedPreferences init
-        sharedPreferences = (requireActivity() as MainActivity).sharedPreferences
-
-        // firebase init
-        firebaseAuth = Firebase.auth
-
-        // toggle btn toolbar setup
-        toggle = (activity as MainActivity).toggle
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Add a Discussion"
-        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-        toggle.setHomeAsUpIndicator(drawable)
-        IS_BACK_TOOLBAR_BTN_ACTIVE = true
+        binding.onlyForAdminLayout.visibility = View.VISIBLE
+        binding.backBtn.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         // init Loading Dialog
         dialog = Dialog(requireContext())
@@ -227,8 +207,8 @@ class AddClassroomDiscussionFragment : Fragment() {
     private fun addToServer(description: String, pdfBaseName: String, pdfId: String) {
         binding.apply {
             val discussionData = hashMapOf(
-                "userName" to sharedPreferences.getString(Constants.USER_NAME,""),
-                "userImage" to sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,""),
+                "userName" to ADMIN_USER_NAME,
+                "userImage" to "",
                 "timestamp" to System.currentTimeMillis().toString(),
                 "description" to description,
                 "pdfNameStored" to pdfBaseName,

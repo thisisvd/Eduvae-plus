@@ -52,7 +52,7 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(data.userImage != null) {
+            if(!data.userImage.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.userImage)
                     .apply(requestOptions)

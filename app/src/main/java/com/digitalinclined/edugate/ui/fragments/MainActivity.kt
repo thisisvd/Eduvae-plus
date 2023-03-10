@@ -187,7 +187,11 @@ class MainActivity : AppCompatActivity() {
 
                             // add classroom list
                             if (userProfile.joinedClassrooms != null){
-                                JOINED_CLASSROOM_LIST.addAll(userProfile.joinedClassrooms)
+                                for (classID in userProfile.joinedClassrooms) {
+                                    if (!JOINED_CLASSROOM_LIST.contains(classID)) {
+                                        JOINED_CLASSROOM_LIST.add(classID)
+                                    }
+                                }
                             }
 
                             if (userProfile != null) {
@@ -237,8 +241,7 @@ class MainActivity : AppCompatActivity() {
     private fun bottomNavigationDrawer() {
         binding.apply {
 
-            navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.navHostFragmentMain) as NavHostFragment
+            navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragmentMain) as NavHostFragment
             val navController = navHostFragment.navController
             bottomNavigationView.apply {
                 val popupMenu = PopupMenu(context, null)

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/theme_color"
     android:orientation="vertical"
     android:paddingLeft="@dimen/_18sdp"
@@ -46,51 +46,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/phoneNumberLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_13sdp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/titillium_web_light"
-            android:text="Mobile"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/_13sdp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneNumberEdittextLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
+            android:id="@+id/phoneNumberLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/titillium_web"
-            app:errorEnabled="true"
-            android:hint=" "
-            app:errorTextColor="@color/red">
+            android:layout_marginTop="@dimen/_13sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneNumber"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/titillium_web_light"
+                android:text="Mobile"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13sdp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberEdittextLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/edittext_stroke"
                 android:fontFamily="@font/titillium_web"
-                android:hint="Your phone number"
-                android:inputType="number"
-                android:maxLength="10"
-                android:padding="@dimen/_13sdp"
-                android:textColor="@color/text_color"
-                android:textColorHint="@color/text_color"
-                android:textSize="@dimen/_14sdp" />
+                android:hint=" "
+                app:errorEnabled="true"
+                app:errorTextColor="@color/red">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/edittext_stroke"
+                    android:fontFamily="@font/titillium_web"
+                    android:hint="Your phone number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:padding="@dimen/_13sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="@dimen/_14sdp" />
 
-    </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/loginLinearLayout"
@@ -108,10 +108,10 @@
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:backgroundTint="@color/button_gradient_end_color"
                 android:padding="@dimen/_8sdp"
-                app:cornerRadius="@dimen/_14sdp"
-                android:textColor="@color/white"
                 android:text="Verify With OTP"
-                android:textSize="@dimen/_17sdp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp"
+                app:cornerRadius="@dimen/_14sdp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -151,14 +151,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
                 android:layout_marginBottom="@dimen/_15sdp"
-                android:gravity="center"
                 android:background="@drawable/round_google_login_background"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="11dp"
+                android:paddingTop="8dp"
+                android:paddingRight="11dp"
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:layout_width="@dimen/_32sdp"
@@ -169,9 +169,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_18sdp"
                     android:fontFamily="@font/titillium_web"
                     android:text="Login with google"
-                    android:layout_marginLeft="@dimen/_18sdp"
                     android:textColor="#3F4542"
                     android:textSize="@dimen/_17sdp"
                     android:textStyle="bold" />
@@ -206,6 +206,34 @@
                     android:textSize="@dimen/_15sdp" />
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_web"
+                android:text="For admin login page  "
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/admin_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_web"
+                android:text="Click here!"
+                android:textColor="#FFC800"
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 

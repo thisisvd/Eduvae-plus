@@ -88,6 +88,9 @@
             app:exitAnim="@anim/wait_animation"
             app:popEnterAnim="@anim/wait_animation"
             app:popExitAnim="@anim/slide_right_animation" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminLoginFragment"
+            app:destination="@id/adminLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/OTPFragment"
@@ -128,5 +131,77 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminLoginFragment"
+        android:label="fragment_admin_login"
+        tools:layout="@layout/fragment_admin_login" >
+        <action
+            android:id="@+id/action_adminLoginFragment_to_adminMainFragment"
+            app:destination="@id/adminMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminCreateClassroomFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminCreateClassroomFragment"
+        android:label="fragment_admin_create_classroom"
+        tools:layout="@layout/fragment_admin_create_classroom" />
+    <fragment
+        android:id="@+id/adminMainFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminMainFragment"
+        android:label="fragment_admin_main"
+        tools:layout="@layout/fragment_admin_main" >
+        <action
+            android:id="@+id/action_adminMainFragment_to_adminCreateClassroomFragment"
+            app:destination="@id/adminCreateClassroomFragment" />
+        <argument
+            android:name="adminID"
+            app:argType="string" />
+        <argument
+            android:name="adminName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_adminMainFragment_to_adminClassroomFragment"
+            app:destination="@id/adminClassroomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminClassroomFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminClassroomFragment"
+        android:label="AdminClassroomFragment" >
+        <action
+            android:id="@+id/action_adminClassroomFragment_to_adminOpenClassroomFragment"
+            app:destination="@id/adminOpenClassroomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminOpenClassroomFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminOpenClassroomFragment"
+        android:label="AdminOpenClassroomFragment" >
+    <argument
+        android:name="classroomName"
+        app:argType="string" />
+    <argument
+        android:name="classColor"
+        app:argType="string" />
+    <argument
+        android:name="classDueDate"
+        app:argType="string" />
+    <argument android:name="imageInt"
+        app:argType="integer" />
+    <argument
+        android:name="classroomID"
+        app:argType="string" />
+    <argument
+        android:name="iconColor"
+        app:argType="string" />
+        <action
+            android:id="@+id/action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment"
+            app:destination="@id/adminAddClassroomDiscussionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminAddClassroomDiscussionFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminAddClassroomDiscussionFragment"
+        android:label="AdminAddClassroomDiscussionFragment" >
+        <argument android:name="classroomID"
+            app:argType="string" />
     </fragment>
 </navigation>
