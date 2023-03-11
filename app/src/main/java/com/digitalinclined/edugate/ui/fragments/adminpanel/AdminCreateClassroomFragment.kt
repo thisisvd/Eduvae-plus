@@ -32,11 +32,8 @@ class AdminCreateClassroomFragment : Fragment() {
     private var _binding: FragmentAdminCreateClassroomBinding? = null
     private val binding get() = _binding!!
 
-    // toggle button
-    private lateinit var toggle: ActionBarDrawerToggle
-
     // init default icon
-    private var defaultIcon = R.drawable.classroom_icon1
+    private var defaultIcon = "https://firebasestorage.googleapis.com/v0/b/fitme-minor-project.appspot.com/o/images%2F6NMEfmmnwjPEoIA8mYCC1678567312786.jpg?alt=media&token=6feb83b6-db5e-437e-964b-9767650dd305"
 
     // alert progress dialog
     private lateinit var dialog: Dialog
@@ -95,9 +92,9 @@ class AdminCreateClassroomFragment : Fragment() {
             imageViewLayout.setOnClickListener{
                 var dialog = CreateClassroomIconDialog()
                 dialog.show(parentFragmentManager,"Create Classroom Dialog")
-                dialog.setOnItemClickListener {
-                    classroomImageIcon.setImageResource(it)
-                    defaultIcon = it
+                dialog.setOnItemClickListener { resourceID, link ->
+                    classroomImageIcon.setImageResource(resourceID)
+                    defaultIcon = link
                 }
             }
 

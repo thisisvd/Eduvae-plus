@@ -125,22 +125,29 @@ class ClassroomFragment : Fragment() {
 
                             if (classroomList.isNotEmpty()) {
                                 recyclerAdapter.differ.submitList(classroomList)
+                                binding.progressBar.visibility = View.GONE
                             } else {
                                 Snackbar.make(
                                     binding.root,
                                     "No Classroom available!",
                                     Snackbar.LENGTH_LONG
                                 ).show()
+                                binding.progressBar.visibility = View.GONE
                             }
-
-                        binding.progressBar.visibility = View.GONE
                         }
                     }.addOnFailureListener { e ->
                         Log.d(TAG, "Error adding document", e)
                         Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
-                    binding.progressBar.visibility = View.GONE
+                        binding.progressBar.visibility = View.GONE
                     }
             }
+        } else {
+            Snackbar.make(
+                binding.root,
+                "No Classroom available!",
+                Snackbar.LENGTH_LONG
+            ).show()
+            binding.progressBar.visibility = View.GONE
         }
     }
 
@@ -172,7 +179,6 @@ class ClassroomFragment : Fragment() {
             dialog.show()
 
             if (!input.text.isNullOrEmpty()) {
-                Log.d(TAG,"${input.text}${allValidClassRoom[0]},${allValidClassRoom[1]}:${allValidClassRoom[0] == input.text.toString()}")
                 if (allValidClassRoom.contains(input.text.toString())) {
                     Log.d(TAG,"Classroom added!")
                     addClassroomToUserAccount(input.text.toString())
@@ -223,12 +229,9 @@ class ClassroomFragment : Fragment() {
         recyclerAdapter.apply {
             setClassroomOnItemClickListener { dataClass, classColor, iconColor ->
                 val bundle = bundleOf(
-                    "classroomName" to dataClass.classroomName,
                     "classColor" to classColor,
                     "iconColor" to iconColor,
-                    "classDueDate" to dataClass.classDueDate,
-                    "imageInt" to dataClass.imageInt!!.toInt(),
-                    "classroomID" to dataClass.classroomID
+                    "classroomDetailsClass" to dataClass
                 )
                 findNavController().navigate(R.id.action_classroomFragment_to_openClassroomFragment,bundle)
             }

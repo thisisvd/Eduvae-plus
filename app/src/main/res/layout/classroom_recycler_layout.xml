@@ -84,13 +84,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/classroom_name_tv" />
 
             <TextView
+                android:id="@+id/pending_work_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/titillium_web_semibold"
-                android:text="PENDING WORK LEFT - 18%"
+                android:text="PENDING WORK LEFT"
                 android:textColor="@color/red"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:textSize="@dimen/_8sdp"
+                android:visibility="gone"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="@+id/open_classroom"
                 app:layout_constraintEnd_toEndOf="parent" />

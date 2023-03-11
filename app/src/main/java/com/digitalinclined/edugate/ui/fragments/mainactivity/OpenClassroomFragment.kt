@@ -1,13 +1,17 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
@@ -17,12 +21,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ClassroomDiscussionRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.JOINED_CLASSROOM_LIST
+import com.digitalinclined.edugate.constants.Constants.USER_COURSE
+import com.digitalinclined.edugate.constants.Constants.USER_NAME
+import com.digitalinclined.edugate.constants.Constants.USER_PROFILE_PHOTO_LINK
+import com.digitalinclined.edugate.constants.Constants.USER_SEMESTER
+import com.digitalinclined.edugate.constants.Constants.quizSubmissionObserver
 import com.digitalinclined.edugate.databinding.FragmentOpenClassroomBinding
 import com.digitalinclined.edugate.models.ClassroomObjectsDataClass
+import com.digitalinclined.edugate.models.quizzesmodel.QuizQuestion
+import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
+import com.digitalinclined.edugate.models.quizzesmodel.Quizze
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
@@ -51,6 +66,15 @@ class OpenClassroomFragment : Fragment() {
     // args
     private val args: OpenClassroomFragmentArgs by navArgs()
 
+    // shared Preferences
+    private lateinit var sharedPreferences: SharedPreferences
+
+    // quiz data if exists
+    private lateinit var quizze: Quizze
+
+    // alert progress dialog
+    private lateinit var dialog: Dialog
+
     // enable the options menu in activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +96,19 @@ class OpenClassroomFragment : Fragment() {
         toggle.setHomeAsUpIndicator(drawable)
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
+        // sharedPreferences init
+        sharedPreferences = (requireActivity() as MainActivity).sharedPreferences
+
+        // init Loading Dialog
+        dialog = Dialog(requireContext())
+        dialog.apply {
+            setContentView(R.layout.custom_dialog)
+            setCancelable(false)
+            if(window != null) {
+                window!!.setBackgroundDrawable(ColorDrawable(0))
+            }
+        }
+
         return binding.root
     }
 
@@ -87,6 +124,14 @@ class OpenClassroomFragment : Fragment() {
 
             // fetch data
             fetchClassroomFromFirebase()
+
+            // observer
+            quizSubmissionObserver.observe(viewLifecycleOwner) {
+                if (it.isTaken) {
+                    submitClassWorkToServer(it.userMarks!!,it.totalMarks!!)
+                    quizSubmissionObserver.postValue(QuizSubmissionDataClass())
+                }
+            }
         }
     }
 
@@ -94,7 +139,7 @@ class OpenClassroomFragment : Fragment() {
     private fun fetchClassroomFromFirebase() {
         var discussionsList = ArrayList<ClassroomObjectsDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom/${args.classroomID}/discussionsmaterial").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial").get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
@@ -119,16 +164,65 @@ class OpenClassroomFragment : Fragment() {
         }
     }
 
+    // fetch classroom work from firebase
+    private fun fetchClassroomWorkFromFirebase() {
+        var quizList = ArrayList<QuizQuestion>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/classwork").get()
+                .addOnSuccessListener { documentResult ->
+                    if (documentResult != null) {
+                        Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
+                        for (document in documentResult) {
+                            val dataClass = document.toObject(QuizQuestion::class.java)!!
+                            quizList.add(dataClass)
+                        }
+                        if (quizList.isNotEmpty()) {
+                            Log.d("FOOL", "quiz size : ${quizList.size}")
+                            quizze = Quizze(
+                                args.classroomDetailsClass.classroomName.toString(),
+                                quizList,
+                                quizList.size
+                            )
+                        } else {
+                            Snackbar.make(binding.root,"No quiz posted!", Snackbar.LENGTH_LONG).show()
+                        }
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }.addOnFailureListener { e ->
+                    Log.d(TAG, "Error adding document", e)
+                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    binding.progressBar.visibility = View.GONE
+                }
+        }
+    }
+
     // set up UI
     private fun setUpUi() {
         binding.apply {
 
-            // copy room id
-            copyRoomId.setOnClickListener {
-                val clipboard: ClipboardManager = requireContext().getSystemService<ClipboardManager>() as ClipboardManager
-                val clip: ClipData = ClipData.newPlainText("Classroom id", args.classroomID)
-                clipboard.setPrimaryClip(clip)
-                Snackbar.make(binding.root,"Classroom link copied!",Snackbar.LENGTH_SHORT).show()
+            // has any pending work
+
+            if (args.classroomDetailsClass.classworkStudentList != null) {
+                if (!args.classroomDetailsClass.classworkStudentList!!.contains(Firebase.auth.currentUser!!.uid)) {
+                    // fetch classroom data
+                    fetchClassroomWorkFromFirebase()
+
+                    submitWork.visibility = View.VISIBLE
+                    submitWork.setOnClickListener {
+                        if (quizze != null) {
+                            val bundle = bundleOf(
+                                "quizze" to quizze,
+                                "fromFragment" to "openClassroom"
+                            )
+                            findNavController().navigate(R.id.quizPerformingFragment, bundle)
+                        }
+                    }
+                }
+            }
+
+            // classroom_id_link
+            classroomIdLink.setOnClickListener {
+                copyClassroomId()
             }
 
             // color
@@ -136,7 +230,15 @@ class OpenClassroomFragment : Fragment() {
 
             // classroom icon
             imageView1.apply {
-                setImageResource(args.imageInt!!)
+                val requestOptions = RequestOptions()
+                requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+                requestOptions.centerCrop()
+                if(!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
+                    Glide.with(root)
+                        .load(args.classroomDetailsClass.imageInt!!)
+                        .apply(requestOptions)
+                        .into(this)
+                }
                 DrawableCompat.setTint(
                     DrawableCompat.wrap(this.drawable),
                     Color.parseColor(args.iconColor)
@@ -144,10 +246,61 @@ class OpenClassroomFragment : Fragment() {
             }
 
             // class room name
-            classroomNameTv.text = args.classroomName
+            classroomNameTv.text = args.classroomDetailsClass.classroomName
 
             // due date
-            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classDueDate.toLong())}"
+            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
+        }
+    }
+
+    // submit classroom work
+    private fun submitClassWork() {
+        dialog.show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            Firebase.firestore.collection("classroom").document(args.classroomDetailsClass.classroomID.toString())
+                .update("classworkStudentList", FieldValue.arrayUnion(Firebase.auth.currentUser!!.uid))
+                .addOnSuccessListener {
+                    binding.submitWork.visibility = View.GONE
+                    Snackbar.make(binding.root,"Classwork submitted!",Snackbar.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Error in submit work to id", e)
+                    Snackbar.make(binding.root,"Error in submitting work!",Snackbar.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+        }
+    }
+
+    // add to server
+    private fun submitClassWorkToServer(userMarks: Int, totalMarks: Int) {
+        binding.apply {
+
+            val data = System.currentTimeMillis() * userMarks
+
+            val classworkData = hashMapOf(
+                "userCourse" to sharedPreferences.getString(USER_COURSE,""),
+                "userImage" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,""),
+                "userMarks" to "${userMarks}/${totalMarks}",
+                "userName" to sharedPreferences.getString(USER_NAME,""),
+                "userSemester" to sharedPreferences.getString(USER_SEMESTER,""),
+                "userTimeStamp" to data
+            )
+
+            // create db in fireStore
+            Firebase.firestore.collection("classroom").document(args.classroomDetailsClass.classroomID.toString())
+                .collection("classworkSubmissions")
+                .document(Firebase.auth.currentUser!!.uid)
+                .set(classworkData)
+                .addOnSuccessListener {
+                    Log.d(TAG, "Classwork submitted to classroom!")
+                    submitClassWork()
+                    dialog.dismiss()
+                }
+                .addOnFailureListener { e ->
+                    Log.d(TAG, "Classwork not submitted to classroom", e)
+                    dialog.dismiss()
+                }
         }
     }
 
@@ -197,7 +350,7 @@ class OpenClassroomFragment : Fragment() {
         when (item.itemId) {
             R.id.add_new_discussion_classroom -> {
                 val bundle = bundleOf(
-                    "classroomID" to args.classroomID
+                    "classroomID" to args.classroomDetailsClass.classroomID
                 )
                 findNavController().navigate(R.id.action_openClassroomFragment_to_addClassroomDiscussionFragment,bundle)
                 true
@@ -206,8 +359,32 @@ class OpenClassroomFragment : Fragment() {
                 showAlertForDeletion()
                 true
             }
+            R.id.copy_class_id -> {
+                copyClassroomId()
+                true
+            }
+            R.id.score_board -> {
+                if (args.classroomDetailsClass.classworkStudentList != null && args.classroomDetailsClass.classworkStudentList!!.isNotEmpty()) {
+                    val bundle = bundleOf(
+                        "classroomID" to args.classroomDetailsClass.classroomID
+                    )
+                    findNavController().navigate(R.id.action_openClassroomFragment_to_scoreBoardFragment,bundle)
+                    Toast.makeText(requireContext(),"View Score board",Toast.LENGTH_SHORT).show()
+                } else {
+                    Snackbar.make(binding.root,"No Score board present",Snackbar.LENGTH_SHORT).show()
+                }
+                true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // copy classroom link
+    private fun copyClassroomId() {
+        val clipboard: ClipboardManager = requireContext().getSystemService<ClipboardManager>() as ClipboardManager
+        val clip: ClipData = ClipData.newPlainText("Classroom id", args.classroomDetailsClass.classroomID)
+        clipboard.setPrimaryClip(clip)
+        Snackbar.make(binding.root,"Classroom link copied!",Snackbar.LENGTH_SHORT).show()
     }
 
     // show alert before deletion of all items
@@ -215,13 +392,13 @@ class OpenClassroomFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setPositiveButton("Yes") { _, _ ->
                 binding.progressBar.visibility = View.VISIBLE
-                deleteClassroomIDs(args.classroomID)
+                deleteClassroomIDs(args.classroomDetailsClass.classroomID.toString())
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
-            .setTitle("Remove classroom?")
-            .setMessage("Are you sure you want to remove '${args.classroomName}'?")
+            .setTitle("Leave classroom?")
+            .setMessage("Are you sure you want to leave '${args.classroomDetailsClass.classroomName}'?")
             .create().show()
     }
 

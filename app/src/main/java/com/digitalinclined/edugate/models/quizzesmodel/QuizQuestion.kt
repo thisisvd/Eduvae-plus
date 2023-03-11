@@ -1,7 +1,7 @@
 package com.digitalinclined.edugate.models.quizzesmodel
 
 data class QuizQuestion(
-    val answer: Int,
-    val options: List<String>,
-    val question: String
+    val answer: Int? = null,
+    val options: List<String>? = null,
+    val question: String? = null
 )

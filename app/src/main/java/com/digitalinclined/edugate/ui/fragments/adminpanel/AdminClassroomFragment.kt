@@ -106,12 +106,9 @@ class AdminClassroomFragment : Fragment() {
         recyclerAdapter.apply {
             setClassroomOnItemClickListener { dataClass, classColor, iconColor ->
                 val bundle = bundleOf(
-                    "classroomName" to dataClass.classroomName,
                     "classColor" to classColor,
                     "iconColor" to iconColor,
-                    "classDueDate" to dataClass.classDueDate,
-                    "imageInt" to dataClass.imageInt!!.toInt(),
-                    "classroomID" to dataClass.classroomID
+                    "classroomDetailsClass" to dataClass
                 )
                 findNavController().navigate(R.id.action_adminClassroomFragment_to_adminOpenClassroomFragment,bundle)
             }

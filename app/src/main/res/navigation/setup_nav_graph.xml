@@ -176,23 +176,15 @@
         android:id="@+id/adminOpenClassroomFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminOpenClassroomFragment"
         android:label="AdminOpenClassroomFragment" >
-    <argument
-        android:name="classroomName"
-        app:argType="string" />
-    <argument
-        android:name="classColor"
-        app:argType="string" />
-    <argument
-        android:name="classDueDate"
-        app:argType="string" />
-    <argument android:name="imageInt"
-        app:argType="integer" />
-    <argument
-        android:name="classroomID"
-        app:argType="string" />
-    <argument
-        android:name="iconColor"
-        app:argType="string" />
+        <argument
+            android:name="classColor"
+            app:argType="string" />
+        <argument
+            android:name="iconColor"
+            app:argType="string" />
+        <argument
+            android:name="classroomDetailsClass"
+            app:argType="com.digitalinclined.edugate.models.ClassroomDetailsClass" />
         <action
             android:id="@+id/action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment"
             app:destination="@id/adminAddClassroomDiscussionFragment" />

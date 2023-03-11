@@ -1,6 +1,5 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,15 +10,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.quizSubmissionObserver
 import com.digitalinclined.edugate.databinding.FragmentQuizPerformingBinding
+import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class QuizPerformingFragment : Fragment() {
 
@@ -38,6 +44,9 @@ class QuizPerformingFragment : Fragment() {
     private var counter: Int = 0
     private var correctAnswerCounter: Int = 0
     private var correctOption: String = ""
+
+    // class id
+    private var classID = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,16 +99,20 @@ class QuizPerformingFragment : Fragment() {
                 questionTv.text = args.quizze.quizQuestions[counter].question
 
                 // update options
-                for (item in args.quizze.quizQuestions[0].options) {
+                for (item in args.quizze.quizQuestions[0].options!!) {
                     for (i in 0 until quizRadioGroup.childCount) {
                         (quizRadioGroup.getChildAt(i) as RadioButton).text =
-                            args.quizze.quizQuestions[counter].options[i]
+                            args.quizze.quizQuestions[counter].options?.get(i) ?: ""
                     }
                 }
 
                 // update correct option
                 correctOption =
-                    args.quizze.quizQuestions[counter].options[args.quizze.quizQuestions[counter].answer]
+                    args.quizze.quizQuestions[counter].answer?.let {
+                        args.quizze.quizQuestions[counter].options?.get(
+                            it
+                        )
+                    } ?: ""
             }
         }
     }
@@ -132,7 +145,8 @@ class QuizPerformingFragment : Fragment() {
                         Toast.makeText(requireContext(), "Please select an option", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    makeSubmitDialog()                }
+                    makeSubmitDialog()
+                }
             }
         }
     }
@@ -142,11 +156,16 @@ class QuizPerformingFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Quiz result")
-            setMessage("Your score is ${correctAnswerCounter+1} out of 5.")
+            setMessage("Your score is ${correctAnswerCounter+1} out of ${args.quizze.quizTotalNumbers}.")
             setCancelable(false)
             setPositiveButton("OK"){ dialog, _ ->
                 dialog.dismiss()
-                findNavController().popBackStack()
+                if (args.fromFragment == "openClassroom") {
+                    quizSubmissionObserver.postValue(QuizSubmissionDataClass(true,correctAnswerCounter+1, args.quizze.quizTotalNumbers))
+                    findNavController().popBackStack()
+                } else {
+                    findNavController().popBackStack()
+                }
             }
         }
         builder.show()

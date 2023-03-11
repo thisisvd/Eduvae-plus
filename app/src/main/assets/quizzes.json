@@ -36,7 +36,7 @@
 						"question": "Which of the following is true about linked list implementation of stack?",
 						"answer": 3,
 						"options": [
-							"MIn push operation, if new nodes are inserted at the beginning of linked list, then in pop operation, nodes must be removed from end.",
+							"Min push operation, if new nodes are inserted at the beginning of linked list, then in pop operation, nodes must be removed from end.",
 							"In push operation, if new nodes are inserted at the end, then in pop operation, nodes must be removed from the beginning.",
 							"Both of the above",
 							"None of the above"

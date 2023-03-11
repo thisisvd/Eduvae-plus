@@ -3,8 +3,10 @@ package com.digitalinclined.edugate.constants
 import androidx.lifecycle.MutableLiveData
 import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.models.UserFollowingProfile
+import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
 import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.digitalinclined.edugate.restapi.models.notes.Note
+import java.util.function.BinaryOperator
 
 object Constants {
 
@@ -70,5 +72,8 @@ object Constants {
     // ROOM CONSTANTS
     const val PDF_TABLE_NAME = "PDF_TABLE_NAME"
     const val PDF_DATABASE_NAME = "PDF_DATABASE_NAME"
+
+    // submit marks of quiz
+    val quizSubmissionObserver = MutableLiveData<QuizSubmissionDataClass>()
 
 }

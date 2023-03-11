@@ -3,14 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/remove_classroom"
-        app:showAsAction="always"
-        android:icon="@drawable/baseline_exit_to_app_24"
-        android:title="Remove" />
-
-    <item
         android:id="@+id/add_new_discussion_classroom"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="Add new Classroom" />
+
+    <item
+        android:id="@+id/score_board"
+        android:title="Quiz Score Board" />
+
+    <item
+        android:id="@+id/copy_class_id"
+        android:title="Copy classroom ID" />
+
+    <item
+        android:id="@+id/remove_classroom"
+        android:title="Leave classroom" />
+
 </menu>

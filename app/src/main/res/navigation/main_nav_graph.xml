@@ -178,6 +178,9 @@
         <argument
             android:name="quizze"
             app:argType="com.digitalinclined.edugate.models.quizzesmodel.Quizze" />
+        <argument
+            android:name="fromFragment"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/openClassroomFragment"
@@ -188,18 +191,7 @@
             android:id="@+id/action_openClassroomFragment_to_PDFWebViewFragment"
             app:destination="@id/PDFWebViewFragment" />
         <argument
-            android:name="classroomName"
-            app:argType="string" />
-        <argument
             android:name="classColor"
-            app:argType="string" />
-        <argument
-            android:name="classDueDate"
-            app:argType="string" />
-        <argument android:name="imageInt"
-            app:argType="integer" />
-        <argument
-            android:name="classroomID"
             app:argType="string" />
         <action
             android:id="@+id/action_openClassroomFragment_to_addClassroomDiscussionFragment"
@@ -207,6 +199,12 @@
         <argument
             android:name="iconColor"
             app:argType="string" />
+        <argument
+            android:name="classroomDetailsClass"
+            app:argType="com.digitalinclined.edugate.models.ClassroomDetailsClass" />
+        <action
+            android:id="@+id/action_openClassroomFragment_to_scoreBoardFragment"
+            app:destination="@id/scoreBoardFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -222,6 +220,14 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AddClassroomDiscussionFragment"
         android:label="AddClassroomDiscussionFragment" >
         <argument android:name="classroomID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreBoardFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.ScoreBoardFragment"
+        android:label="ScoreBoardFragment" >
+        <argument
+            android:name="classroomID"
             app:argType="string" />
     </fragment>
 </navigation>

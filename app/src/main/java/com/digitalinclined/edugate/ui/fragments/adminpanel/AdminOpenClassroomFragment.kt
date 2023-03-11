@@ -17,6 +17,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ClassroomDiscussionRecyclerAdapter
 import com.digitalinclined.edugate.databinding.FragmentOpenClassroomBinding
@@ -69,7 +72,7 @@ class AdminOpenClassroomFragment : Fragment() {
             // add btn
             adminAddData.setOnClickListener {
                 val bundle = bundleOf(
-                    "classroomID" to args.classroomID
+                    "classroomID" to args.classroomDetailsClass.classroomID
                 )
                 findNavController().navigate(R.id.action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment,bundle)
             }
@@ -77,14 +80,6 @@ class AdminOpenClassroomFragment : Fragment() {
             // delete classroom permanent
             adminDeleteRoom.setOnClickListener {
                 showAlertForDeletion()
-            }
-
-            // copy room id
-            copyRoomId.setOnClickListener {
-                val clipboard: ClipboardManager = requireContext().getSystemService<ClipboardManager>() as ClipboardManager
-                val clip: ClipData = ClipData.newPlainText("Classroom id", args.classroomID)
-                clipboard.setPrimaryClip(clip)
-                Snackbar.make(binding.root,"Classroom link copied!",Snackbar.LENGTH_SHORT).show()
             }
 
             // set up UI
@@ -102,7 +97,7 @@ class AdminOpenClassroomFragment : Fragment() {
     private fun fetchClassroomFromFirebase() {
         var discussionsList = ArrayList<ClassroomObjectsDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom/${args.classroomID}/discussionsmaterial").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial").get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
@@ -131,12 +126,32 @@ class AdminOpenClassroomFragment : Fragment() {
     private fun setUpUi() {
         binding.apply {
 
+            // copy classroom link
+            classroomIdLink.setOnClickListener {
+                val clipboard: ClipboardManager =
+                    requireContext().getSystemService<ClipboardManager>() as ClipboardManager
+                val clip: ClipData =
+                    ClipData.newPlainText("Classroom id", args.classroomDetailsClass.classroomID)
+                clipboard.setPrimaryClip(clip)
+                Snackbar.make(binding.root, "Classroom link copied!", Snackbar.LENGTH_SHORT).show()
+            }
+
+
             // color
             constraintLayout2.setBackgroundColor(Color.parseColor(args.classColor))
 
             // classroom icon
             imageView1.apply {
-                setImageResource(args.imageInt!!)
+                val requestOptions = RequestOptions()
+                requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
+                requestOptions.centerCrop()
+                if(!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
+                    Glide.with(root)
+                        .load(args.classroomDetailsClass.imageInt!!)
+                        .apply(requestOptions)
+                        .into(this)
+                }
+
                 DrawableCompat.setTint(
                     DrawableCompat.wrap(this.drawable),
                     Color.parseColor(args.iconColor)
@@ -144,10 +159,10 @@ class AdminOpenClassroomFragment : Fragment() {
             }
 
             // class room name
-            classroomNameTv.text = args.classroomName
+            classroomNameTv.text = args.classroomDetailsClass.classroomName
 
             // due date
-            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classDueDate.toLong())}"
+            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
         }
     }
 
@@ -176,13 +191,13 @@ class AdminOpenClassroomFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setPositiveButton("Yes") { _, _ ->
                 binding.progressBar.visibility = View.VISIBLE
-                deleteClassroom(args.classroomID)
+                deleteClassroom(args.classroomDetailsClass.classroomID.toString())
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
             .setTitle("Delete classroom permanently?")
-            .setMessage("Are you sure you want to remove '${args.classroomName} permanently'?")
+            .setMessage("Are you sure you want to remove '${args.classroomDetailsClass.classroomName} permanently'?")
             .create().show()
     }
 
