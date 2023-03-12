@@ -104,50 +104,41 @@ class ClassroomFragment : Fragment() {
     // fetch classrooms data from firebase
     private fun fetchClassroomFromFirebase() {
         binding.progressBar.visibility = View.VISIBLE
-        if (!JOINED_CLASSROOM_LIST.isNullOrEmpty()) {
-            var classroomList = ArrayList<ClassroomDetailsClass>()
-            lifecycleScope.launch(Dispatchers.IO) {
-                Firebase.firestore.collection("classroom").get()
-                    .addOnSuccessListener { documentResult ->
-                        if (documentResult != null) {
-                            Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
-                            for (document in documentResult) {
-                                val dataClass = document.toObject(ClassroomDetailsClass::class.java)!!
-                                if (JOINED_CLASSROOM_LIST.contains(dataClass.classroomID)) {
-                                    classroomList.add(dataClass)
-                                }
-
-                                allValidClassRoom.add(dataClass.classroomID.toString())
-                                Log.d(TAG, "Valid List size : ${allValidClassRoom.size}")
+        var classroomList = ArrayList<ClassroomDetailsClass>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            Firebase.firestore.collection("classroom").get()
+                .addOnSuccessListener { documentResult ->
+                    if (documentResult != null) {
+                        Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
+                        for (document in documentResult) {
+                            val dataClass = document.toObject(ClassroomDetailsClass::class.java)!!
+                            if (JOINED_CLASSROOM_LIST.contains(dataClass.classroomID)) {
+                                classroomList.add(dataClass)
                             }
 
-                            Log.d(TAG, "List size : ${classroomList.size}")
-
-                            if (classroomList.isNotEmpty()) {
-                                recyclerAdapter.differ.submitList(classroomList)
-                                binding.progressBar.visibility = View.GONE
-                            } else {
-                                Snackbar.make(
-                                    binding.root,
-                                    "No Classroom available!",
-                                    Snackbar.LENGTH_LONG
-                                ).show()
-                                binding.progressBar.visibility = View.GONE
-                            }
+                            allValidClassRoom.add(dataClass.classroomID.toString())
+                            Log.d(TAG, "Valid List size : ${allValidClassRoom.size}")
                         }
-                    }.addOnFailureListener { e ->
-                        Log.d(TAG, "Error adding document", e)
-                        Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
-                        binding.progressBar.visibility = View.GONE
+
+                        Log.d(TAG, "List size : ${classroomList.size}")
+
+                        if (classroomList.isNotEmpty()) {
+                            recyclerAdapter.differ.submitList(classroomList)
+                            binding.progressBar.visibility = View.GONE
+                        } else {
+                            Snackbar.make(
+                                binding.root,
+                                "No Classroom available!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            binding.progressBar.visibility = View.GONE
+                        }
                     }
-            }
-        } else {
-            Snackbar.make(
-                binding.root,
-                "No Classroom available!",
-                Snackbar.LENGTH_LONG
-            ).show()
-            binding.progressBar.visibility = View.GONE
+                }.addOnFailureListener { e ->
+                    Log.d(TAG, "Error adding document", e)
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
+                    binding.progressBar.visibility = View.GONE
+                }
         }
     }
 

@@ -33,6 +33,7 @@ import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.io.ByteArrayOutputStream
@@ -49,9 +50,6 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
 
     // toggle
     lateinit var toggle: ActionBarDrawerToggle
-
-    // Shared Preference
-    private lateinit var sharedPreferences: SharedPreferences
 
     // selected Document Type
     private var selectedDocumentType: String? = ""
@@ -88,19 +86,20 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
         binding = FragmentUploadVideoBinding.bind(view)
         binding.apply {
 
-            // change the title bar
-            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Upload to Contribute"
+            if(Firebase.auth.currentUser != null) {
+                // change the title bar
+                (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+                    "Upload to Contribute"
 
-            // shared preferences
-            sharedPreferences = (activity as MainActivity).sharedPreferences
+                // toggle btn toolbar setup
+                toggle = (activity as MainActivity).toggle
+                toggle.isDrawerIndicatorEnabled = false
+                val drawable =
+                    requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+                toggle.setHomeAsUpIndicator(drawable)
+                IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
-            // toggle btn toolbar setup
-            toggle = (activity as MainActivity).toggle
-            toggle.isDrawerIndicatorEnabled = false
-            val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-            toggle.setHomeAsUpIndicator(drawable)
-            IS_BACK_TOOLBAR_BTN_ACTIVE = true
-
+            }
             // init Loading Dialog
             dialog = Dialog(requireContext())
             dialog.apply {
@@ -148,7 +147,6 @@ class UploadVideoFragment : Fragment(R.layout.fragment_upload_video) {
 
                 override fun onFinish() {
                     dialog.dismiss()
-                    Snackbar.make(binding.root,"Error occurred!",Snackbar.LENGTH_LONG).show()
                 }
             }
             timer!!.start()

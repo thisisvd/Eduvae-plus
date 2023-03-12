@@ -18,8 +18,10 @@ import com.digitalinclined.edugate.databinding.FragmentNotesBinding
 import com.digitalinclined.edugate.models.QuestionsNotesDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -54,20 +56,24 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNotesBinding.bind(view)
 
-        // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
+        if(Firebase.auth.currentUser != null) {
+            // change the title bar
+            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
 
-        // shared preferences
-        sharedPreferences = (activity as MainActivity).sharedPreferences
-        course = sharedPreferences.getString(Constants.USER_COURSE,"")!!.lowercase()
-        semester = sharedPreferences.getString(Constants.USER_SEMESTER,"")
+            // shared preferences
+            sharedPreferences = (activity as MainActivity).sharedPreferences
+            course = sharedPreferences.getString(Constants.USER_COURSE, "")!!.lowercase()
+            semester = sharedPreferences.getString(Constants.USER_SEMESTER, "")
 
-        // toggle btn toolbar setup
-        toggle = (activity as MainActivity).toggle
-        toggle.isDrawerIndicatorEnabled = false
-        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-        toggle.setHomeAsUpIndicator(drawable)
-        Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
+            // toggle btn toolbar setup
+            toggle = (activity as MainActivity).toggle
+            toggle.isDrawerIndicatorEnabled = false
+            val drawable =
+                requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+            toggle.setHomeAsUpIndicator(drawable)
+            Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
+
+        }
 
         // set up recycler view
         setupRecyclerView()

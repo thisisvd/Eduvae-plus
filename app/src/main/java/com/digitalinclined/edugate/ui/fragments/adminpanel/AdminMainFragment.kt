@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentAdminMainBinding
+import com.digitalinclined.edugate.ui.fragments.SetupActivity
+import com.google.android.material.snackbar.Snackbar
 
 class AdminMainFragment : Fragment() {
 
@@ -51,7 +52,7 @@ class AdminMainFragment : Fragment() {
 
             // back
             homeNewsButton1.setOnClickListener {
-                Toast.makeText(requireContext(),"Security policy",Toast.LENGTH_SHORT).show()
+                (activity as SetupActivity).launchChromeCustomTab("http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage")
             }
 
             // logout
@@ -69,6 +70,15 @@ class AdminMainFragment : Fragment() {
                 findNavController().navigate(R.id.action_adminMainFragment_to_adminClassroomFragment)
             }
 
+            // upload notes & questions
+            uploadBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_adminMainFragment_to_uploadVideoFragment2)
+            }
+
+            // upload notes & questions
+            manageQuiz.setOnClickListener {
+                Snackbar.make(binding.root,"Error in managing quiz!",Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 

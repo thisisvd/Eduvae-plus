@@ -75,6 +75,10 @@ class AdminLoginFragment : Fragment() {
     private fun onClickListeners() {
         binding.apply {
 
+            // resets
+            adminIdLayout.error = null
+            adminPasskeyLayout.error = null
+
             // login clicked
             adminLoginBtn.setOnClickListener {
                 if (!isTextEmpty()) {

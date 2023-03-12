@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/theme_color"
+    tools:context=".ui.fragments.adminpanel.AdminAddClassworkFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/only_for_admin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/theme_color_unchangeable"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_web"
+            android:gravity="end"
+            android:text="Add classroom work quiz"
+            android:textColor="@color/button_gradient_start_color"
+            android:textSize="@dimen/_18sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/homeNewsUpperText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/titillium_web_semibold"
+        android:text="Create class quizzes in one go other wise you have \nto re-create the whole quiz."
+        android:textColor="@color/text_color"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/only_for_admin_layout" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeNewsUpperText"
+        app:layout_constraintBottom_toTopOf="@+id/add_work_btn"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/titillium_web_light"
+                android:text="Quiz Question"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13sdp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/question_et"
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edittext_stroke"
+                android:fontFamily="@font/titillium_web"
+                android:gravity="start"
+                android:hint="Enter question here!"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="7"
+                android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/titillium_web_light"
+                android:text="Quiz Options"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/titillium_web"
+                    android:gravity="end"
+                    android:text="1"
+                    android:textColor="@color/button_gradient_start_color"
+                    android:textSize="@dimen/_24sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/quiz_option_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:background="@drawable/edittext_stroke"
+                    android:fontFamily="@font/titillium_web"
+                    android:hint="Enter option 1"
+                    android:inputType="textCapSentences"
+                    android:padding="@dimen/_13sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/titillium_web"
+                    android:gravity="end"
+                    android:text="2"
+                    android:textColor="@color/button_gradient_start_color"
+                    android:textSize="@dimen/_24sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/quiz_option_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:background="@drawable/edittext_stroke"
+                    android:fontFamily="@font/titillium_web"
+                    android:hint="Enter option 2"
+                    android:inputType="textCapSentences"
+                    android:padding="@dimen/_13sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/titillium_web"
+                    android:gravity="end"
+                    android:text="3"
+                    android:textColor="@color/button_gradient_start_color"
+                    android:textSize="@dimen/_24sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/quiz_option_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:background="@drawable/edittext_stroke"
+                    android:fontFamily="@font/titillium_web"
+                    android:hint="Enter option 3"
+                    android:inputType="textCapSentences"
+                    android:padding="@dimen/_13sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/titillium_web"
+                    android:gravity="end"
+                    android:text="4"
+                    android:textColor="@color/button_gradient_start_color"
+                    android:textSize="@dimen/_24sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/quiz_option_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:background="@drawable/edittext_stroke"
+                    android:fontFamily="@font/titillium_web"
+                    android:hint="Enter option 4"
+                    android:inputType="textCapSentences"
+                    android:padding="@dimen/_13sdp"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/text_color"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/titillium_web_light"
+                android:text="Correct Option"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_13sdp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/quiz_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_stroke"
+                android:fontFamily="@font/titillium_web"
+                android:hint="Correct answer"
+                android:inputType="number"
+                android:maxLength="1"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_work_btn"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_gradient_end_color"
+        android:padding="@dimen/_8sdp"
+        android:text="Add question"
+        android:layout_margin="@dimen/_12sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17sdp"
+        app:cornerRadius="@dimen/_14sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

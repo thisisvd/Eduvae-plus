@@ -163,6 +163,9 @@
         <action
             android:id="@+id/action_adminMainFragment_to_adminClassroomFragment"
             app:destination="@id/adminClassroomFragment" />
+        <action
+            android:id="@+id/action_adminMainFragment_to_uploadVideoFragment2"
+            app:destination="@id/uploadVideoFragment2" />
     </fragment>
     <fragment
         android:id="@+id/adminClassroomFragment"
@@ -188,6 +191,9 @@
         <action
             android:id="@+id/action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment"
             app:destination="@id/adminAddClassroomDiscussionFragment" />
+        <action
+            android:id="@+id/action_adminOpenClassroomFragment_to_adminAddClassworkFragment"
+            app:destination="@id/adminAddClassworkFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminAddClassroomDiscussionFragment"
@@ -196,4 +202,18 @@
         <argument android:name="classroomID"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/adminAddClassworkFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminAddClassworkFragment"
+        android:label="fragment_admin_add_classwork"
+        tools:layout="@layout/fragment_admin_add_classwork" >
+        <argument
+            android:name="classroomID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/uploadVideoFragment2"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.UploadVideoFragment"
+        android:label="fragment_upload_video"
+        tools:layout="@layout/fragment_upload_video" />
 </navigation>

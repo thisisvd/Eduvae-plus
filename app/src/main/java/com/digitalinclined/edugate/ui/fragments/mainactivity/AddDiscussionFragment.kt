@@ -263,7 +263,7 @@ class AddDiscussionFragment : Fragment() {
 
     // check for data validation
     private fun verifyDataFromUser(title: String, description: String, pdfFileName: String): Boolean {
-        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(pdfFileName)) {
+        return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
             false
         } else !(title.isEmpty() || description.isEmpty() || pdfFileName.isEmpty())
     }

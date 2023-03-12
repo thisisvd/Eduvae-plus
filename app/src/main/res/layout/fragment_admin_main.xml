@@ -243,7 +243,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/titillium_web_semibold"
                         android:maxLines="2"
-                        android:text="📂 Manage classroom's"
+                        android:text="📂 Manage Classroom's"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp" />
 
@@ -302,7 +302,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/titillium_web_semibold"
                         android:maxLines="2"
-                        android:text="📜 Create Quizzes &amp; tests"
+                        android:text="📤 Upload Questions &amp; PDF's"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp" />
 
@@ -321,13 +321,13 @@
                     android:paddingBottom="@dimen/_8sdp">
 
                     <TextView
-                        android:id="@+id/create_quiz"
+                        android:id="@+id/upload_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/titillium_web"
-                        android:text="Create  >"
+                        android:text="Upload >"
                         android:textAlignment="center"
                         android:textColor="#FFC800"
                         android:textSize="@dimen/_15sdp" />
@@ -361,7 +361,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/titillium_web_semibold"
                         android:maxLines="2"
-                        android:text="📜 Manage Quizzes &amp; tests"
+                        android:text="📜 Manage &amp; Create Quizzes"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp" />
 
@@ -386,7 +386,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:fontFamily="@font/titillium_web"
-                        android:text="Edit  >"
+                        android:text="Edit >"
                         android:textAlignment="center"
                         android:textColor="#FFC800"
                         android:textSize="@dimen/_15sdp" />

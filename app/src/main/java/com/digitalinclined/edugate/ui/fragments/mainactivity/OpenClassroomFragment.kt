@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -22,7 +23,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ClassroomDiscussionRecyclerAdapter
@@ -201,20 +205,21 @@ class OpenClassroomFragment : Fragment() {
         binding.apply {
 
             // has any pending work
+            if (args.classroomDetailsClass.hasClassWork) {
+                if (args.classroomDetailsClass.classworkStudentList != null) {
+                    if (!args.classroomDetailsClass.classworkStudentList!!.contains(Firebase.auth.currentUser!!.uid)) {
+                        // fetch classroom data
+                        fetchClassroomWorkFromFirebase()
 
-            if (args.classroomDetailsClass.classworkStudentList != null) {
-                if (!args.classroomDetailsClass.classworkStudentList!!.contains(Firebase.auth.currentUser!!.uid)) {
-                    // fetch classroom data
-                    fetchClassroomWorkFromFirebase()
-
-                    submitWork.visibility = View.VISIBLE
-                    submitWork.setOnClickListener {
-                        if (quizze != null) {
-                            val bundle = bundleOf(
-                                "quizze" to quizze,
-                                "fromFragment" to "openClassroom"
-                            )
-                            findNavController().navigate(R.id.quizPerformingFragment, bundle)
+                        submitWork.visibility = View.VISIBLE
+                        submitWork.setOnClickListener {
+                            if (quizze != null) {
+                                val bundle = bundleOf(
+                                    "quizze" to quizze,
+                                    "fromFragment" to "openClassroom"
+                                )
+                                findNavController().navigate(R.id.quizPerformingFragment, bundle)
+                            }
                         }
                     }
                 }
@@ -237,12 +242,35 @@ class OpenClassroomFragment : Fragment() {
                     Glide.with(root)
                         .load(args.classroomDetailsClass.imageInt!!)
                         .apply(requestOptions)
+                        .listener(object : RequestListener<Drawable?> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                // log exception
+                                Log.d("Glide", "Error loading image")
+                                return false // important to return false so the error placeholder can be placed
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.d("Glide", "Loaded image")
+                                DrawableCompat.setTint(
+                                    DrawableCompat.wrap(resource!!),
+                                    Color.parseColor(args.iconColor)
+                                )
+                                return false
+                            }
+                        })
                         .into(this)
                 }
-                DrawableCompat.setTint(
-                    DrawableCompat.wrap(this.drawable),
-                    Color.parseColor(args.iconColor)
-                )
             }
 
             // class room name

@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -98,6 +102,25 @@ class SetupActivity : AppCompatActivity() {
         networkDialog = networkDialogBuilder.create()
     }
 
+    // Chrome custom tab to be used by every required fragment
+    fun launchChromeCustomTab(url: String) {
+        if (!url.isNullOrEmpty()) {
+
+            // load page
+            val builder: CustomTabsIntent.Builder = CustomTabsIntent.Builder()
+
+            // change toolbar color
+            val defaultColors = CustomTabColorSchemeParams.Builder()
+                .setToolbarColor(ContextCompat.getColor(this, R.color.theme_color))
+                .build()
+            builder.setDefaultColorSchemeParams(defaultColors)
+
+            val customTabsIntent: CustomTabsIntent = builder.build()
+            customTabsIntent.launchUrl(this, Uri.parse(url))
+        } else {
+            Log.d(TAG, "Chrome custom tab : null link provided!")
+        }
+    }
     override fun onResume() {
         super.onResume()
         checkForNetworkConnectivity()

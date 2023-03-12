@@ -7,5 +7,6 @@ data class ClassroomDetailsClass(
     val classroomName: String? = null,
     val imageInt: String? = null,
     val classroomID: String? = null,
+    val hasClassWork: Boolean = false,
     val classworkStudentList: ArrayList<String>? = null
 ) : Serializable

@@ -20,6 +20,7 @@ import com.digitalinclined.edugate.dialogs.CreateClassroomIconDialog
 import com.digitalinclined.edugate.models.ClassroomDetailsClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -108,8 +109,10 @@ class AdminCreateClassroomFragment : Fragment() {
             val classRoom = hashMapOf(
                 "classDueDate" to System.currentTimeMillis().toString(),
                 "classroomName" to classroomName,
-                "imageInt" to defaultIcon.toString(),
-                "classroomID" to ""
+                "imageInt" to defaultIcon,
+                "classroomID" to "",
+                "classworkStudentList" to FieldValue.arrayUnion(),
+                "hasClassWork" to false
             )
 
             Firebase.firestore.collection("classroom")

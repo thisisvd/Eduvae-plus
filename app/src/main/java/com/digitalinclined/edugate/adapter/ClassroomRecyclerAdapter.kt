@@ -120,10 +120,12 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
             classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(data.classDueDate!!.toLong())}"
 
             // pending work tv
-            if (data.classworkStudentList != null) {
-                if (Firebase.auth.currentUser != null) {
-                    if (!data.classworkStudentList.contains(Firebase.auth.currentUser!!.uid)) {
-                        pendingWorkLeft.visibility = View.VISIBLE
+            if (data.hasClassWork) {
+                if (data.classworkStudentList != null) {
+                    if (Firebase.auth.currentUser != null) {
+                        if (!data.classworkStudentList.contains(Firebase.auth.currentUser!!.uid)) {
+                            pendingWorkLeft.visibility = View.VISIBLE
+                        }
                     }
                 }
             }

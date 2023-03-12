@@ -15,6 +15,7 @@ import com.digitalinclined.edugate.databinding.FragmentCompleteProfileBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -63,7 +64,8 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
             val user = hashMapOf(
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
-                "semester" to semesterAutoTextView.text.toString()
+                "semester" to semesterAutoTextView.text.toString(),
+                "joinedClassrooms" to FieldValue.arrayUnion()
             )
 
             // create db in fireStore
