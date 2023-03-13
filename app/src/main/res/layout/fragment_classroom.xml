@@ -69,12 +69,27 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:indeterminate="true"
+        android:visibility="visible"
         android:indeterminateTint="@color/navy_blue_color"
         android:indeterminateTintMode="src_atop"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/no_classroom_joined_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/titillium_web_semibold"
+        android:text="No classroom joined!"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:alpha=".3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

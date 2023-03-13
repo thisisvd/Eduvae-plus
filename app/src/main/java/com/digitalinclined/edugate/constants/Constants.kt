@@ -1,6 +1,7 @@
 package com.digitalinclined.edugate.constants
 
 import androidx.lifecycle.MutableLiveData
+import com.digitalinclined.edugate.models.ColorComboRecyclerClass
 import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
@@ -75,5 +76,13 @@ object Constants {
 
     // submit marks of quiz
     val quizSubmissionObserver = MutableLiveData<QuizSubmissionDataClass>()
+
+    // Constant color of maps
+    val mapOfColors = mapOf(
+        0 to ColorComboRecyclerClass("#FEF8E2","#FFDC5C"),
+        1 to ColorComboRecyclerClass("#E7FAE9","#27FF3D"),
+        2 to ColorComboRecyclerClass("#EEF9FF","#49BEFD"),
+        3 to ColorComboRecyclerClass("#FDEBF9","#E529BC")
+    )
 
 }

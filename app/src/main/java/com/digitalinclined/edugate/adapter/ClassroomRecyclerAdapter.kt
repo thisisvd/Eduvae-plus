@@ -1,6 +1,5 @@
 package com.digitalinclined.edugate.adapter
 
-import android.R
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -17,23 +16,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.digitalinclined.edugate.constants.Constants.mapOfColors
 import com.digitalinclined.edugate.databinding.ClassroomRecyclerLayoutBinding
 import com.digitalinclined.edugate.models.ClassroomDetailsClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-
 class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
-
-    inner class ColorComboRecyclerClass(val backColor: String, val iconColor: String)
-
-    val mapOfColors = mapOf(
-        0 to ColorComboRecyclerClass("#FEF8E2","#FFDC5C"),
-        1 to ColorComboRecyclerClass("#E7FAE9","#27FF3D"),
-        2 to ColorComboRecyclerClass("#EEF9FF","#49BEFD"),
-        3 to ColorComboRecyclerClass("#FDEBF9","#E529BC")
-    )
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassroomDetailsClass>() {

@@ -42,7 +42,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
     // TAG
     private val TAG = "AddClassDiscussionFragment"
 
-    // viewBinding
+    // view binding
     private var _binding: FragmentAddClassroomDiscussionBinding? = null
     private val binding get() = _binding!!
 

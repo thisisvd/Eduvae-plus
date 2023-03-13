@@ -4,12 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -36,13 +34,14 @@ import com.smarteist.autoimageslider.SliderAnimations
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
 
     // TAG
     private val TAG = "HomeFragment"
 
-    // viewBinding
-    private lateinit var binding: FragmentHomeBinding
+    // view binding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     // Shared Preference
     private lateinit var sharedPreferences: SharedPreferences
@@ -63,9 +62,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setHasOptionsMenu(true)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
@@ -75,6 +77,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Home"
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // fetching banners
         if(FETCHED_DATA_CLASS != null) {
@@ -98,25 +106,50 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // user name for the top
         getUserName()
 
+        // on click listeners
+        onClickListeners()
+
+    }
+
+    // on click listeners
+    private fun onClickListeners() {
         binding.apply {
 
+            // open video btn
+            videosItemBtn.setOnClickListener {
+                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
+            }
+
+            // apply for jobs btn
+            jobItemBtn.setOnClickListener {
+                val bundle = bundleOf(
+                    "url" to "https://www.naukri.com/",
+                )
+                findNavController().navigate(R.id.webViewFragment,bundle)
+            }
+
+            // discussion form
+            discussionItemBtn.setOnClickListener {
+                findNavController().navigate(R.id.discussionFragment)
+            }
+
             // syllabus click listener
-            quizButton.setOnClickListener {
+            quizBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_quizFragment)
             }
 
             // oldYearPaper click listener
-            oldYearPaper.setOnClickListener {
+            classQuestions.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_previousYearPapersFragment)
             }
 
             // notes click listener
-            notes.setOnClickListener {
+            classNotes.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_notesFragment)
             }
 
             // videos click listener
-            videos.setOnClickListener {
+            classVideos.setOnClickListener {
                 startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
             }
         }
@@ -135,14 +168,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.apply {
 
             // Slider Image Adapter
-            val adapter = SliderImageAdapter(webViewProgressBar)
-
-            // setting up banners in the adapter list
-            if(FETCHED_DATA_CLASS != null) {
-                for (banner in FETCHED_DATA_CLASS!!.banner!!) {
-                    adapter.addItem(banner)
-                }
-            }
+            val adapter = SliderImageAdapter(requireContext(),webViewProgressBar)
 
             // adapter init
             sliderView.setSliderAdapter(adapter)
@@ -195,4 +221,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

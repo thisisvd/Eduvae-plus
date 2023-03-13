@@ -1,23 +1,26 @@
 package com.digitalinclined.edugate.adapter
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import coil.load
+import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.SliderImageViewBinding
 import com.smarteist.autoimageslider.SliderViewAdapter
 
-class SliderImageAdapter(var webViewProgressBar: ProgressBar): SliderViewAdapter<SliderImageAdapter.SliderAdapterViewHolder>() {
+class SliderImageAdapter(var context: Context, var webViewProgressBar: ProgressBar): SliderViewAdapter<SliderImageAdapter.SliderAdapterViewHolder>() {
   
-    private var mBanner : MutableList<String> = ArrayList()
+    private var mBanner = arrayListOf(
+        ContextCompat.getDrawable(context,R.drawable.banner_1),
+        ContextCompat.getDrawable(context,R.drawable.banner_2),
+        ContextCompat.getDrawable(context,R.drawable.banner_3)
+    )
 
-    fun addItem(Banner : String) {
-        mBanner.add(Banner)
-        notifyDataSetChanged()
-    }
-
-    override fun getCount() = mBanner .size
+    override fun getCount() = mBanner.size
 
     override fun onCreateViewHolder(parent: ViewGroup?): SliderAdapterViewHolder {
         val binding = SliderImageViewBinding.inflate(LayoutInflater.from(parent!!.context),parent,false)
@@ -30,15 +33,11 @@ class SliderImageAdapter(var webViewProgressBar: ProgressBar): SliderViewAdapter
         val data = mBanner[position]
 
         holder!!.binding.apply {
-
-            ivAutoImageSlider.load(data)
+            ivAutoImageSlider.setImageDrawable(data)
             webViewProgressBar.visibility = View.GONE
-
         }
-
     }
 
     // inner class
-    inner class SliderAdapterViewHolder(val binding: SliderImageViewBinding): SliderViewAdapter.ViewHolder(binding.root)
-
+    inner class SliderAdapterViewHolder(val binding: SliderImageViewBinding): ViewHolder(binding.root)
 }

@@ -124,6 +124,7 @@ class ClassroomFragment : Fragment() {
 
                         if (classroomList.isNotEmpty()) {
                             recyclerAdapter.differ.submitList(classroomList)
+                            binding.noClassroomJoinedTv.visibility = View.GONE
                             binding.progressBar.visibility = View.GONE
                         } else {
                             Snackbar.make(
@@ -131,6 +132,7 @@ class ClassroomFragment : Fragment() {
                                 "No Classroom available!",
                                 Snackbar.LENGTH_LONG
                             ).show()
+                            binding.noClassroomJoinedTv.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.GONE
                         }
                     }
