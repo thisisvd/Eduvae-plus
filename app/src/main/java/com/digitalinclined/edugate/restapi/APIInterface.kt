@@ -1,41 +1,25 @@
 package com.digitalinclined.edugate.restapi
 
-import com.digitalinclined.edugate.models.NotesMessage
-import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
-import com.digitalinclined.edugate.restapi.models.branches.BranchesModel
-import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
-import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
-import retrofit2.Call
+import com.digitalinclined.edugate.constants.Constants.BASE_YOUTUBE_API_KEY
+import com.digitalinclined.edugate.models.youtubemodel.YoutubeResponse
 import retrofit2.Response
 import retrofit2.http.*
 
 interface APIInterface {
 
-    // banner
-    @GET("getbanner")
-    suspend fun getBanner() :
-            Response<BannerResponse>
-
     // notes
-    @GET("getnotes")
-    suspend fun getNotes(
-        @Query("course")
-        course: String,
-        @Query("sem")
-        semister: Int,
-    ) : Response<NotesResponse>
-
-    // add notes to server
-    @POST("addnotesmbl")
-    suspend fun addNotes(
-        @Query("course") course: String,
-        @Query("sem") semester: String,
-        @Query("filename") filename: String,
-        @Body pdfFile: MainViewModel.PDFFileDataClass
-    ): Response<NotesMessage>
-
-    // get branches
-    @GET("getbranch")
-    suspend fun getBranches() : Response<BranchesModel>
+    @GET("search")
+    suspend fun getYoutubeSearchQuery(
+        @Query("q")
+        q: String,
+        @Query("regionCode")
+        regionCode: String,
+        @Query("key")
+        key: String = BASE_YOUTUBE_API_KEY,
+        @Query("maxResults")
+        maxResults: Int = 30,
+        @Query("part")
+        part: String = "snippet"
+    ) : Response<YoutubeResponse>
 
 }

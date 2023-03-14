@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentOnBoardingScreenBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -55,9 +53,6 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
         private const val RC_SIGN_IN = 100
         private const val TAG_GOOGLE_SIGN_IN = "GOOGLE_SING_IN_TAG"
     }
-
-    // viewModel
-    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

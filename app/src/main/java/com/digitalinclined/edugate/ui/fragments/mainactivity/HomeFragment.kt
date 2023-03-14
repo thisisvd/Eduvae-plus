@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -27,6 +28,7 @@ import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
+import com.digitalinclined.edugate.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -53,9 +55,6 @@ class HomeFragment : Fragment() {
     // firebase db
     private val db = Firebase.firestore
     private val dbReference = db.collection("extraData")
-
-    // viewModel
-    private val viewModel: MainViewModel by activityViewModels()
 
     // enable the options menu in activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,7 +117,9 @@ class HomeFragment : Fragment() {
 
             // open video btn
             videosItemBtn.setOnClickListener {
-                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
+//                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
+//                viewModel.getYoutubeResult("Computer Networks","IN")
+                findNavController().navigate(R.id.action_homeFragment_to_videosBranchFragment)
             }
 
             // apply for jobs btn
@@ -181,7 +182,7 @@ class HomeFragment : Fragment() {
 
             // videos click listener
             classVideos.setOnClickListener {
-                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
+                findNavController().navigate(R.id.action_homeFragment_to_videosBranchFragment)
             }
         }
     }

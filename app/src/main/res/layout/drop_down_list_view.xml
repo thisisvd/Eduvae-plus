@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:text="TextView"
     android:padding="15dp"
-    android:textColor="#505352"
+    android:textColor="@color/third_text_color"
     android:fontFamily="@font/titillium_web"
     android:textSize="15sp"
     android:textStyle="bold"

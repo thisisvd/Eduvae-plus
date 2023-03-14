@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeFragment_to_feedbackFragment"
             app:destination="@id/feedbackFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_videosBranchFragment"
+            app:destination="@id/videosBranchFragment" />
     </fragment>
     <fragment
         android:id="@+id/discussionFragment"
@@ -241,4 +244,22 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.FeedbackFragment"
         android:label="fragment_feedback"
         tools:layout="@layout/fragment_feedback" />
+    <fragment
+        android:id="@+id/videosBranchFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideosBranchFragment"
+        android:label="fragment_videos_branch"
+        tools:layout="@layout/fragment_videos_branch" >
+        <action
+            android:id="@+id/action_videosBranchFragment_to_videosListFragment"
+            app:destination="@id/videosListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videosListFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideosListFragment"
+        android:label="fragment_videos_list"
+        tools:layout="@layout/fragment_videos_list" >
+        <argument
+            android:name="branchesData"
+            app:argType="com.digitalinclined.edugate.models.BranchListDataClass" />
+    </fragment>
 </navigation>

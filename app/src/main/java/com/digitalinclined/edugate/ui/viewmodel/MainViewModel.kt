@@ -5,19 +5,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.digitalinclined.edugate.models.NotesMessage
+import com.digitalinclined.edugate.models.youtubemodel.Item
 import com.digitalinclined.edugate.restapi.APIClient
-import com.digitalinclined.edugate.restapi.models.banner.BannerResponse
-import com.digitalinclined.edugate.restapi.models.branches.BranchesModel
-import com.digitalinclined.edugate.restapi.models.notes.NotesResponse
 import com.digitalinclined.edugate.ui.viewmodel.repository.Repository
 import com.digitalinclined.edugate.utils.Resource
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.lang.Exception
 
 class MainViewModel(
@@ -28,139 +25,39 @@ class MainViewModel(
     private val TAG = "EmployeeViewModel"
 
     // main repository
-    private val repository: Repository
+    private val repository: Repository = Repository(APIClient.api)
 
     // banner details
-    var getBranchesFromAPI: MutableLiveData<Resource<BranchesModel>> = MutableLiveData()
-
-    // notes details
-    var getNotesDetail: MutableLiveData<Resource<NotesResponse>> = MutableLiveData()
-
-    // add notes
-    var addNotesDetail: MutableLiveData<Resource<NotesMessage>> = MutableLiveData()
-
-    init {
-        repository = Repository(APIClient.api)
-    }
+    var getYoutubeSearchResult: MutableLiveData<Resource<List<Item>>> = MutableLiveData()
 
     /** MAIN API CALLS */
-    // get branches from api
-    fun getBranches() = viewModelScope.launch {
-        getBranchesFromAPI.postValue(Resource.Loading())
-
-        if(hasInternetConnection()) {
-            // Actually processing Data
-            try {
-                val response = repository.getBranches()
-                getBranchesFromAPI.value = handleGetBranches(response)
-            } catch (e: Exception) {
-                getBranchesFromAPI.value = Resource.Error("404 Not Found!")
-            }
-        } else {
-            getBranchesFromAPI.value = Resource.Error("No Internet Connection!")
-        }
-    }
-
-    // handling error responses
-    private fun handleGetBranches(response: Response<BranchesModel>): Resource<BranchesModel>? {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                Resource.Error("Timeout")
-            }
-            response.isSuccessful -> {
-                val banner = response.body()
-                Resource.Success(banner!!)
-            }
-            else -> {
-                Resource.Error(response.message())
-            }
-        }
-    }
-
-    // handling error responses
-    private fun handleBannerResponse(response: Response<BannerResponse>): Resource<BannerResponse>? {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                Resource.Error("Timeout")
-            }
-            response.isSuccessful -> {
-                val banner = response.body()
-                Resource.Success(banner!!)
-            }
-            else -> {
-                Resource.Error(response.message())
-            }
-        }
-    }
-
-    // get banners from api
-    fun getNotes(course: String, semester: Int) = viewModelScope.launch {
-        getNotesDetail.value = Resource.Loading()
-
-        if(hasInternetConnection()) {
-            // Actually processing Data
-            try {
-                val response = repository.getNotes(course,semester)
-                getNotesDetail.value = handleNotesResponse(response)
-            } catch (e: Exception) {
-                getNotesDetail.value = Resource.Error("404 Not Found!")
-            }
-        } else {
-            getNotesDetail.value = Resource.Error("No Internet Connection!")
-        }
-    }
-
-    // handling error responses
-    private fun handleNotesResponse(response: Response<NotesResponse>): Resource<NotesResponse>? {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                Resource.Error("Timeout")
-            }
-            response.isSuccessful -> {
-                val notes = response.body()
-                Resource.Success(notes!!)
-            }
-            else -> {
-                Resource.Error(response.message())
-            }
-        }
-    }
-
-    // add notes to api (server)
-    fun addNotes(course: String, semester: String, filename: String, pdfFile: String) = viewModelScope.launch {
-        addNotesSafeCall(course,semester, filename, PDFFileDataClass(pdfFile))
-    }
-
     // add notes from api safe call
-    private suspend fun addNotesSafeCall(course: String, semester: String, filename: String, pdfFile: MainViewModel.PDFFileDataClass) = viewModelScope.launch {
-        addNotesDetail.value = Resource.Loading()
+    fun getYoutubeResult(query: String, regionCode: String) = viewModelScope.launch {
+        getYoutubeSearchResult.postValue(Resource.Loading())
 
         if(hasInternetConnection()) {
-            // Actually processing Data
             try {
-                val response = repository.addNotes(course,semester,filename, pdfFile)
-                addNotesDetail.value = handleAddNotesResponse(response)
+                // sending request
+                val response = repository.getYoutubeSearchResults(query, regionCode)
+
+                if (response.isSuccessful) {
+                    response.body().let { response ->
+                        if (response != null && response.items.isNotEmpty()) {
+                            getYoutubeSearchResult.postValue(Resource.Success(response.items))
+                        }
+                    }
+
+                } else {
+                    Log.d(TAG, "Error in search -> ${response.message()}")
+                    getYoutubeSearchResult.postValue(Resource.Error(response.message().toString()))
+                }
+
             } catch (e: Exception) {
-                addNotesDetail.value = Resource.Error("404 Not Found!")
+                getYoutubeSearchResult.postValue(Resource.Error(e.message.toString()))
+                e.printStackTrace()
             }
         } else {
-            addNotesDetail.value = Resource.Error("No Internet Connection!")
-        }
-    }
-
-    // handling error responses
-    private fun handleAddNotesResponse(response: Response<NotesMessage>): Resource<NotesMessage>? {
-        return when {
-            response.message().toString().contains("timeout") -> {
-                Resource.Error("Timeout")
-            }
-            response.isSuccessful -> {
-                val notes = response.body()
-                Resource.Success(notes!!)
-            }
-            else -> {
-                Resource.Error(response.message())
-            }
+            getYoutubeSearchResult.postValue(Resource.Error("No Internet Connection!"))
         }
     }
 
@@ -180,8 +77,5 @@ class MainViewModel(
             else -> false
         }
     }
-
-    /** INNER CLASS FOR APIS */
-    inner class PDFFileDataClass(var file: String)
 
 }

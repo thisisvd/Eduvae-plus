@@ -12,7 +12,8 @@ import java.util.function.BinaryOperator
 object Constants {
 
     // API
-    const val BASE_URL = "http://64.227.161.183/"
+    const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
+    const val BASE_YOUTUBE_API_KEY = "AIzaSyCdn27lKADWOvbq8-nclKDnKphucdUKmls"
 
     // admin
     var ADMIN_USER_NAME = "Admin"

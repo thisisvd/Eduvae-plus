@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -22,16 +21,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
-import com.digitalinclined.edugate.constants.Constants.USER_COURSE
-import com.digitalinclined.edugate.constants.Constants.USER_SEMESTER
 import com.digitalinclined.edugate.data.model.PDFDataRoom
 import com.digitalinclined.edugate.data.viewmodel.LocalViewModel
 import com.digitalinclined.edugate.databinding.FragmentUploadVideoBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
-import com.digitalinclined.edugate.utils.Resource
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
