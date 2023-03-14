@@ -29,7 +29,7 @@
                 android:maxLines="1"
                 android:layout_marginEnd="12sp"
                 android:ellipsize="end"
-                android:fontFamily="@font/titillium_web"
+                android:fontFamily="@font/titillium_web_semibold"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp" />
@@ -152,7 +152,7 @@
             app:textSize="@dimen/_12sdp"
             app:iconSize="@dimen/_16sdp"
             app:cornerRadius="@dimen/_20sdp"
-            app:itemFontFamily="@font/titillium_web_light"
+            app:itemFontFamily="@font/titillium_web"
             app:textColor="@color/theme_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -179,7 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:fontFamily="@font/titillium_web_light"
+            android:fontFamily="@font/titillium_web_semibold"
             android:text="Made With ❤ For Students"
             android:textColor="@color/white"
             android:textSize="@dimen/_12sdp" />

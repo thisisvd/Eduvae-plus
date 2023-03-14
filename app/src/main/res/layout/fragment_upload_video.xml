@@ -38,7 +38,6 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/titillium_web_semibold"
                     android:gravity="center"
-                    android:letterSpacing="0.08"
                     android:text="@string/uploadVideoText"
                     android:textAlignment="center"
                     android:textColor="@color/text_color"

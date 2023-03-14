@@ -320,6 +320,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.previousQuestionPapers -> {
                         val bundle = bundleOf(
                             "url" to "https://www.rgpvonline.com/",
+                            "urlSiteName" to "RGPV Papers site"
                         )
                         navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
@@ -328,6 +329,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.quizButton -> {
                         val bundle = bundleOf(
                             "url" to "https://www.rgpv.ac.in/uni/frm_viewscheme.aspx",
+                            "urlSiteName" to "RGPV Schema & syllabus"
                         )
                         navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
@@ -336,6 +338,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.notes -> {
                         val bundle = bundleOf(
                             "url" to "https://www.rgpvnotes.in/",
+                            "urlSiteName" to "RGPV Notes"
                         )
                         navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
@@ -344,6 +347,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.universityPortal -> {
                         val bundle = bundleOf(
                             "url" to "https://www.rgpv.ac.in/",
+                            "urlSiteName" to "RGPV University"
                         )
                         navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
@@ -357,6 +361,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.jobUpdates -> {
                         val bundle = bundleOf(
                             "url" to "https://www.naukri.com/",
+                            "urlSiteName" to "Naukri.com"
                         )
                         navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
                         true
@@ -368,8 +373,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     // Join Our Telegram
                     R.id.joinOurTelegram -> {
-                        val intent =
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/RGPVExams"))
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/RGPVExams"))
                         startActivity(intent)
                         true
                     }

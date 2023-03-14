@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -124,6 +125,7 @@ class HomeFragment : Fragment() {
             jobItemBtn.setOnClickListener {
                 val bundle = bundleOf(
                     "url" to "https://www.naukri.com/",
+                    "urlSiteName" to "Naukri.com"
                 )
                 findNavController().navigate(R.id.webViewFragment,bundle)
             }
@@ -131,6 +133,35 @@ class HomeFragment : Fragment() {
             // discussion form
             discussionItemBtn.setOnClickListener {
                 findNavController().navigate(R.id.discussionFragment)
+            }
+
+            // share app
+            shareAppLayout.setOnClickListener {
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                val shareBody = "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${getString(R.string.app_name)} : Link"
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                startActivity(sharingIntent)
+            }
+
+            // feedback app
+            feedbackAppLayout.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_feedbackFragment)
+            }
+
+            // university app
+            universityAppLayout.setOnClickListener {
+                val bundle = bundleOf(
+                    "url" to "https://www.rgpv.ac.in/",
+                    "urlSiteName" to "RGPV University"
+                )
+                findNavController().navigate(R.id.webViewFragment,bundle)
+            }
+
+            // notification
+            notificationsAppLayout.setOnClickListener {
+                findNavController().navigate(R.id.notificationFragment)
             }
 
             // syllabus click listener

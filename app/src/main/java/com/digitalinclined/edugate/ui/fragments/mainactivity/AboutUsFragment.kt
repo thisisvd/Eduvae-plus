@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -35,22 +36,64 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
 
         binding.apply {
 
-            // profile click listeners
-            akashLink.setOnClickListener {
-                openProfileLinks("https://github.com/Akash1308")
+            // on click listener
+            onClickListeners()
+
+        }
+    }
+
+    // on click listener
+    private fun onClickListeners() {
+        binding.apply {
+
+            // vd link
+            vdLink.setOnClickListener {
+                openProfileLinks("https://github.com/thisisvd", "Vimal's Github")
             }
 
-            vdLink.setOnClickListener {
-                openProfileLinks("https://github.com/thisisvd")
+            // flat-icons link
+            flatIconsLink.setOnClickListener {
+                openProfileLinks("https://www.flaticon.com","Flaticon")
+            }
+
+            // icons8 link
+            icons8Link.setOnClickListener {
+                openProfileLinks("https://icons8.com","icons8")
+            }
+
+            // unDraw
+            undrawLink.setOnClickListener {
+                openProfileLinks("https://undraw.co", "unDraw")
+            }
+
+            // privacy policy
+            privatePolicyLink.setOnClickListener {
+                openProfileLinks("http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage","Privacy Policy")
+            }
+
+            // terms & co
+            termsAndCoLink.setOnClickListener {
+                openProfileLinks("http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage","Terms & Conditions")
+            }
+
+            // share app
+            aboutUsShareOurApp.setOnClickListener {
+                val sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                val shareBody = "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${getString(R.string.app_name)} : Link"
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                startActivity(sharingIntent)
             }
 
         }
     }
 
     // open link
-    private fun openProfileLinks(link: String) {
+    private fun openProfileLinks(link: String, name: String) {
         val bundle = bundleOf(
             "url" to link,
+            "urlSiteName" to name
         )
         findNavController().navigate(R.id.action_aboutUsFragment_to_webViewFragment,bundle)
     }

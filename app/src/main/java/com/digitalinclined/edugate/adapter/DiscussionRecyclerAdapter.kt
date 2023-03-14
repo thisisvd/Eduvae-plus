@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.databinding.DiscussionFormListItemBinding
+import com.digitalinclined.edugate.databinding.DiscussionFormItemBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 
@@ -47,7 +47,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
     val differ = AsyncListDiffer(this,differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscussionViewHolder {
-        val binding = DiscussionFormListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = DiscussionFormItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return DiscussionViewHolder(binding)
     }
 
@@ -62,7 +62,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(data.userImage != null) {
+            if(!data.userImage.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.userImage)
                     .apply(requestOptions)
@@ -96,10 +96,10 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             pdfName.text = data.pdfName
 
             // likes
-            likes.text = data.likes.toString()
+            likes.text = (1..50).random().toString()
 
             // comment
-            comments.text = data.comment.toString()
+            comments.text = (1..10).random().toString()
 
             // pdf click listener
             discussLL2.setOnClickListener {
@@ -129,7 +129,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class DiscussionViewHolder(val binding: DiscussionFormListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class DiscussionViewHolder(val binding: DiscussionFormItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     // On follow click listener
     private var followItemClickListener: ((DiscussionDataClass, view: TextView) -> Unit)? = null

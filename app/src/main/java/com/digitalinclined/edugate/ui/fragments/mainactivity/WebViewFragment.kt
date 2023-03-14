@@ -48,7 +48,9 @@ class WebViewFragment : Fragment() {
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "$urlMain..."
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = if (args.urlSiteName != null)
+            "${args.urlSiteName}"
+        else ""
 
         return binding.root
     }

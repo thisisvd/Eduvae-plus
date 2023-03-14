@@ -16,8 +16,9 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="@dimen/_111sdp"
-            android:layout_height="@dimen/_111sdp"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
+            app:tint="@color/white"
             android:src="@drawable/splash_logo" />
 
         <TextView
@@ -25,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginRight="@dimen/_35sdp"
-            android:fontFamily="@font/titillium_web"
-            android:text="Edugate"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:fontFamily="@font/titillium_web_semibold"
+            android:text="@string/app_name"
             android:textColor="@color/white"
             android:textSize="@dimen/_40sdp" />
 
@@ -56,7 +57,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/titillium_web_light"
+        android:fontFamily="@font/titillium_web_semibold"
         android:text="Made With ❤ For Students"
         android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
