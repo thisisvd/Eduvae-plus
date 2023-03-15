@@ -18,7 +18,7 @@ import java.lang.Exception
 
 class MainViewModel(
     application: Application
-): AndroidViewModel(application) {
+) : AndroidViewModel(application) {
 
     // main repository
     private val repository: Repository = Repository(APIClient.api)
@@ -31,7 +31,7 @@ class MainViewModel(
     fun getYoutubeResult(query: String, regionCode: String) = viewModelScope.launch {
         getYoutubeSearchResult.postValue(Resource.Loading())
 
-        if(hasInternetConnection()) {
+        if (hasInternetConnection()) {
             try {
                 // sending request
                 val response = repository.getYoutubeSearchResults(query, regionCode)

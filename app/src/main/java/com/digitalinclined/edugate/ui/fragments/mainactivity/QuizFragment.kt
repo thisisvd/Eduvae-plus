@@ -9,24 +9,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.QuizMainAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentQuizBinding
-import com.digitalinclined.edugate.models.ClassroomDetailsClass
-import com.digitalinclined.edugate.models.QuizDataClassRoigh
 import com.digitalinclined.edugate.models.quizzesmodel.QuizDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -13,7 +12,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -31,7 +29,6 @@ import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.JOINED_CLASSROOM_LIST
 import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
-import com.digitalinclined.edugate.constants.Constants.STORAGE_REQUEST_CODE
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_CURRENT_COURSE
@@ -427,7 +424,6 @@ class MainActivity : AppCompatActivity() {
                 android.R.id.home -> {
                     if(IS_BACK_TOOLBAR_BTN_ACTIVE) {
                         navHostFragment.navController.popBackStack()
-//                        toggle.isDrawerIndicatorEnabled = false
                         val drawable = getDrawable(R.drawable.ic_baseline_menu_24)
                         toggle.setHomeAsUpIndicator(drawable)
                         IS_BACK_TOOLBAR_BTN_ACTIVE = false
@@ -441,24 +437,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        when(requestCode) {
-            STORAGE_REQUEST_CODE -> {
-                if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this,"You need the storage permission to save pdf.", Toast.LENGTH_SHORT).show()
-                } else {
-                    // do nothing on granted
-                }
-            }
-        }
-
-    }
-
 }

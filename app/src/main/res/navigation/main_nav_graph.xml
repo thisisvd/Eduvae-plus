@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_notesFragment"
             app:destination="@id/notesFragment"
@@ -40,7 +40,7 @@
         android:id="@+id/discussionFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.DiscussionFragment"
         android:label="fragment_discussion"
-        tools:layout="@layout/fragment_discussion" >
+        tools:layout="@layout/fragment_discussion">
         <action
             android:id="@+id/action_discussionFragment_to_addDiscussionFragment"
             app:destination="@id/addDiscussionFragment"
@@ -63,7 +63,7 @@
         android:id="@+id/myProfile"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.MyProfile"
         android:label="fragment_myprofile"
-        tools:layout="@layout/fragment_myprofile" >
+        tools:layout="@layout/fragment_myprofile">
         <action
             android:id="@+id/action_myProfile_to_followingFragment"
             app:destination="@id/followingFragment"
@@ -75,20 +75,16 @@
     <fragment
         android:id="@+id/notesFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.NotesFragment"
-        android:label="NotesFragment" >
+        android:label="NotesFragment">
         <action
             android:id="@+id/action_notesFragment_to_PDFWebViewFragment"
             app:destination="@id/PDFWebViewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/topicFragment"
-        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.TopicFragment"
-        android:label="TopicFragment" />
-    <fragment
         android:id="@+id/previousYearPapersFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PreviousYearPapersFragment"
         android:label="fragment_previous_year_papers"
-        tools:layout="@layout/fragment_previous_year_papers" >
+        tools:layout="@layout/fragment_previous_year_papers">
         <action
             android:id="@+id/action_previousYearPapersFragment_to_PDFWebViewFragment"
             app:destination="@id/PDFWebViewFragment" />
@@ -112,42 +108,20 @@
         android:id="@+id/aboutUsFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AboutUsFragment"
         android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" >
+        tools:layout="@layout/fragment_about_us">
         <action
             android:id="@+id/action_aboutUsFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/PDFFragment"
-        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PDFFragment"
-        android:label="fragment_p_d_f"
-        tools:layout="@layout/fragment_p_d_f" >
-        <argument
-            android:name="previousFragment"
-            app:argType="string"
-            android:defaultValue="null" />
-        <argument
-            android:name="fragmentPdfName"
-            app:argType="string"
-            android:defaultValue="null" />
-        <argument android:name="pdfUri"
-            app:argType="string"
-            android:defaultValue="null" />
-        <argument
-            android:name="Notes"
-            app:argType="com.digitalinclined.edugate.restapi.models.notes.Note"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
-    <fragment
         android:id="@+id/webViewFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.WebViewFragment"
         android:label="fragment_web_view"
-        tools:layout="@layout/fragment_web_view" >
+        tools:layout="@layout/fragment_web_view">
         <argument
             android:name="url"
-            app:argType="string"
-            android:defaultValue="null" />
+            android:defaultValue="null"
+            app:argType="string" />
         <argument
             android:name="urlSiteName"
             app:argType="string" />
@@ -165,7 +139,7 @@
         android:id="@+id/PDFWebViewFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.PDFWebViewFragment"
         android:label="fragment_p_d_f_web_view"
-        tools:layout="@layout/fragment_p_d_f_web_view" >
+        tools:layout="@layout/fragment_p_d_f_web_view">
         <argument
             android:name="pdfLink"
             app:argType="string" />
@@ -174,7 +148,7 @@
         android:id="@+id/classroomFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.ClassroomFragment"
         android:label="fragment_classroom"
-        tools:layout="@layout/fragment_classroom" >
+        tools:layout="@layout/fragment_classroom">
         <action
             android:id="@+id/action_classroomFragment_to_openClassroomFragment"
             app:destination="@id/openClassroomFragment" />
@@ -183,7 +157,7 @@
         android:id="@+id/quizPerformingFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.QuizPerformingFragment"
         android:label="fragment_quiz_performing"
-        tools:layout="@layout/fragment_quiz_performing" >
+        tools:layout="@layout/fragment_quiz_performing">
         <argument
             android:name="quizze"
             app:argType="com.digitalinclined.edugate.models.quizzesmodel.Quizze" />
@@ -195,7 +169,7 @@
         android:id="@+id/openClassroomFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.OpenClassroomFragment"
         android:label="fragment_open_classroom"
-        tools:layout="@layout/fragment_open_classroom" >
+        tools:layout="@layout/fragment_open_classroom">
         <action
             android:id="@+id/action_openClassroomFragment_to_PDFWebViewFragment"
             app:destination="@id/PDFWebViewFragment" />
@@ -219,7 +193,7 @@
         android:id="@+id/quizFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.QuizFragment"
         android:label="fragment_quiz"
-        tools:layout="@layout/fragment_quiz" >
+        tools:layout="@layout/fragment_quiz">
         <action
             android:id="@+id/action_quizFragment_to_quizPerformingFragment"
             app:destination="@id/quizPerformingFragment" />
@@ -227,14 +201,15 @@
     <fragment
         android:id="@+id/addClassroomDiscussionFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.AddClassroomDiscussionFragment"
-        android:label="AddClassroomDiscussionFragment" >
-        <argument android:name="classroomID"
+        android:label="AddClassroomDiscussionFragment">
+        <argument
+            android:name="classroomID"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/scoreBoardFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.ScoreBoardFragment"
-        android:label="ScoreBoardFragment" >
+        android:label="ScoreBoardFragment">
         <argument
             android:name="classroomID"
             app:argType="string" />
@@ -248,7 +223,7 @@
         android:id="@+id/videosBranchFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideosBranchFragment"
         android:label="fragment_videos_branch"
-        tools:layout="@layout/fragment_videos_branch" >
+        tools:layout="@layout/fragment_videos_branch">
         <action
             android:id="@+id/action_videosBranchFragment_to_videosListFragment"
             app:destination="@id/videosListFragment" />
@@ -257,7 +232,7 @@
         android:id="@+id/videosListFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideosListFragment"
         android:label="fragment_videos_list"
-        tools:layout="@layout/fragment_videos_list" >
+        tools:layout="@layout/fragment_videos_list">
         <argument
             android:name="branchesData"
             app:argType="com.digitalinclined.edugate.models.BranchListDataClass" />

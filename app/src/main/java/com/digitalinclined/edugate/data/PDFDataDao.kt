@@ -16,10 +16,6 @@ interface PDFDataDao {
 
     // select single item
     @Query("SELECT * FROM PDF_TABLE_NAME WHERE uniqueID=:keyId")
-    fun getSelectedPDF(keyId: String) : LiveData<PDFDataRoom>
-
-    // delete all item
-    @Query("DELETE FROM PDF_TABLE_NAME")
-    fun deleteAllPDF()
+    fun getSelectedPDF(keyId: String): LiveData<PDFDataRoom>
 
 }

@@ -6,4 +6,4 @@ data class Quizze(
     val quizName: String,
     val quizQuestions: List<QuizQuestion>,
     val quizTotalNumbers: Int
-): Serializable
+) : Serializable

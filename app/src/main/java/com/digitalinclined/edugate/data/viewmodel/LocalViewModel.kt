@@ -10,26 +10,15 @@ import com.digitalinclined.edugate.data.repository.PDFRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LocalViewModel(application: Application): AndroidViewModel(application) {
+class LocalViewModel(application: Application) : AndroidViewModel(application) {
 
     private val toDoDao = PDFDatabase.getDatabase(application).pdfDataDao()
-    private val repository: PDFRepository
-
-    init {
-        repository = PDFRepository(toDoDao)
-    }
+    private val repository: PDFRepository = PDFRepository(toDoDao)
 
     // insert data
     fun insertData(pdfDataRoom: PDFDataRoom) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertData(pdfDataRoom)
-        }
-    }
-
-    // delete data
-    fun deleteAllPDF() {
-        viewModelScope.launch {
-            repository.deleteAllPDF()
         }
     }
 

@@ -21,21 +21,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.FETCHED_DATA_CLASS
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
-import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
-import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
-import com.digitalinclined.edugate.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -84,24 +77,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // fetching banners
-        if(FETCHED_DATA_CLASS != null) {
-            sliderImageView()
-        } else {
-            lifecycleScope.launch(Dispatchers.IO) {
-                dbReference.document("data").get()
-                    .addOnSuccessListener { document ->
-                        if (document != null) {
-                            Log.d("REALTAG", "DocumentSnapshot data: ${document.data}")
-                            FETCHED_DATA_CLASS = document.toObject(FetchDataClass::class.java)!!
-                            if (FETCHED_DATA_CLASS != null) {
-                                Log.d("REALTAG", FETCHED_DATA_CLASS!!.banner!!.size.toString())
-                                sliderImageView()
-                            }
-                        }
-                    }
-            }
-        }
+        // slider images banner
+        sliderImageView()
 
         // user name for the top
         getUserName()

@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/following"
+        android:icon="@drawable/ic_twotone_people_alt_24"
         android:title="Following"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_twotone_people_alt_24" />
+        app:showAsAction="ifRoom" />
 
 </menu>

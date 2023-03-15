@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.digitalinclined.edugate.databinding.PreviousYearItemLayoutBinding
 import com.digitalinclined.edugate.databinding.QuizItemLayoutBinding
-import com.digitalinclined.edugate.models.quizzesmodel.QuizQuestion
 import com.digitalinclined.edugate.models.quizzesmodel.Quizze
 
-class QuizMainAdapter: RecyclerView.Adapter<QuizMainAdapter.QuizMainViewHolder>(){
+class QuizMainAdapter : RecyclerView.Adapter<QuizMainAdapter.QuizMainViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<Quizze>() {
@@ -30,13 +28,14 @@ class QuizMainAdapter: RecyclerView.Adapter<QuizMainAdapter.QuizMainViewHolder>(
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): QuizMainViewHolder {
-        val binding = QuizItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            QuizItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QuizMainViewHolder(binding)
     }
 
@@ -63,7 +62,8 @@ class QuizMainAdapter: RecyclerView.Adapter<QuizMainAdapter.QuizMainViewHolder>(
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class QuizMainViewHolder(val binding: QuizItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
+    inner class QuizMainViewHolder(val binding: QuizItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((quizQuestions: Quizze) -> Unit)? = null
@@ -71,5 +71,4 @@ class QuizMainAdapter: RecyclerView.Adapter<QuizMainAdapter.QuizMainViewHolder>(
     fun setOnItemClickListener(listener: (quizQuestions: Quizze) -> Unit) {
         onItemClickListener = listener
     }
-
 }

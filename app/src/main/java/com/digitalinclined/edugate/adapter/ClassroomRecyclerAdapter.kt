@@ -23,7 +23,7 @@ import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
+class ClassroomRecyclerAdapter : RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassroomDetailsClass>() {
@@ -43,10 +43,14 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassroomViewHolder {
-        val binding = ClassroomRecyclerLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ClassroomRecyclerLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ClassroomViewHolder(binding)
     }
 
@@ -68,7 +72,7 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
                 val requestOptions = RequestOptions()
                 requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
                 requestOptions.centerCrop()
-                if(!data.imageInt!!.isNullOrEmpty()) {
+                if (!data.imageInt!!.isNullOrEmpty()) {
                     Glide.with(root)
                         .load(data.imageInt!!)
                         .apply(requestOptions)
@@ -107,7 +111,8 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
             classroomNameTv.text = data.classroomName
 
             // due date
-            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(data.classDueDate!!.toLong())}"
+            classroomLastUpdateTv.text =
+                "Last updated on - ${DateTimeFormatFetcher().getDateTime(data.classDueDate!!.toLong())}"
 
             // pending work tv
             if (data.hasClassWork) {
@@ -122,11 +127,13 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
 
             // click listener
             openClassroom.setOnClickListener {
-                onClassroomItemClickListener?.let { it(
-                    data,
-                    mapOfColors[colorPosition]!!.backColor,
-                    mapOfColors[colorPosition]!!.iconColor,
-                )}
+                onClassroomItemClickListener?.let {
+                    it(
+                        data,
+                        mapOfColors[colorPosition]!!.backColor,
+                        mapOfColors[colorPosition]!!.iconColor,
+                    )
+                }
             }
 
         }
@@ -135,10 +142,12 @@ class ClassroomRecyclerAdapter: RecyclerView.Adapter<ClassroomRecyclerAdapter.Cl
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class ClassroomViewHolder(val binding: ClassroomRecyclerLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ClassroomViewHolder(val binding: ClassroomRecyclerLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
-    private var onClassroomItemClickListener: ((ClassroomDetailsClass, String, String) -> Unit)? = null
+    private var onClassroomItemClickListener: ((ClassroomDetailsClass, String, String) -> Unit)? =
+        null
 
     fun setClassroomOnItemClickListener(listener: (ClassroomDetailsClass, String, String) -> Unit) {
         onClassroomItemClickListener = listener

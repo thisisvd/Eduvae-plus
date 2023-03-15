@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.databinding.FollowingLayoutItemBinding
 import com.digitalinclined.edugate.models.UserFollowingProfile
 
-class FollowingRecyclerAdapter: RecyclerView.Adapter<FollowingRecyclerAdapter.UserFollowingProfilesViewHolder>() {
+class FollowingRecyclerAdapter : RecyclerView.Adapter<FollowingRecyclerAdapter.UserFollowingProfilesViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<UserFollowingProfile>() {
@@ -31,10 +31,14 @@ class FollowingRecyclerAdapter: RecyclerView.Adapter<FollowingRecyclerAdapter.Us
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserFollowingProfilesViewHolder {
-        val binding = FollowingLayoutItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): UserFollowingProfilesViewHolder {
+        val binding =
+            FollowingLayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserFollowingProfilesViewHolder(binding)
     }
 
@@ -48,7 +52,7 @@ class FollowingRecyclerAdapter: RecyclerView.Adapter<FollowingRecyclerAdapter.Us
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(!data.profilephotolink.isNullOrEmpty()) {
+            if (!data.profilephotolink.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.profilephotolink)
                     .apply(requestOptions)
@@ -75,7 +79,8 @@ class FollowingRecyclerAdapter: RecyclerView.Adapter<FollowingRecyclerAdapter.Us
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class UserFollowingProfilesViewHolder(val binding: FollowingLayoutItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class UserFollowingProfilesViewHolder(val binding: FollowingLayoutItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((UserFollowingProfile) -> Unit)? = null
@@ -83,5 +88,4 @@ class FollowingRecyclerAdapter: RecyclerView.Adapter<FollowingRecyclerAdapter.Us
     fun setOnItemClickListener(listener: (UserFollowingProfile) -> Unit) {
         onItemClickListener = listener
     }
-
 }

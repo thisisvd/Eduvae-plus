@@ -8,7 +8,7 @@ import com.digitalinclined.edugate.constants.Constants.PDF_DATABASE_NAME
 import com.digitalinclined.edugate.data.model.PDFDataRoom
 
 @Database(entities = [PDFDataRoom::class], version = 1, exportSchema = false)
-abstract class PDFDatabase: RoomDatabase() {
+abstract class PDFDatabase : RoomDatabase() {
 
     abstract fun pdfDataDao(): PDFDataDao
 
@@ -21,7 +21,7 @@ abstract class PDFDatabase: RoomDatabase() {
 
         fun getDatabase(context: Context): PDFDatabase {
             val tempInstance = INSTANCE
-            if(tempInstance != null) {
+            if (tempInstance != null) {
                 return tempInstance
             }
 
@@ -38,7 +38,5 @@ abstract class PDFDatabase: RoomDatabase() {
                 return instance
             }
         }
-
     }
-
 }

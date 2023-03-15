@@ -1,21 +1,15 @@
 package com.digitalinclined.edugate.adapter
 
-import android.content.Context
-import android.os.Message
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.digitalinclined.edugate.R
 
-class ProgressButton(
-    context: Context,
-    view: View,
-) {
+class ProgressButton(view: View) {
 
-    private var progressBar: ProgressBar= view.findViewById(R.id.progressBar)
+    // vars
+    private var progressBar: ProgressBar = view.findViewById(R.id.progressBar)
     private var checkImage: ImageView = view.findViewById(R.id.checkImage)
     private var textView: TextView = view.findViewById(R.id.btnName)
 
@@ -42,5 +36,4 @@ class ProgressButton(
         progressBar.visibility = View.GONE
         textView.text = btnMessage
     }
-
 }

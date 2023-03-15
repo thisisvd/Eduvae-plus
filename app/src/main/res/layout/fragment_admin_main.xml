@@ -361,6 +361,65 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/titillium_web_semibold"
                         android:maxLines="2"
+                        android:text="🔔 Post notifications &amp; alerts"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sdp" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Rl"
+                    android:background="@drawable/notification_bottom_background"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_15sdp"
+                    android:paddingBottom="@dimen/_8sdp">
+
+                    <TextView
+                        android:id="@+id/create_notify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/titillium_web"
+                        android:text="Create >"
+                        android:textAlignment="center"
+                        android:textColor="#FFC800"
+                        android:textSize="@dimen/_15sdp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/theme_color"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/notification_background"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/titillium_web_semibold"
+                        android:maxLines="2"
                         android:text="📜 Manage &amp; Create Quizzes"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sdp" />

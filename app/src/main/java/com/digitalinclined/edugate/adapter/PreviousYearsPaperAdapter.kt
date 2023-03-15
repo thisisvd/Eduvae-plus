@@ -11,7 +11,8 @@ import com.digitalinclined.edugate.models.QuestionsNotesDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
 
-class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<PreviousYearsPaperAdapter.PreviousYearsPaperViewHolder>(){
+class PreviousYearsPaperAdapter(val itemView: String) :
+    RecyclerView.Adapter<PreviousYearsPaperAdapter.PreviousYearsPaperViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<QuestionsNotesDataClass>() {
@@ -31,13 +32,17 @@ class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<Prev
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): PreviousYearsPaperViewHolder {
-        val binding = PreviousYearItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = PreviousYearItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return PreviousYearsPaperViewHolder(binding)
     }
 
@@ -56,7 +61,7 @@ class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<Prev
                 paperTitleTV.text = paperName
 
                 // change & disable text for itemView
-                if(itemView == "notes") {
+                if (itemView == "notes") {
                     syllabusTV.visibility = View.GONE
                     viewPaper.text = "View Notes"
                 }
@@ -69,7 +74,7 @@ class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<Prev
 
                 // set syllabus
                 syllabusTV.setOnClickListener {
-                    Snackbar.make(it,"No syllabus found!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(it, "No syllabus found!", Snackbar.LENGTH_SHORT).show()
                 }
 
             }
@@ -79,7 +84,8 @@ class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<Prev
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class PreviousYearsPaperViewHolder(val binding: PreviousYearItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
+    inner class PreviousYearsPaperViewHolder(val binding: PreviousYearItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((str: String, view: String) -> Unit)? = null
@@ -87,5 +93,4 @@ class PreviousYearsPaperAdapter(val itemView: String): RecyclerView.Adapter<Prev
     fun setOnItemClickListener(listener: (str: String, view: String) -> Unit) {
         onItemClickListener = listener
     }
-
 }

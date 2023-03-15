@@ -75,6 +75,11 @@ class AdminMainFragment : Fragment() {
                 findNavController().navigate(R.id.action_adminMainFragment_to_uploadVideoFragment2)
             }
 
+            // post notifications
+            createNotify.setOnClickListener{
+                findNavController().navigate(R.id.action_adminMainFragment_to_adminCreateNotificationFragment)
+            }
+
             // upload notes & questions
             manageQuiz.setOnClickListener {
                 Snackbar.make(binding.root,"Error in managing quiz!",Snackbar.LENGTH_SHORT).show()

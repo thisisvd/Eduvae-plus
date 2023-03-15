@@ -100,7 +100,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
         // init progress bar button
         viewProgress = binding.root.findViewById(R.id.saveButton)
-        progressButton = ProgressButton(requireContext(),viewProgress)
+        progressButton = ProgressButton(viewProgress)
         progressButton.setBtnOriginalName("Save Changes")
 
         // sharedPreferences init

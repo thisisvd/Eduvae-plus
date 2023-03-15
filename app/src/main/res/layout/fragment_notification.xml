@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/news_coordinator_layout"
@@ -8,36 +8,43 @@
     android:background="@color/theme_color"
     tools:context=".ui.fragments.mainactivity.NotificationFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvgh1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/transparent">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_15sdp"
-                android:fontFamily="@font/titillium_web_semibold"
-                android:gravity="center"
-                android:text="Your Notifications"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/_20sdp" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_margin="@dimen/_15sdp"
+        android:fontFamily="@font/titillium_web_semibold"
+        android:gravity="center"
+        android:text="Your Notifications"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:background="@color/theme_color"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvgh1" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/navy_blue_color"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

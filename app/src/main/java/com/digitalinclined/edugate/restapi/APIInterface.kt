@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface APIInterface {
 
-    // notes
+    // youtube videos api search
     @GET("search")
     suspend fun getYoutubeSearchQuery(
         @Query("q")
@@ -22,6 +22,6 @@ interface APIInterface {
         maxResults: Int = 30,
         @Query("part")
         part: String = "snippet"
-    ) : Response<YoutubeResponse>
+    ): Response<YoutubeResponse>
 
 }

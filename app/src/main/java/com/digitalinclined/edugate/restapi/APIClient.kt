@@ -28,7 +28,5 @@ class APIClient {
         val api by lazy {
             retrofit.create(APIInterface::class.java)
         }
-
     }
-
 }

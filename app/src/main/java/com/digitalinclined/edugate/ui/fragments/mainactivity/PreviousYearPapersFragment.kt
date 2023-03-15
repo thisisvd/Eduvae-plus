@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -15,8 +14,6 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.PreviousYearsPaperAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentPreviousYearPapersBinding
-import com.digitalinclined.edugate.models.DiscussionDataClass
-import com.digitalinclined.edugate.models.PreviousYearPapersDataClass
 import com.digitalinclined.edugate.models.QuestionsNotesDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar

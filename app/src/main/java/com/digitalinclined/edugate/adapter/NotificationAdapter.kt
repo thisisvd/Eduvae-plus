@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.adapter
 
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.digitalinclined.edugate.databinding.NotificationItemLayoutBinding
 import com.digitalinclined.edugate.models.NotificationDataClass
 
-class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>(){
+class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<NotificationDataClass>() {
@@ -28,13 +29,17 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.Notification
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): NotificationViewHolder {
-        val binding = NotificationItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = NotificationItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return NotificationViewHolder(binding)
     }
 
@@ -46,20 +51,20 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.Notification
         holder.binding.apply {
             data.apply {
 
-                // set date
-                date
-                
+                // time stamp
+                monthYearTV.text = DateUtils.getRelativeTimeSpanString(data.timeStamp!!.toLong())
+
                 // title
                 notificationTitleTV.text = title
-                
+
                 //content
                 notificationContentTV.text = content
-                
+
                 // details
                 viewDetailsTV.setOnClickListener {
                     onItemClickListener?.let { it(data) }
                 }
-               
+
             }
         }
     }
@@ -67,7 +72,8 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.Notification
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class NotificationViewHolder(val binding: NotificationItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
+    inner class NotificationViewHolder(val binding: NotificationItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((NotificationDataClass) -> Unit)? = null
@@ -75,5 +81,4 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationAdapter.Notification
     fun setOnItemClickListener(listener: (NotificationDataClass) -> Unit) {
         onItemClickListener = listener
     }
-
 }

@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.TextPaint
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -236,11 +237,8 @@ class AdminOpenClassroomFragment : Fragment() {
         }
         // on click listener
         recyclerAdapter.apply {
-            setClassroomOnItemClickListener { pdfLink ->
-                val bundle = bundleOf(
-                    "pdfLink" to pdfLink
-                )
-                findNavController().navigate(R.id.action_openClassroomFragment_to_PDFWebViewFragment,bundle)
+            setClassroomOnItemClickListener {
+                Snackbar.make(binding.root,"Error in loading pdf!",Snackbar.LENGTH_SHORT).show()
             }
         }
     }

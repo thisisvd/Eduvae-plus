@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.digitalinclined.edugate.databinding.BranchSelectionItemBinding
 import com.digitalinclined.edugate.models.BranchListDataClass
 
-class BranchesListAdapter: RecyclerView.Adapter<BranchesListAdapter.QuizMainViewHolder>(){
+class BranchesListAdapter : RecyclerView.Adapter<BranchesListAdapter.QuizMainViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<BranchListDataClass>() {
@@ -28,13 +28,14 @@ class BranchesListAdapter: RecyclerView.Adapter<BranchesListAdapter.QuizMainView
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): QuizMainViewHolder {
-        val binding = BranchSelectionItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            BranchSelectionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QuizMainViewHolder(binding)
     }
 
@@ -61,7 +62,8 @@ class BranchesListAdapter: RecyclerView.Adapter<BranchesListAdapter.QuizMainView
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class QuizMainViewHolder(val binding: BranchSelectionItemBinding): RecyclerView.ViewHolder(binding.root)
+    inner class QuizMainViewHolder(val binding: BranchSelectionItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((quizQuestions: BranchListDataClass) -> Unit)? = null
@@ -69,5 +71,4 @@ class BranchesListAdapter: RecyclerView.Adapter<BranchesListAdapter.QuizMainView
     fun setOnItemClickListener(listener: (quizQuestions: BranchListDataClass) -> Unit) {
         onItemClickListener = listener
     }
-
 }

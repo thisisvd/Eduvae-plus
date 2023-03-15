@@ -14,7 +14,7 @@ import com.digitalinclined.edugate.models.ClassroomObjectsDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
 
-class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussionRecyclerAdapter.ClassroomViewHolder>() {
+class ClassroomDiscussionRecyclerAdapter : RecyclerView.Adapter<ClassroomDiscussionRecyclerAdapter.ClassroomViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassroomObjectsDataClass>() {
@@ -34,10 +34,11 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassroomViewHolder {
-        val binding = ClassroomItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            ClassroomItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ClassroomViewHolder(binding)
     }
 
@@ -52,7 +53,7 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(!data.userImage.isNullOrEmpty()) {
+            if (!data.userImage.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.userImage)
                     .apply(requestOptions)
@@ -63,21 +64,22 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
             classroomUsernameTv.text = data.userName
 
             // timestamp
-            postTime.text = DateTimeFormatFetcher().getDateWithIncludedTime(data.timestamp!!.toLong())
+            postTime.text =
+                DateTimeFormatFetcher().getDateWithIncludedTime(data.timestamp!!.toLong())
 
             // pdf
-            if(!data.pdfNameStored.isNullOrEmpty()) {
+            if (!data.pdfNameStored.isNullOrEmpty()) {
                 classroomPdfView.visibility = View.VISIBLE
                 pdfName.text = data.pdfNameStored
                 classroomPdfView.setOnClickListener {
                     onClassroomItemClickListener?.let {
-                        it(data.pdfNameStored!!)
+                        it(data.pdfId!!)
                     }
                 }
             }
 
             // image
-            if(!data.imageLink.isNullOrEmpty()) {
+            if (!data.imageLink.isNullOrEmpty()) {
                 classroomImageView.visibility = View.VISIBLE
                 Glide.with(root)
                     .load(data.imageLink)
@@ -90,7 +92,7 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
 
             // click listener
             likeIcon1.setOnClickListener {
-                Snackbar.make(it,"Post appreciated",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(it, "Post appreciated", Snackbar.LENGTH_SHORT).show()
             }
 
         }
@@ -100,7 +102,8 @@ class ClassroomDiscussionRecyclerAdapter: RecyclerView.Adapter<ClassroomDiscussi
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class ClassroomViewHolder(val binding: ClassroomItemLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ClassroomViewHolder(val binding: ClassroomItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onClassroomItemClickListener: ((String) -> Unit)? = null

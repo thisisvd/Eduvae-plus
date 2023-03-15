@@ -2,22 +2,16 @@ package com.digitalinclined.edugate.constants
 
 import androidx.lifecycle.MutableLiveData
 import com.digitalinclined.edugate.models.ColorComboRecyclerClass
-import com.digitalinclined.edugate.models.FetchDataClass
 import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
-import com.digitalinclined.edugate.restapi.models.banner.Banner
-import com.digitalinclined.edugate.restapi.models.notes.Note
 
 object Constants {
 
-    // API
+    // APIs
     const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
     const val BASE_YOUTUBE_API_KEY = "AIzaSyCdn27lKADWOvbq8-nclKDnKphucdUKmls"
 
     // admin
     var ADMIN_USER_NAME = "Admin"
-
-    // PERMISSION
-    const val STORAGE_REQUEST_CODE = 101
 
     // Splash Screen Constant
     var IS_SPLASH_SCREEN_FIRST_SHOWED = true
@@ -42,7 +36,7 @@ object Constants {
     // Indian City CONSTANT DATA
     var INDIAN_CITY_DATA = arrayListOf<String>()
 
-    // TEMPORARY USERS DATA FIREBASE
+    // TEMPORARY USERS DATA FIREBASE (Shared preferences)
     var SHARED_PREFERENCES_NAME = "SHARED_PREFERENCES_USERS_DATA"
     var USER_NAME = "USER_NAME"
     var USER_EMAIL = "USER_EMAIL"
@@ -53,22 +47,12 @@ object Constants {
     var USER_CITY = "USER_CITY"
     var USER_PROFILE_PHOTO_LINK = "USER_PROFILE_PHOTO_LINK"
 
-    // TEMP CONSTANT
-    var BASE_64_STRING = ""
-
     // Constant TEMP ARRAYLIST for FOLLOWING USERS ID
     var FOLLOWING_USER_ID = MutableLiveData<ArrayList<String>>()
     var USER_CURRENT_COURSE = ""
 
     // constant - join classroom list
     var JOINED_CLASSROOM_LIST = ArrayList<String>()
-
-    // Constant TEMP list for BANNER images API
-    var BANNER_IMAGES_LIST = arrayListOf<Banner>()
-    var FETCHED_DATA_CLASS: FetchDataClass? = null
-
-    // Constant TEMP list for NOTES images API
-    var NOTES_TEMPORARY_LIST = arrayListOf<Note>()
 
     // ROOM CONSTANTS
     const val PDF_TABLE_NAME = "PDF_TABLE_NAME"
@@ -84,5 +68,4 @@ object Constants {
         2 to ColorComboRecyclerClass("#EEF9FF","#49BEFD"),
         3 to ColorComboRecyclerClass("#FDEBF9","#E529BC")
     )
-
 }

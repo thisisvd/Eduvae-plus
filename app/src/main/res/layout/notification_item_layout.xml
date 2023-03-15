@@ -3,23 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/_10sdp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
     android:background="@color/theme_color">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/notification_background"
-        android:paddingTop="@dimen/_15sdp"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingRight="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_15sdp">
+        android:orientation="vertical"
+        android:padding="12dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/Rl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/img1"
@@ -39,42 +41,20 @@
                 android:text="Received 2 minutes ago"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_8sdp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_12sdp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_toLeftOf="@+id/date"
-                android:src="@drawable/yearview" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/titillium_web"
-                android:text="4 Jan 2022"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_10sdp"
-                android:textStyle="bold" />
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/notificationTitleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Rl1"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/titillium_web_semibold"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Notification title"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
@@ -85,13 +65,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/notificationTitleTV"
             android:layout_centerVertical="true"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/titillium_web"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Notification content"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp" />
+            android:textSize="@dimen/_12sdp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll2"

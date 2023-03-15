@@ -11,4 +11,4 @@ data class Snippet(
     val publishedAt: String,
     val thumbnails: Thumbnails,
     val title: String
-): Serializable
+) : Serializable

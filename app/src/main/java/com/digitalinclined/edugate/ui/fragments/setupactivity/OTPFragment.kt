@@ -104,7 +104,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
             // init progress bar button
             viewProgress = binding.root.findViewById(R.id.progressBarButton)
-            progressButton = ProgressButton(requireContext(),viewProgress)
+            progressButton = ProgressButton(viewProgress)
             progressButton.setBtnOriginalName("Verify")
 
             // Hiding the google/facebook sign in layout

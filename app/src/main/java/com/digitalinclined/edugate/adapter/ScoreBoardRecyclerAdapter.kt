@@ -11,7 +11,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.databinding.ScoreBoardLayoutItemBinding
 import com.digitalinclined.edugate.models.quizzesmodel.ClassWorkSubmissionDataClass
 
-class ScoreBoardRecyclerAdapter: RecyclerView.Adapter<ScoreBoardRecyclerAdapter.ScoreProfilesViewHolder>() {
+class ScoreBoardRecyclerAdapter :
+    RecyclerView.Adapter<ScoreBoardRecyclerAdapter.ScoreProfilesViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassWorkSubmissionDataClass>() {
@@ -31,10 +32,11 @@ class ScoreBoardRecyclerAdapter: RecyclerView.Adapter<ScoreBoardRecyclerAdapter.
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreProfilesViewHolder {
-        val binding = ScoreBoardLayoutItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            ScoreBoardLayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ScoreProfilesViewHolder(binding)
     }
 
@@ -48,7 +50,7 @@ class ScoreBoardRecyclerAdapter: RecyclerView.Adapter<ScoreBoardRecyclerAdapter.
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(!data.userImage.isNullOrEmpty()) {
+            if (!data.userImage.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.userImage)
                     .apply(requestOptions)
@@ -76,6 +78,7 @@ class ScoreBoardRecyclerAdapter: RecyclerView.Adapter<ScoreBoardRecyclerAdapter.
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class ScoreProfilesViewHolder(val binding: ScoreBoardLayoutItemBinding) : RecyclerView.ViewHolder(binding.root)
-    
+    inner class ScoreProfilesViewHolder(val binding: ScoreBoardLayoutItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
 }

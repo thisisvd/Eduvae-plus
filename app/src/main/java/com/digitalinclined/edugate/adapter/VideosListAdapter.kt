@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.databinding.VideoContainerItemLayoutBinding
 import com.digitalinclined.edugate.models.youtubemodel.Item
 
-class VideosListAdapter: RecyclerView.Adapter<VideosListAdapter.QuizMainViewHolder>(){
+class VideosListAdapter : RecyclerView.Adapter<VideosListAdapter.QuizMainViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<Item>() {
@@ -31,13 +31,17 @@ class VideosListAdapter: RecyclerView.Adapter<VideosListAdapter.QuizMainViewHold
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): QuizMainViewHolder {
-        val binding = VideoContainerItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = VideoContainerItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return QuizMainViewHolder(binding)
     }
 
@@ -52,7 +56,7 @@ class VideosListAdapter: RecyclerView.Adapter<VideosListAdapter.QuizMainViewHold
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(data.snippet.thumbnails.high.url != null) {
+            if (data.snippet.thumbnails.high.url != null) {
                 Glide.with(root)
                     .load(data.snippet.thumbnails.high.url)
                     .apply(requestOptions)
@@ -72,7 +76,8 @@ class VideosListAdapter: RecyclerView.Adapter<VideosListAdapter.QuizMainViewHold
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class QuizMainViewHolder(val binding: VideoContainerItemLayoutBinding): RecyclerView.ViewHolder(binding.root)
+    inner class QuizMainViewHolder(val binding: VideoContainerItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On click listener
     private var onItemClickListener: ((quizQuestions: Item) -> Unit)? = null
@@ -80,5 +85,4 @@ class VideosListAdapter: RecyclerView.Adapter<VideosListAdapter.QuizMainViewHold
     fun setOnItemClickListener(listener: (quizQuestions: Item) -> Unit) {
         onItemClickListener = listener
     }
-
 }

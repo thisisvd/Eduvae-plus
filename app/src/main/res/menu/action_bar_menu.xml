@@ -4,13 +4,14 @@
 
     <item
         android:id="@+id/uploadVideo"
-        app:showAsAction="always"
         android:icon="@drawable/ic_baseline_cloud_upload_24"
-        android:title="Upload Video"/>
+        android:title="Upload Video"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/homeProfileMenu"
-        app:showAsAction="always"
+    <item
+        android:id="@+id/homeProfileMenu"
+        android:title="Profile"
         app:actionLayout="@layout/round_image_view"
-        android:title="Profile" />
+        app:showAsAction="always" />
 
 </menu>

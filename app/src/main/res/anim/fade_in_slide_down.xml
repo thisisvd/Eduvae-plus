@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--Fade In-->
-    <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
+    <alpha
+        android:duration="1000"
+        android:fromAlpha="0.0"
         android:interpolator="@android:anim/accelerate_interpolator"
-        android:duration="1000"/>
+        android:toAlpha="1.0" />
 
-<!--Slide Down-->
-    <scale android:fromXScale="0.5"
+    <scale
+        android:duration="1000"
+        android:fromXScale="0.5"
         android:fromYScale="0.5"
-        android:toXScale="1"
-        android:toYScale="1"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:duration="1000"/>
+        android:toXScale="1"
+        android:toYScale="1" />
 
 </set>

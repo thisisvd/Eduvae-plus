@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/add_new_discussion_classroom"
-        app:showAsAction="always"
         android:icon="@drawable/ic_baseline_add_24"
-        android:title="Add new Classroom" />
+        android:title="Add new Classroom"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/score_board"

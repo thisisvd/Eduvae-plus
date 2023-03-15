@@ -15,10 +15,4 @@ class PDFRepository(
     suspend fun insertData(pdfData: PDFDataRoom) {
         pdfDataDao.insertData(pdfData)
     }
-
-    // delete all data
-    fun deleteAllPDF() {
-        pdfDataDao.deleteAllPDF()
-    }
-
 }

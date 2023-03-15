@@ -167,7 +167,6 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
         when (item.itemId) {
             R.id.following -> {
                 findNavController().navigate(R.id.action_discussionFragment_to_followingFragment)
-//                viewModel.deleteAllPDF()
                 true
             }
         }

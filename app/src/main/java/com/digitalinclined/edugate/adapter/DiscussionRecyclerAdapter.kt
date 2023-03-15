@@ -2,6 +2,7 @@ package com.digitalinclined.edugate.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -15,14 +16,16 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.DiscussionFormItemBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
+class DiscussionRecyclerAdapter(val context: Context) : RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
 
     // temp followers list
     private var followersList = ArrayList<String>()
 
     // add Followers In The List
-    fun addFollowersInTheList(list: ArrayList<String>){
+    fun addFollowersInTheList(list: ArrayList<String>) {
         followersList.addAll(list)
     }
 
@@ -44,10 +47,11 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
     }
 
     // Differ Value Setup
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiscussionViewHolder {
-        val binding = DiscussionFormItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            DiscussionFormItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DiscussionViewHolder(binding)
     }
 
@@ -62,7 +66,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(!data.userImage.isNullOrEmpty()) {
+            if (!data.userImage.isNullOrEmpty()) {
                 Glide.with(root)
                     .load(data.userImage)
                     .apply(requestOptions)
@@ -73,7 +77,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             nameTV.text = data.name
 
             // follow / unfollow
-            followUser.text = if(checkForExistFollower(data.userID.toString())){
+            followUser.text = if (checkForExistFollower(data.userID.toString())) {
                 followUser.setTextColor(ContextCompat.getColor(context, R.color.green_color))
                 "Following"
             } else {
@@ -101,6 +105,12 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
             // comment
             comments.text = (1..10).random().toString()
 
+            // hide follow
+            if (data.userID.toString() == Firebase.auth.currentUser!!.uid) {
+                followUser.visibility = View.GONE
+                followView.visibility = View.GONE
+            }
+
             // pdf click listener
             discussLL2.setOnClickListener {
                 pdfItemClickListener?.let {
@@ -110,7 +120,7 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
 
             // follow user click listener
             followUser.setOnClickListener {
-                followItemClickListener?.let { it(data,followUser) }
+                followItemClickListener?.let { it(data, followUser) }
             }
         }
 
@@ -118,8 +128,8 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
 
     // check for existing follower
     private fun checkForExistFollower(id: String): Boolean {
-        for(item in followersList) {
-            if(item == id) {
+        for (item in followersList) {
+            if (item == id) {
                 return true
             }
         }
@@ -129,7 +139,8 @@ class DiscussionRecyclerAdapter(val context: Context): RecyclerView.Adapter<Disc
     override fun getItemCount() = differ.currentList.size
 
     // Inner Class ViewHolder
-    inner class DiscussionViewHolder(val binding: DiscussionFormItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class DiscussionViewHolder(val binding: DiscussionFormItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // On follow click listener
     private var followItemClickListener: ((DiscussionDataClass, view: TextView) -> Unit)? = null

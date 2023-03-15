@@ -9,7 +9,7 @@
         android:id="@+id/onBoardingScreenFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.OnBoardingScreenFragment"
         android:label="fragment_on_boarding_screen"
-        tools:layout="@layout/fragment_on_boarding_screen" >
+        tools:layout="@layout/fragment_on_boarding_screen">
         <action
             android:id="@+id/action_onBoardingScreenFragment_to_signUpScreenFragment"
             app:destination="@id/signUpScreenFragment"
@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/signUpScreenFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.SignUpScreenFragment"
-        android:label="SignUpScreenFragment" >
+        android:label="SignUpScreenFragment">
         <action
             android:id="@+id/action_signUpScreenFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -54,7 +54,7 @@
     <fragment
         android:id="@+id/completeProfileFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.CompleteProfileFragment"
-        android:label="CompleteProfileFragment" >
+        android:label="CompleteProfileFragment">
         <action
             android:id="@+id/action_completeProfileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -66,7 +66,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_signUpScreenFragment"
             app:destination="@id/signUpScreenFragment"
@@ -95,7 +95,7 @@
     <fragment
         android:id="@+id/OTPFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.OTPFragment"
-        android:label="OTPFragment" >
+        android:label="OTPFragment">
         <action
             android:id="@+id/action_OTPFragment_to_signUpScreenFragment"
             app:destination="@id/signUpScreenFragment"
@@ -112,18 +112,18 @@
             app:popExitAnim="@anim/slide_right_animation" />
         <argument
             android:name="fragment"
-            app:argType="string"
-            android:defaultValue="signUP" />
+            android:defaultValue="signUP"
+            app:argType="string" />
         <argument
             android:name="phone"
-            app:argType="string"
-            android:defaultValue="none" />
+            android:defaultValue="none"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.setupactivity.SplashScreenFragment"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_onBoardingScreenFragment"
             app:destination="@id/onBoardingScreenFragment"
@@ -136,7 +136,7 @@
         android:id="@+id/adminLoginFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminLoginFragment"
         android:label="fragment_admin_login"
-        tools:layout="@layout/fragment_admin_login" >
+        tools:layout="@layout/fragment_admin_login">
         <action
             android:id="@+id/action_adminLoginFragment_to_adminMainFragment"
             app:destination="@id/adminMainFragment" />
@@ -150,7 +150,7 @@
         android:id="@+id/adminMainFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminMainFragment"
         android:label="fragment_admin_main"
-        tools:layout="@layout/fragment_admin_main" >
+        tools:layout="@layout/fragment_admin_main">
         <action
             android:id="@+id/action_adminMainFragment_to_adminCreateClassroomFragment"
             app:destination="@id/adminCreateClassroomFragment" />
@@ -166,11 +166,14 @@
         <action
             android:id="@+id/action_adminMainFragment_to_uploadVideoFragment2"
             app:destination="@id/uploadVideoFragment2" />
+        <action
+            android:id="@+id/action_adminMainFragment_to_adminCreateNotificationFragment"
+            app:destination="@id/adminCreateNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClassroomFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminClassroomFragment"
-        android:label="AdminClassroomFragment" >
+        android:label="AdminClassroomFragment">
         <action
             android:id="@+id/action_adminClassroomFragment_to_adminOpenClassroomFragment"
             app:destination="@id/adminOpenClassroomFragment" />
@@ -178,7 +181,7 @@
     <fragment
         android:id="@+id/adminOpenClassroomFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminOpenClassroomFragment"
-        android:label="AdminOpenClassroomFragment" >
+        android:label="AdminOpenClassroomFragment">
         <argument
             android:name="classColor"
             app:argType="string" />
@@ -198,15 +201,16 @@
     <fragment
         android:id="@+id/adminAddClassroomDiscussionFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminAddClassroomDiscussionFragment"
-        android:label="AdminAddClassroomDiscussionFragment" >
-        <argument android:name="classroomID"
+        android:label="AdminAddClassroomDiscussionFragment">
+        <argument
+            android:name="classroomID"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/adminAddClassworkFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminAddClassworkFragment"
         android:label="fragment_admin_add_classwork"
-        tools:layout="@layout/fragment_admin_add_classwork" >
+        tools:layout="@layout/fragment_admin_add_classwork">
         <argument
             android:name="classroomID"
             app:argType="string" />
@@ -216,4 +220,8 @@
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.UploadVideoFragment"
         android:label="fragment_upload_video"
         tools:layout="@layout/fragment_upload_video" />
+    <fragment
+        android:id="@+id/adminCreateNotificationFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.adminpanel.AdminCreateNotificationFragment"
+        android:label="AdminCreateNotificationFragment" />
 </navigation>
