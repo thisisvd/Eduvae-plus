@@ -117,8 +117,6 @@ class HomeFragment : Fragment() {
 
             // open video btn
             videosItemBtn.setOnClickListener {
-//                startActivity(Intent(requireActivity(),YoutubeVideoActivity::class.java))
-//                viewModel.getYoutubeResult("Computer Networks","IN")
                 findNavController().navigate(R.id.action_homeFragment_to_videosBranchFragment)
             }
 

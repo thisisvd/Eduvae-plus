@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -15,15 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.BranchesListAdapter
-import com.digitalinclined.edugate.adapter.QuizMainAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.databinding.FragmentHomeBinding
+import com.digitalinclined.edugate.constants.Constants.USER_CURRENT_COURSE
 import com.digitalinclined.edugate.databinding.FragmentVideosBranchBinding
 import com.digitalinclined.edugate.models.BranchListDataClass
-import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -78,27 +74,37 @@ class VideosBranchFragment : Fragment() {
     private fun fetchBranchesListFromFirebase() {
         var branchList = ArrayList<BranchListDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("extraData/branchesDetails/BTECH").get()
-                .addOnSuccessListener { documentResult ->
-                    if (documentResult != null) {
-                        Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
-                        for (document in documentResult) {
-                            val dataClass = document.toObject(BranchListDataClass::class.java)!!
-                            branchList.add(dataClass)
+            if (!USER_CURRENT_COURSE.isNullOrEmpty()) {
+                Firebase.firestore.collection("extraData/branchesDetails/${USER_CURRENT_COURSE}")
+                    .get()
+                    .addOnSuccessListener { documentResult ->
+                        if (documentResult != null) {
+                            Log.d(
+                                TAG,
+                                "DocumentSnapshot data size : ${documentResult.documents.size}"
+                            )
+                            for (document in documentResult) {
+                                val dataClass = document.toObject(BranchListDataClass::class.java)!!
+                                branchList.add(dataClass)
+                            }
+                            Log.d(TAG, "List size : ${branchList.size}")
+                            if (branchList.isNotEmpty()) {
+                                recyclerAdapter.differ.submitList(branchList)
+                            } else {
+                                Snackbar.make(
+                                    binding.root,
+                                    "No branches fetched!",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                            binding.progressBar.visibility = View.GONE
                         }
-                        Log.d(TAG, "List size : ${branchList.size}")
-                        if (branchList.isNotEmpty()) {
-                            recyclerAdapter.differ.submitList(branchList)
-                        } else {
-                            Snackbar.make(binding.root,"No branches fetched!", Snackbar.LENGTH_LONG).show()
-                        }
+                    }.addOnFailureListener { e ->
+                        Log.d(TAG, "Error adding document", e)
+                        Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                         binding.progressBar.visibility = View.GONE
                     }
-                }.addOnFailureListener { e ->
-                    Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
-                    binding.progressBar.visibility = View.GONE
-                }
+            }
         }
     }
 
@@ -114,7 +120,6 @@ class VideosBranchFragment : Fragment() {
         // on click listener
         recyclerAdapter.apply {
             setOnItemClickListener {
-                Toast.makeText(requireContext(),it.branchName,Toast.LENGTH_SHORT).show()
                 val bundle = bundleOf(
                     "branchesData" to it
                 )

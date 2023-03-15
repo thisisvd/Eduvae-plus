@@ -14,6 +14,8 @@ interface APIInterface {
         q: String,
         @Query("regionCode")
         regionCode: String,
+        @Query("type")
+        type: String = "video",
         @Query("key")
         key: String = BASE_YOUTUBE_API_KEY,
         @Query("maxResults")

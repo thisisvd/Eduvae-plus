@@ -34,6 +34,7 @@ import com.digitalinclined.edugate.constants.Constants.SHARED_PREFERENCES_NAME
 import com.digitalinclined.edugate.constants.Constants.STORAGE_REQUEST_CODE
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
+import com.digitalinclined.edugate.constants.Constants.USER_CURRENT_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE
@@ -178,6 +179,8 @@ class MainActivity : AppCompatActivity() {
                         if (document != null) {
                             Log.d(TAG, "DocumentSnapshot data: ${document.data}")
                             val userProfile = document.toObject(UserProfile::class.java)!!
+
+                            USER_CURRENT_COURSE = userProfile.course.toString()
 
                             // add following users
                             if (userProfile.following != null) {

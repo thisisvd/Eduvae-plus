@@ -3,11 +3,9 @@ package com.digitalinclined.edugate.constants
 import androidx.lifecycle.MutableLiveData
 import com.digitalinclined.edugate.models.ColorComboRecyclerClass
 import com.digitalinclined.edugate.models.FetchDataClass
-import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
 import com.digitalinclined.edugate.restapi.models.banner.Banner
 import com.digitalinclined.edugate.restapi.models.notes.Note
-import java.util.function.BinaryOperator
 
 object Constants {
 
@@ -32,7 +30,7 @@ object Constants {
     var TEMP_CREATE_USER_EMAIL: String? = null
 
     // COURSE LIST AND YEAR LIST FOR STUDENT
-    val COURSE_LIST = arrayListOf("B.TECH","M.TECH","BCA","MBA","BCOM")
+    val COURSE_LIST = arrayListOf("BTECH","BCA","MBA","BCOM")
 
     val YEAR_LIST = arrayListOf(
         "1st Year", "2nd Year", "3rd Year", "4th Year"
@@ -60,6 +58,7 @@ object Constants {
 
     // Constant TEMP ARRAYLIST for FOLLOWING USERS ID
     var FOLLOWING_USER_ID = MutableLiveData<ArrayList<String>>()
+    var USER_CURRENT_COURSE = ""
 
     // constant - join classroom list
     var JOINED_CLASSROOM_LIST = ArrayList<String>()

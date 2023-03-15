@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/theme_color"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragments.YoutubeVideoActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/titillium_web"
-            android:text="Recorded Lectures"
+            android:text="Video Premiere"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
 
@@ -52,51 +53,102 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chip_background_ui"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:layout_marginEnd="@dimen/_6sdp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="6dp"
+                android:src="@drawable/share_icon_ui_2" />
+
+            <TextView
+                android:id="@+id/share_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/allerta"
+                android:text="Share"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/chip_background_ui"
+            android:gravity="center_vertical"
+            android:layout_gravity="end"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            android:layout_marginStart="@dimen/_6sdp" >
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="6dp"
+                android:src="@drawable/channel_icon_ui" />
+
+            <TextView
+                android:id="@+id/channel_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:fontFamily="@font/allerta"
+                android:text="Channel Name"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/nameTV"
+        android:id="@+id/video_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/titillium_web_semibold"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:text="Title of the video"
-        android:textAlignment="center"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/youtubePlayer" />
+        android:textSize="@dimen/_20sdp" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+        android:id="@+id/video_description"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/_15sdp"
-        android:fontFamily="@font/titillium_web"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:alpha=".8"
+        android:fontFamily="@font/titillium_web_light"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa ultrices bibendum tempus nisi volutpat. Tincidunt dignissim amet sit tempor eleifend nascetur donec. Euismod quisque pulvinar nunc dui. Pulvinar sagittis consequat lacus, lobortis sodales. Amet, neque dictum nibh tortor quisque senectus dolor. "
         android:textColor="@color/text_color"
-        android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTV" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/nextChapter"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_gradient_end_color"
-        android:padding="@dimen/_8sdp"
-        android:text="NEXT CHAPTER >"
-        android:layout_margin="@dimen/_15sdp"
-        android:textSize="@dimen/_17sdp"
-        app:cornerRadius="@dimen/_14sdp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="@dimen/_14sdp" />
+    
+</LinearLayout>

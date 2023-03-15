@@ -23,13 +23,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ProgressButton
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
 import com.digitalinclined.edugate.constants.Constants.INDIAN_CITY_DATA
 import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIVE
 import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
+import com.digitalinclined.edugate.constants.Constants.USER_CURRENT_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE

@@ -40,9 +40,6 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     // Adapters
     private lateinit var recyclerAdapter: DiscussionRecyclerAdapter
 
-    // toggle button
-    private lateinit var toggle: ActionBarDrawerToggle
-
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -96,6 +93,7 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")
                         if (discussionsList.isNotEmpty()) {
+                            discussionsList.reverse()
                             recyclerAdapter.differ.submitList(discussionsList)
                         } else {
                             Snackbar.make(binding.root,"No discussions in the lists!", Snackbar.LENGTH_LONG).show()

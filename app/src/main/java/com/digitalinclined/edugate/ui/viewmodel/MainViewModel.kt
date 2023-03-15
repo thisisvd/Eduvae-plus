@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -20,9 +19,6 @@ import java.lang.Exception
 class MainViewModel(
     application: Application
 ): AndroidViewModel(application) {
-
-    // TAG
-    private val TAG = "EmployeeViewModel"
 
     // main repository
     private val repository: Repository = Repository(APIClient.api)
@@ -48,7 +44,6 @@ class MainViewModel(
                     }
 
                 } else {
-                    Log.d(TAG, "Error in search -> ${response.message()}")
                     getYoutubeSearchResult.postValue(Resource.Error(response.message().toString()))
                 }
 

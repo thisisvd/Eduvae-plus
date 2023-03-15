@@ -1,5 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,14 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.adapter.VideosListAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentVideosListBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import com.digitalinclined.edugate.utils.Resource
 
@@ -36,6 +39,12 @@ class VideosListFragment : Fragment() {
 
     // args
     private val args: VideosListFragmentArgs by navArgs()
+
+    // Adapters
+    private lateinit var recyclerAdapter: VideosListAdapter
+
+    // subject selection var
+    private var selectedSubject = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,12 +67,14 @@ class VideosListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
 
+            // set up recycler view
+            setupRecyclerView()
+
             // setup adapters
             setUpAdaptersForSpinners()
 
             // view model observers
             viewModelObservers()
-
         }
     }
 
@@ -88,10 +99,22 @@ class VideosListFragment : Fragment() {
                     setAdapter(
                         courseAdapter
                     )
-                    setOnItemClickListener { adapterView, view, i, l ->
-                        Toast.makeText(requireContext(), subjectsLists[i],Toast.LENGTH_SHORT).show()
+
+                    // on change listener
+                    setOnItemClickListener { _, _, i, _ ->
+                        selectedSubject = subjectsLists[i]
+                        if (!selectedSubject.isNullOrEmpty()) {
+                            viewModel.getYoutubeResult(selectedSubject,"IN")
+                        }
                     }
-//                setDropDownBackgroundResource(R.color.button_gradient_end_color);
+
+                    // set default subject & default request
+                    setText(subjectsLists[0],false)
+                    selectedSubject = subjectsLists[0]
+
+                    if (!selectedSubject.isNullOrEmpty()) {
+                        viewModel.getYoutubeResult(selectedSubject,"IN")
+                    }
                 }
             }
         }
@@ -107,23 +130,43 @@ class VideosListFragment : Fragment() {
                     is Resource.Success -> {
                         response.data?.let { videosList ->
                             if (!videosList.isNullOrEmpty()) {
-                                for (item in videosList) {
-                                    Log.d(TAG, item.snippet.title)
-                                }
+                                recyclerAdapter.differ.submitList(videosList)
                             }
                         }
+                        progressBar.visibility = View.GONE
                     }
                     is Resource.Error -> {
                         response.message?.let { message ->
                             Log.e(TAG, "An error occurred : $message")
                         }
+                        progressBar.visibility = View.GONE
                     }
                     is Resource.Loading -> {
                         Log.d(TAG, "Youtube search api Loading!")
+                        progressBar.visibility = View.VISIBLE
                     }
                 }
             }
 
+        }
+    }
+
+    // Recycler view setup
+    private fun setupRecyclerView(){
+        recyclerAdapter = VideosListAdapter()
+        binding.apply {
+            recyclerView.apply {
+                adapter = recyclerAdapter
+                layoutManager = LinearLayoutManager(activity)
+            }
+        }
+        // on click listener
+        recyclerAdapter.apply {
+            setOnItemClickListener {
+                val intent = Intent(requireActivity(), YoutubeVideoActivity::class.java)
+                intent.putExtra("videoItem", it)
+                startActivity(intent)
+            }
         }
     }
 

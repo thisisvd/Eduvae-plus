@@ -1,5 +1,7 @@
 package com.digitalinclined.edugate.models.youtubemodel
 
+import java.io.Serializable
+
 data class Snippet(
     val channelId: String,
     val channelTitle: String,
@@ -9,4 +11,4 @@ data class Snippet(
     val publishedAt: String,
     val thumbnails: Thumbnails,
     val title: String
-)
+): Serializable
