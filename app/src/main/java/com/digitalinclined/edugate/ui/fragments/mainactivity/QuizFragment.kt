@@ -41,7 +41,7 @@ class QuizFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentQuizBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentQuizBinding.inflate(layoutInflater, container, false)
 
         // toggle btn toolbar setup
         toggle = (activity as MainActivity).toggle
@@ -76,18 +76,22 @@ class QuizFragment : Fragment() {
 
                 var testModel = gson.fromJson(json, QuizDataClass::class.java)
 
-                Log.d(TAG,testModel.totalQuizzes.toString())
+                Log.d(TAG, testModel.totalQuizzes.toString())
 
-                if(testModel.quizzes.isNotEmpty()) {
+                if (testModel.quizzes.isNotEmpty()) {
                     recyclerAdapter.differ.submitList(testModel.quizzes)
                 } else {
-                    Snackbar.make(binding.root,"No quiz present at a moment!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        binding.root,
+                        "No quiz present at a moment!",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
 
                 progressBar.visibility = View.GONE
-            }catch (e: IOException) {
-                Log.d(TAG,e.message.toString())
-                Snackbar.make(binding.root,"Failed to load quiz!",Snackbar.LENGTH_SHORT).show()
+            } catch (e: IOException) {
+                Log.d(TAG, e.message.toString())
+                Snackbar.make(binding.root, "Failed to load quiz!", Snackbar.LENGTH_SHORT).show()
                 progressBar.visibility = View.GONE
             }
 
@@ -95,7 +99,7 @@ class QuizFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = QuizMainAdapter()
         binding.apply {
             recyclerView.apply {
@@ -110,7 +114,10 @@ class QuizFragment : Fragment() {
                     "quizze" to it,
                     "fromFragment" to "quizFragment"
                 )
-                findNavController().navigate(R.id.action_quizFragment_to_quizPerformingFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_quizFragment_to_quizPerformingFragment,
+                    bundle
+                )
             }
         }
     }

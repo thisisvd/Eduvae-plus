@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/theme_color"
+    android:orientation="vertical"
     android:padding="@dimen/_18sdp"
     tools:context=".ui.fragments.adminpanel.AdminLoginFragment">
 
@@ -15,9 +15,9 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/titillium_web"
         android:text="Admin login"
-        android:textStyle="bold"
         android:textColor="@color/button_gradient_start_color"
-        android:textSize="@dimen/_25sdp" />
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"

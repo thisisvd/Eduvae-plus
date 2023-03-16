@@ -8,18 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentAdminCreateClassroomBinding
-import com.digitalinclined.edugate.databinding.FragmentOpenClassroomBinding
 import com.digitalinclined.edugate.dialogs.CreateClassroomIconDialog
-import com.digitalinclined.edugate.models.ClassroomDetailsClass
-import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -34,7 +26,8 @@ class AdminCreateClassroomFragment : Fragment() {
     private val binding get() = _binding!!
 
     // init default icon
-    private var defaultIcon = "https://firebasestorage.googleapis.com/v0/b/fitme-minor-project.appspot.com/o/images%2F6NMEfmmnwjPEoIA8mYCC1678567312786.jpg?alt=media&token=6feb83b6-db5e-437e-964b-9767650dd305"
+    private var defaultIcon =
+        "https://firebasestorage.googleapis.com/v0/b/fitme-minor-project.appspot.com/o/images%2F6NMEfmmnwjPEoIA8mYCC1678567312786.jpg?alt=media&token=6feb83b6-db5e-437e-964b-9767650dd305"
 
     // alert progress dialog
     private lateinit var dialog: Dialog
@@ -44,14 +37,14 @@ class AdminCreateClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAdminCreateClassroomBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAdminCreateClassroomBinding.inflate(layoutInflater, container, false)
 
         // init Loading Dialog
         dialog = Dialog(requireContext())
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -90,9 +83,9 @@ class AdminCreateClassroomFragment : Fragment() {
             }
 
             // icon selector
-            imageViewLayout.setOnClickListener{
+            imageViewLayout.setOnClickListener {
                 var dialog = CreateClassroomIconDialog()
-                dialog.show(parentFragmentManager,"Create Classroom Dialog")
+                dialog.show(parentFragmentManager, "Create Classroom Dialog")
                 dialog.setOnItemClickListener { resourceID, link ->
                     classroomImageIcon.setImageResource(resourceID)
                     defaultIcon = link
@@ -121,7 +114,7 @@ class AdminCreateClassroomFragment : Fragment() {
                     Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
 
                     Firebase.firestore.collection("classroom").document(documentReference.id)
-                        .update("classroomID",documentReference.id)
+                        .update("classroomID", documentReference.id)
                         .addOnSuccessListener {
                             Log.d(TAG, "Update in server successful!")
                             dialog.dismiss()

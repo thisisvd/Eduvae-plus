@@ -85,7 +85,7 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
             if (phoneNumber.text.isNullOrEmpty()) {
                 isTextEmpty = true
                 phoneNumberLayout.error = "*Phone number can't be empty!"
-            } else if(phoneNumber.text.toString().length < 10) {
+            } else if (phoneNumber.text.toString().length < 10) {
                 isTextEmpty = true
                 phoneNumberLayout.error = "*Please enter a valid phone number!"
             }
@@ -129,7 +129,7 @@ class SignUpScreenFragment : Fragment(R.layout.fragment_sign_up_screen) {
     private fun onBack() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
-            findNavController().popBackStack(R.id.onBoardingScreenFragment,false)
+            findNavController().popBackStack(R.id.onBoardingScreenFragment, false)
         }
 
     }

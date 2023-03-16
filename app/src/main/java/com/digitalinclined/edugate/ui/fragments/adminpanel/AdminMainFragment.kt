@@ -29,7 +29,7 @@ class AdminMainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAdminMainBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAdminMainBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -76,13 +76,13 @@ class AdminMainFragment : Fragment() {
             }
 
             // post notifications
-            createNotify.setOnClickListener{
+            createNotify.setOnClickListener {
                 findNavController().navigate(R.id.action_adminMainFragment_to_adminCreateNotificationFragment)
             }
 
             // upload notes & questions
             manageQuiz.setOnClickListener {
-                Snackbar.make(binding.root,"Error in managing quiz!",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Error in managing quiz!", Snackbar.LENGTH_SHORT).show()
             }
         }
     }

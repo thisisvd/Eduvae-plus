@@ -18,7 +18,6 @@ import com.digitalinclined.edugate.databinding.FragmentFeedbackBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hsalf.smileyrating.SmileyRating
@@ -60,7 +59,7 @@ class FeedbackFragment : Fragment() {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -85,7 +84,7 @@ class FeedbackFragment : Fragment() {
             // smile Listener
             smileRating.setSmileySelectedListener { type ->
 
-                when{
+                when {
                     SmileyRating.Type.GREAT == type -> smileCount = 5
                     SmileyRating.Type.GOOD == type -> smileCount = 4
                     SmileyRating.Type.OKAY == type -> smileCount = 3
@@ -102,10 +101,14 @@ class FeedbackFragment : Fragment() {
                         dialog.show()
                         addFeedbackInServer(feedbackEt.text.toString())
                     } else {
-                        Snackbar.make(binding.root,"Please select rating smile!",Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            binding.root,
+                            "Please select rating smile!",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Snackbar.make(binding.root,"Empty feedback!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Empty feedback!", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
@@ -131,7 +134,8 @@ class FeedbackFragment : Fragment() {
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error in adding feedback!", e)
                     dialog.dismiss()
-                    Snackbar.make(binding.root,"Error occurred! Try again",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred! Try again", Snackbar.LENGTH_LONG)
+                        .show()
                 }
         }
     }

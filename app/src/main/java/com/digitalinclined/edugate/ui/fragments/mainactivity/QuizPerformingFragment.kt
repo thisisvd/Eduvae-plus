@@ -1,7 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
@@ -20,12 +18,6 @@ import com.digitalinclined.edugate.constants.Constants.quizSubmissionObserver
 import com.digitalinclined.edugate.databinding.FragmentQuizPerformingBinding
 import com.digitalinclined.edugate.models.quizzesmodel.QuizSubmissionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class QuizPerformingFragment : Fragment() {
 
@@ -52,7 +44,7 @@ class QuizPerformingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentQuizPerformingBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentQuizPerformingBinding.inflate(layoutInflater, container, false)
 
         // toggle btn toolbar setup
         toggle = (activity as MainActivity).toggle
@@ -72,7 +64,7 @@ class QuizPerformingFragment : Fragment() {
             setUpClickListeners()
 
             // fetch quiz
-            if(args != null) {
+            if (args != null) {
                 fetchQuizFromServer()
             }
         }
@@ -130,19 +122,23 @@ class QuizPerformingFragment : Fragment() {
             // next listener
             nextButton.setOnClickListener {
 
-                if ((counter+1) == (args.quizze.quizTotalNumbers - 1)) {
+                if ((counter + 1) == (args.quizze.quizTotalNumbers - 1)) {
                     nextButton.text = "Submit"
                 }
 
-                if (counter < (args.quizze.quizTotalNumbers-1)) {
-                    if(selectedOption != "") {
+                if (counter < (args.quizze.quizTotalNumbers - 1)) {
+                    if (selectedOption != "") {
                         if (selectedOption == correctOption) {
                             correctAnswerCounter++
                         }
                         counter++
                         fetchQuizFromServer()
                     } else {
-                        Toast.makeText(requireContext(), "Please select an option", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Please select an option",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
                     makeSubmitDialog()
@@ -156,12 +152,18 @@ class QuizPerformingFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Quiz result")
-            setMessage("Your score is ${correctAnswerCounter+1} out of ${args.quizze.quizTotalNumbers}.")
+            setMessage("Your score is ${correctAnswerCounter + 1} out of ${args.quizze.quizTotalNumbers}.")
             setCancelable(false)
-            setPositiveButton("OK"){ dialog, _ ->
+            setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
                 if (args.fromFragment == "openClassroom") {
-                    quizSubmissionObserver.postValue(QuizSubmissionDataClass(true,correctAnswerCounter+1, args.quizze.quizTotalNumbers))
+                    quizSubmissionObserver.postValue(
+                        QuizSubmissionDataClass(
+                            true,
+                            correctAnswerCounter + 1,
+                            args.quizze.quizTotalNumbers
+                        )
+                    )
                     findNavController().popBackStack()
                 } else {
                     findNavController().popBackStack()

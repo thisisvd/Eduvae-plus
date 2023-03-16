@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/theme_color"
     android:orientation="vertical"
-    android:paddingTop="6dp"
-    android:paddingBottom="6dp"
     android:paddingStart="12dp"
+    android:paddingTop="6dp"
     android:paddingEnd="12dp"
-    android:background="@color/theme_color">
+    android:paddingBottom="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
             android:id="@+id/Rl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/img1"
@@ -52,9 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/Rl1"
             android:layout_marginTop="6dp"
+            android:ellipsize="end"
             android:fontFamily="@font/titillium_web_semibold"
             android:maxLines="1"
-            android:ellipsize="end"
             android:text="Notification title"
             android:textColor="@color/white"
             android:textSize="@dimen/_20sdp" />
@@ -66,9 +66,9 @@
             android:layout_below="@+id/notificationTitleTV"
             android:layout_centerVertical="true"
             android:layout_marginTop="6dp"
+            android:ellipsize="end"
             android:fontFamily="@font/titillium_web"
             android:maxLines="1"
-            android:ellipsize="end"
             android:text="Notification content"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -82,12 +82,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Rl"
         android:background="@drawable/notification_bottom_background"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingRight="@dimen/_15sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_8sdp"
         android:gravity="end"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_8sdp">
 
         <TextView
             android:id="@+id/viewDetailsTV"

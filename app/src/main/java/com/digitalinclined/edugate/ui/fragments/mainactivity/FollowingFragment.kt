@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +18,6 @@ import com.digitalinclined.edugate.databinding.FragmentFollowingBinding
 import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
@@ -65,7 +63,8 @@ class FollowingFragment : Fragment() {
 
             // toggle btn toolbar setup
             toggle = (activity as MainActivity).toggle
-            val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+            val drawable =
+                requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
             toggle.setHomeAsUpIndicator(drawable)
             Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
@@ -84,8 +83,8 @@ class FollowingFragment : Fragment() {
 
         // following users list observer
         FOLLOWING_USER_ID.observe(viewLifecycleOwner) { users ->
-            if(users.isNotEmpty()) {
-                Log.d(TAG,"Triggered list size : ${users.size}")
+            if (users.isNotEmpty()) {
+                Log.d(TAG, "Triggered list size : ${users.size}")
                 followedUsersList.clear()
                 for (userID in users) {
                     fetchFollowingUsersFromFirebase(userID)
@@ -145,7 +144,7 @@ class FollowingFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = FollowingRecyclerAdapter()
         binding.apply {
             recyclerView.apply {
@@ -156,7 +155,7 @@ class FollowingFragment : Fragment() {
 
         // on click listener
         recyclerAdapter.setOnItemClickListener { userProfile ->
-            if(!userProfile.userID.isNullOrEmpty()) {
+            if (!userProfile.userID.isNullOrEmpty()) {
                 showAlertForUnFollowUser(userProfile.name!!.split(" ")[0], userProfile.userID!!)
             }
         }

@@ -9,19 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.ActivitySetupBinding
 import com.digitalinclined.edugate.utils.NetworkListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SetupActivity : AppCompatActivity() {
@@ -29,7 +26,7 @@ class SetupActivity : AppCompatActivity() {
     // TAG
     private val TAG = "SetupActivity"
 
-    // viewBinding
+    // view binding
     private lateinit var binding: ActivitySetupBinding
 
     // dialog
@@ -57,7 +54,7 @@ class SetupActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { controller, _, _ ->
-            if(controller.currentDestination?.displayName == "com.digitalinclined.edugate:id/splashScreenFragment") {
+            if (controller.currentDestination?.displayName == "com.digitalinclined.edugate:id/splashScreenFragment") {
                 Log.d(TAG, controller.currentDestination?.displayName.toString())
             } else {
                 checkForNetworkConnectivity()
@@ -73,8 +70,8 @@ class SetupActivity : AppCompatActivity() {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(this@SetupActivity)
                 .collect { status ->
-                    Log.d("NetworkListener",status.toString())
-                    if(status) {
+                    Log.d("NetworkListener", status.toString())
+                    if (status) {
                         networkDialog.dismiss()
                     } else {
                         networkDialog.show()
@@ -84,17 +81,19 @@ class SetupActivity : AppCompatActivity() {
     }
 
     // dialog to check for account
-    private fun dialogSetupForNoNetwork(){
+    private fun dialogSetupForNoNetwork() {
         networkDialogBuilder = MaterialAlertDialogBuilder(this).apply {
             setIcon(R.drawable.ic_baseline_signal_wifi_connected_no_internet_4_24)
             setTitle("Network not found!")
             titleColor = Color.parseColor("#A67E40")
-            setMessage("Facing an issue with the network!. " +
-                        "Please establish internet connection so you can proceed further. Please TURN ON -")
-            setPositiveButton("WIFI") { _,_ ->
+            setMessage(
+                "Facing an issue with the network!. " +
+                        "Please establish internet connection so you can proceed further. Please TURN ON -"
+            )
+            setPositiveButton("WIFI") { _, _ ->
                 startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
             }
-            setNeutralButton("MOBILE NETWORK") { _,_ ->
+            setNeutralButton("MOBILE NETWORK") { _, _ ->
                 startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS))
             }
             setCancelable(false)
@@ -121,6 +120,7 @@ class SetupActivity : AppCompatActivity() {
             Log.d(TAG, "Chrome custom tab : null link provided!")
         }
     }
+
     override fun onResume() {
         super.onResume()
         checkForNetworkConnectivity()

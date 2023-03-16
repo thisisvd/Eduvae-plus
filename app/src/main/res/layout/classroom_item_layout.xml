@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -93,10 +92,10 @@
             android:id="@+id/classroom_pdf_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
             android:background="@drawable/rectangle_brown_background"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_margin="@dimen/_8sdp"
             android:padding="@dimen/_8sdp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,8 +127,8 @@
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
         android:layout_marginTop="@dimen/_12sdp"
+        android:background="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

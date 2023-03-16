@@ -7,28 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.adapter.FollowingRecyclerAdapter
 import com.digitalinclined.edugate.adapter.ScoreBoardRecyclerAdapter
 import com.digitalinclined.edugate.constants.Constants
-import com.digitalinclined.edugate.constants.Constants.FOLLOWING_USER_ID
 import com.digitalinclined.edugate.databinding.FragmentFollowingBinding
 import com.digitalinclined.edugate.models.UserFollowingProfile
 import com.digitalinclined.edugate.models.quizzesmodel.ClassWorkSubmissionDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,11 +59,13 @@ class ScoreBoardFragment : Fragment() {
         binding.apply {
 
             // change the title bar
-            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Score Board"
+            (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+                "Score Board"
 
             // toggle btn toolbar setup
             toggle = (activity as MainActivity).toggle
-            val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
+            val drawable =
+                requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
             toggle.setHomeAsUpIndicator(drawable)
             Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
@@ -96,7 +91,8 @@ class ScoreBoardFragment : Fragment() {
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         for (document in documentResult) {
-                            val dataClass = document.toObject(ClassWorkSubmissionDataClass::class.java)
+                            val dataClass =
+                                document.toObject(ClassWorkSubmissionDataClass::class.java)
                             scoreProfileList.add(dataClass)
                         }
 
@@ -107,20 +103,22 @@ class ScoreBoardFragment : Fragment() {
                     } else {
                         Log.d(TAG, "Error in processing!")
                         binding.progressBar.visibility = View.GONE
-                        Snackbar.make(binding.root,"Error in processing!",Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, "Error in processing!", Snackbar.LENGTH_SHORT)
+                            .show()
                     }
                     binding.progressBar.visibility = View.GONE
                 }
                 .addOnFailureListener { exception ->
                     Log.d(TAG, "get failed with ", exception)
-                    Snackbar.make(binding.root,"Error in processing!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Error in processing!", Snackbar.LENGTH_SHORT)
+                        .show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = ScoreBoardRecyclerAdapter()
         binding.apply {
             recyclerView.apply {

@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.digitalinclined.edugate.R
@@ -20,8 +18,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class AdminAddClassworkFragment : Fragment() {
 
@@ -43,14 +39,14 @@ class AdminAddClassworkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAdminAddClassworkBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAdminAddClassworkBinding.inflate(layoutInflater, container, false)
 
         // init Loading Dialog
         dialog = Dialog(requireContext())
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -92,16 +88,22 @@ class AdminAddClassworkFragment : Fragment() {
             if (!questionEt.text.isNullOrEmpty()) {
 
                 if (!isQuizOptionsEmpty()) {
-                    if (!quizAnswer.text.isNullOrEmpty() && (quizAnswer.text.toString().toInt() in 1..4)) {
+                    if (!quizAnswer.text.isNullOrEmpty() && (quizAnswer.text.toString()
+                            .toInt() in 1..4)
+                    ) {
                         createClassworkRoomInServer()
                     } else {
-                        Snackbar.make(binding.root,"Enter correct answer number",Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            binding.root,
+                            "Enter correct answer number",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
-                    Snackbar.make(binding.root,"Enter all options",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Enter all options", Snackbar.LENGTH_SHORT).show()
                 }
             } else {
-                Snackbar.make(binding.root,"Please enter question",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Please enter question", Snackbar.LENGTH_SHORT).show()
             }
 
         }
@@ -114,7 +116,7 @@ class AdminAddClassworkFragment : Fragment() {
             dialog.show()
 
             val classRoom = hashMapOf(
-                "answer" to quizAnswer.text.toString().toInt()-1,
+                "answer" to quizAnswer.text.toString().toInt() - 1,
                 "options" to FieldValue.arrayUnion(
                     returnOptionValue(quizOption1.text.toString()),
                     returnOptionValue(quizOption2.text.toString()),
@@ -141,7 +143,7 @@ class AdminAddClassworkFragment : Fragment() {
                 .addOnFailureListener { e ->
                     dialog.dismiss()
                     Log.w(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Error occurred", Snackbar.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }
         }
@@ -158,7 +160,7 @@ class AdminAddClassworkFragment : Fragment() {
     }
 
     // option element
-    private fun returnOptionValue(option: String) : String{
+    private fun returnOptionValue(option: String): String {
         return if (option.isNullOrEmpty()) "null" else option
     }
 
@@ -199,7 +201,7 @@ class AdminAddClassworkFragment : Fragment() {
     // update class work submission collection
     private fun updateWorkSubmission() {
         Firebase.firestore.collection("classroom/${args.classroomID}/classworkSubmissions")
-            .get().addOnSuccessListener {documentReference ->
+            .get().addOnSuccessListener { documentReference ->
                 if (documentReference != null) {
                     for (document in documentReference) {
                         // delete one by one

@@ -34,12 +34,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -47,8 +47,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:indeterminate="true"
         android:layout_gravity="center"
+        android:indeterminate="true"
         android:indeterminateTint="@color/made_with_background"
         android:indeterminateTintMode="src_atop" />
 
@@ -56,13 +56,13 @@
         android:id="@+id/noNotesInList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/_15sdp"
         android:fontFamily="@font/titillium_web_semibold"
-        android:layout_gravity="center"
         android:text="No notes available!"
-        android:visibility="gone"
         android:textAlignment="center"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/_20sdp" />
+        android:textSize="@dimen/_20sdp"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

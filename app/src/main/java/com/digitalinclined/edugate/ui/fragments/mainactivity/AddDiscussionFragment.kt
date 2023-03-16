@@ -92,7 +92,8 @@ class AddDiscussionFragment : Fragment() {
 
         // toggle btn toolbar setup
         toggle = (activity as MainActivity).toggle
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Add a Discussion"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            "Add a Discussion"
         val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
         toggle.setHomeAsUpIndicator(drawable)
         IS_BACK_TOOLBAR_BTN_ACTIVE = true
@@ -102,7 +103,7 @@ class AddDiscussionFragment : Fragment() {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -116,16 +117,21 @@ class AddDiscussionFragment : Fragment() {
 
             // submit discussion
             submitDiscussion.setOnClickListener {
-                if(verifyDataFromUser(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName)) {
+                if (verifyDataFromUser(
+                        discussionTitle.text.toString(),
+                        discussionContentTitle.text.toString(),
+                        pdfBase64FileName
+                    )
+                ) {
                     dialog.show()
                     uploadingPDFAndAddToServer()
                 } else {
-                    Snackbar.make(it,"Please fill all fields!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(it, "Please fill all fields!", Snackbar.LENGTH_LONG).show()
                 }
             }
 
             // attach a file
-            attachFile.setOnClickListener{
+            attachFile.setOnClickListener {
                 selectPDFFromStorage()
             }
 
@@ -138,13 +144,25 @@ class AddDiscussionFragment : Fragment() {
             viewModel.apply {
                 if (pdfBase64FileData.isNotEmpty()) {
                     val currentPDFIDName = System.currentTimeMillis().toString()
-                    insertData(PDFDataRoom(0, currentPDFIDName, pdfBase64FileName,pdfBase64FileData))
+                    insertData(
+                        PDFDataRoom(
+                            0,
+                            currentPDFIDName,
+                            pdfBase64FileName,
+                            pdfBase64FileData
+                        )
+                    )
 
-                    val timer = object: CountDownTimer(10000, 1000) {
+                    val timer = object : CountDownTimer(10000, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
-                            if((millisUntilFinished/1000) == 7L){
+                            if ((millisUntilFinished / 1000) == 7L) {
                                 getSelectedPdf(currentPDFIDName).observe(viewLifecycleOwner) { pdfId ->
-                                    addToServer(discussionTitle.text.toString(),discussionContentTitle.text.toString(),pdfBase64FileName,pdfId.uniqueID)
+                                    addToServer(
+                                        discussionTitle.text.toString(),
+                                        discussionContentTitle.text.toString(),
+                                        pdfBase64FileName,
+                                        pdfId.uniqueID
+                                    )
                                 }
                             }
                         }
@@ -160,14 +178,19 @@ class AddDiscussionFragment : Fragment() {
     }
 
     // add to server
-    private fun addToServer(title: String, description: String, pdfBaseName: String, pdfFileLink: String) {
+    private fun addToServer(
+        title: String,
+        description: String,
+        pdfBaseName: String,
+        pdfFileLink: String
+    ) {
         binding.apply {
             val discussionData = hashMapOf(
-                "name" to sharedPreferences.getString(Constants.USER_NAME,""),
+                "name" to sharedPreferences.getString(Constants.USER_NAME, ""),
                 "course" to sharedPreferences.getString(Constants.USER_COURSE, ""),
                 "courseYear" to sharedPreferences.getString(Constants.USER_YEAR, ""),
                 "publishedDate" to System.currentTimeMillis().toString(),
-                "userImage" to sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,""),
+                "userImage" to sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, ""),
                 "title" to title,
                 "content" to description,
                 "pdfName" to pdfBaseName,
@@ -182,13 +205,18 @@ class AddDiscussionFragment : Fragment() {
                 .set(discussionData)
                 .addOnSuccessListener {
                     Log.d(TAG, "Update in server successful!")
-                    Snackbar.make(binding.root,"Discussion Submitted!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Discussion Submitted!", Snackbar.LENGTH_LONG)
+                        .show()
                     findNavController().popBackStack()
                     dialog.dismiss()
                 }
                 .addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.discussionTitle,"Error occurred please try again!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(
+                        binding.discussionTitle,
+                        "Error occurred please try again!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
                     dialog.dismiss()
                 }
         }
@@ -201,25 +229,28 @@ class AddDiscussionFragment : Fragment() {
             type = "application/pdf"
             addCategory(Intent.CATEGORY_OPENABLE)
         }
-        startActivityForResult(Intent.createChooser(openStorageIntent, "Select PDF"), PDF_SELECTION_CODE)
+        startActivityForResult(
+            Intent.createChooser(openStorageIntent, "Select PDF"),
+            PDF_SELECTION_CODE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedPdfFromStorage = data.data
 
             // file name from uri
-            val fileName = queryName(requireContext(),selectedPdfFromStorage!!)
-            Toast.makeText(requireContext(),fileName.toString(),Toast.LENGTH_SHORT).show()
+            val fileName = queryName(requireContext(), selectedPdfFromStorage!!)
+            Toast.makeText(requireContext(), fileName.toString(), Toast.LENGTH_SHORT).show()
             pdfBase64FileName = fileName.toString()
             pdfFileStorageLocation = selectedPdfFromStorage
 
             pdfBase64FileData = getBase64FromPath(selectedPdfFromStorage)
 
-            Log.d("TAGU",selectedPdfFromStorage.path.toString())
-            Log.d("TAGU",pdfBase64FileName)
+            Log.d("TAGU", selectedPdfFromStorage.path.toString())
+            Log.d("TAGU", pdfBase64FileName)
 
             // file name view
             binding.attachFile.visibility = View.GONE
@@ -233,8 +264,8 @@ class AddDiscussionFragment : Fragment() {
         val iStream: InputStream? = requireActivity().contentResolver.openInputStream(uri)
         val inputData: ByteArray = getBytes(iStream!!)
 
-        var getBase64String = encodeToString(inputData,NO_WRAP)
-        Log.d(TAG,getBase64String)
+        var getBase64String = encodeToString(inputData, NO_WRAP)
+        Log.d(TAG, getBase64String)
 
         return getBase64String
     }
@@ -262,7 +293,11 @@ class AddDiscussionFragment : Fragment() {
     }
 
     // check for data validation
-    private fun verifyDataFromUser(title: String, description: String, pdfFileName: String): Boolean {
+    private fun verifyDataFromUser(
+        title: String,
+        description: String,
+        pdfFileName: String
+    ): Boolean {
         return if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
             false
         } else !(title.isEmpty() || description.isEmpty() || pdfFileName.isEmpty())

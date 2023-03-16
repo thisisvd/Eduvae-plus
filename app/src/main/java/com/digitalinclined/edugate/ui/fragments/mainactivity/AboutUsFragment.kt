@@ -10,12 +10,13 @@ import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.APP_SHARE_URL
 import com.digitalinclined.edugate.databinding.FragmentAboutUsBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 
 class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
 
-    // viewBinding
+    // view binding
     private lateinit var binding: FragmentAboutUsBinding
 
     // toggle
@@ -53,12 +54,12 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
 
             // flat-icons link
             flatIconsLink.setOnClickListener {
-                openProfileLinks("https://www.flaticon.com","Flaticon")
+                openProfileLinks("https://www.flaticon.com", "Flaticon")
             }
 
             // icons8 link
             icons8Link.setOnClickListener {
-                openProfileLinks("https://icons8.com","icons8")
+                openProfileLinks("https://icons8.com", "icons8")
             }
 
             // unDraw
@@ -68,19 +69,28 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
 
             // privacy policy
             privatePolicyLink.setOnClickListener {
-                openProfileLinks("http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage","Privacy Policy")
+                openProfileLinks(
+                    "http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage",
+                    "Privacy Policy"
+                )
             }
 
             // terms & co
             termsAndCoLink.setOnClickListener {
-                openProfileLinks("http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage","Terms & Conditions")
+                openProfileLinks(
+                    "http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage",
+                    "Terms & Conditions"
+                )
             }
 
             // share app
             aboutUsShareOurApp.setOnClickListener {
                 val sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"
-                val shareBody = "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${getString(R.string.app_name)} : Link"
+                val shareBody =
+                    "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${
+                        getString(R.string.app_name)
+                    } : $APP_SHARE_URL"
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
                 startActivity(sharingIntent)
@@ -95,7 +105,7 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
             "url" to link,
             "urlSiteName" to name
         )
-        findNavController().navigate(R.id.action_aboutUsFragment_to_webViewFragment,bundle)
+        findNavController().navigate(R.id.action_aboutUsFragment_to_webViewFragment, bundle)
     }
 
 }

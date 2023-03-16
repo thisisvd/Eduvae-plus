@@ -8,7 +8,6 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
@@ -53,17 +52,18 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view,savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         binding = FragmentDiscussionBinding.bind(view)
 
         // firebase init
         firebaseAuth = Firebase.auth
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Discussion Form"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            "Discussion Form"
 
-        binding.apply { 
-            
+        binding.apply {
+
             // set up recycler view
             setupRecyclerView()
 
@@ -96,13 +96,17 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
                             discussionsList.reverse()
                             recyclerAdapter.differ.submitList(discussionsList)
                         } else {
-                            Snackbar.make(binding.root,"No discussions in the lists!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "No discussions in the lists!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         binding.progressBar.visibility = View.GONE
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
@@ -116,18 +120,19 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
                 .addOnSuccessListener {
                     Log.d(TAG, "User Followed Successfully!")
                     (activity as MainActivity).fetchFirebaseUserData()
-                    view.setTextColor(ContextCompat.getColor(requireContext(),R.color.green_color))
+                    view.setTextColor(ContextCompat.getColor(requireContext(), R.color.green_color))
                     view.text = "Following"
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error in following user!", e)
-                    Snackbar.make(binding.root,"Error in following user!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error in following user!", Snackbar.LENGTH_LONG)
+                        .show()
                 }
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = DiscussionRecyclerAdapter(requireContext())
         binding.apply {
             recyclerView.apply {

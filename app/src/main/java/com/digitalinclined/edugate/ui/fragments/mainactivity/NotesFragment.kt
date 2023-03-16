@@ -21,7 +21,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -56,7 +55,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNotesBinding.bind(view)
 
-        if(Firebase.auth.currentUser != null) {
+        if (Firebase.auth.currentUser != null) {
             // change the title bar
             (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notes"
 
@@ -101,20 +100,24 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
                             recyclerAdapter.differ.submitList(questionsList)
                             binding.progressBar.visibility = View.GONE
                         } else {
-                            Snackbar.make(binding.root,"No discussions in the lists!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "No discussions in the lists!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             binding.progressBar.visibility = View.GONE
                         }
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = PreviousYearsPaperAdapter("notes")
         binding.apply {
             recyclerView.apply {
@@ -128,7 +131,10 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
                 val bundle = bundleOf(
                     "pdfLink" to strLink
                 )
-                findNavController().navigate(R.id.action_notesFragment_to_PDFWebViewFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_notesFragment_to_PDFWebViewFragment,
+                    bundle
+                )
             }
         }
     }

@@ -44,7 +44,8 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
         binding = FragmentPreviousYearPapersBinding.bind(view)
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Question Papers"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            "Question Papers"
 
         // toggle setup
         toggle = (activity as MainActivity).toggle
@@ -79,20 +80,24 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
                             recyclerAdapter.differ.submitList(questionsList)
                             binding.progressBar.visibility = View.GONE
                         } else {
-                            Snackbar.make(binding.root,"No discussions in the lists!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "No discussions in the lists!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             binding.progressBar.visibility = View.GONE
                         }
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = PreviousYearsPaperAdapter("questions")
         binding.apply {
             recyclerView.apply {
@@ -106,7 +111,10 @@ class PreviousYearPapersFragment : Fragment(R.layout.fragment_previous_year_pape
                 val bundle = bundleOf(
                     "pdfLink" to strLink
                 )
-                findNavController().navigate(R.id.action_previousYearPapersFragment_to_PDFWebViewFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_previousYearPapersFragment_to_PDFWebViewFragment,
+                    bundle
+                )
             }
         }
     }

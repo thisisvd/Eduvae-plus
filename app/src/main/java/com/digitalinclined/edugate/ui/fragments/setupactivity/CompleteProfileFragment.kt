@@ -49,7 +49,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
             // complete sign up button onClick listener
             completeButton.setOnClickListener {
-                if(!isAutoCompleteEmpty() && isEnteredValueTrue()) {
+                if (!isAutoCompleteEmpty() && isEnteredValueTrue()) {
                     webViewProgressBar.visibility = View.VISIBLE
                     updateAnAccount()
                 }
@@ -83,7 +83,7 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
     }
 
     // Setting adapters for Spinner / AutoTextView
-    private fun adapterForSpinners(){
+    private fun adapterForSpinners() {
         binding.apply {
 
             // adapter for course list
@@ -140,22 +140,23 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
 
         binding.apply {
 
-            if(chooseCourseAutoTextView.text.isNullOrEmpty()) {
+            if (chooseCourseAutoTextView.text.isNullOrEmpty()) {
                 result = true
             }
 
-            if(yearAutoTextView.text.isNullOrEmpty()) {
+            if (yearAutoTextView.text.isNullOrEmpty()) {
                 result = true
             }
 
-            if(semesterAutoTextView.text.isNullOrEmpty()) {
+            if (semesterAutoTextView.text.isNullOrEmpty()) {
                 result = true
             }
         }
 
-        if(result) {
+        if (result) {
             // Snack bar on empty OTP
-            Snackbar.make(binding.root ,
+            Snackbar.make(
+                binding.root,
                 "Please enter all fields!",
                 Snackbar.LENGTH_SHORT
             ).show()
@@ -190,27 +191,30 @@ class CompleteProfileFragment : Fragment(R.layout.fragment_complete_profile) {
                 }
             }
 
-            if(!resultCourse) {
+            if (!resultCourse) {
                 chooseCourseAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()
                 result = false
             }
 
-            if(!resultYear) {
+            if (!resultYear) {
                 yearAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()
                 result = false
             }
 
-            if(!resultSemester) {
+            if (!resultSemester) {
                 semesterAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()

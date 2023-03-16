@@ -8,22 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.ADMIN_USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentAdminLoginBinding
-import com.digitalinclined.edugate.databinding.FragmentClassroomBinding
 import com.digitalinclined.edugate.models.AdminLoginDataClass
-import com.digitalinclined.edugate.models.ClassroomDetailsClass
-import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -46,14 +39,14 @@ class AdminLoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAdminLoginBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAdminLoginBinding.inflate(layoutInflater, container, false)
 
         // init Loading Dialog
         dialog = Dialog(requireContext())
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -83,7 +76,7 @@ class AdminLoginFragment : Fragment() {
             adminLoginBtn.setOnClickListener {
                 if (!isTextEmpty()) {
                     dialog.show()
-                    checkAdminAndLogin(adminId.text.toString(),adminPasskey.text.toString())
+                    checkAdminAndLogin(adminId.text.toString(), adminPasskey.text.toString())
                 }
             }
 
@@ -113,7 +106,10 @@ class AdminLoginFragment : Fragment() {
                                 "adminName" to ADMIN_USER_NAME
                             )
                             dialog.dismiss()
-                            findNavController().navigate(R.id.action_adminLoginFragment_to_adminMainFragment,bundle)
+                            findNavController().navigate(
+                                R.id.action_adminLoginFragment_to_adminMainFragment,
+                                bundle
+                            )
                             // reformat texts
                             binding.apply {
                                 adminId.setText("")
@@ -121,13 +117,18 @@ class AdminLoginFragment : Fragment() {
                             }
                         } else {
                             dialog.dismiss()
-                            Snackbar.make(binding.root, "Invalid id or passkey!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "Invalid id or passkey!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                     }
                 }.addOnFailureListener { e ->
                     dialog.dismiss()
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root, "Invalid id or passkey!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Invalid id or passkey!", Snackbar.LENGTH_LONG)
+                        .show()
                 }
         }
     }

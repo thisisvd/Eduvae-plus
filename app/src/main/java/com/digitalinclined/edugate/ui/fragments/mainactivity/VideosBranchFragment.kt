@@ -47,7 +47,8 @@ class VideosBranchFragment : Fragment() {
         _binding = FragmentVideosBranchBinding.inflate(inflater, container, false)
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Select Branch/Course"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            "Select Branch/Course"
         toggle = (activity as MainActivity).toggle
         toggle.isDrawerIndicatorEnabled = false
         val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
@@ -109,7 +110,7 @@ class VideosBranchFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = BranchesListAdapter()
         binding.apply {
             recyclerView.apply {
@@ -123,7 +124,10 @@ class VideosBranchFragment : Fragment() {
                 val bundle = bundleOf(
                     "branchesData" to it
                 )
-                findNavController().navigate(R.id.action_videosBranchFragment_to_videosListFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_videosBranchFragment_to_videosListFragment,
+                    bundle
+                )
             }
         }
     }

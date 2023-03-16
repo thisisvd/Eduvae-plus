@@ -48,9 +48,10 @@ class WebViewFragment : Fragment() {
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = if (args.urlSiteName != null)
-            "${args.urlSiteName}"
-        else ""
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            if (args.urlSiteName != null)
+                "${args.urlSiteName}"
+            else ""
 
         return binding.root
     }
@@ -61,7 +62,7 @@ class WebViewFragment : Fragment() {
 
             // web view init
             webView.apply {
-                webViewClient = object : WebViewClient(){
+                webViewClient = object : WebViewClient() {
 
                     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                         super.onPageStarted(view, url, favicon)

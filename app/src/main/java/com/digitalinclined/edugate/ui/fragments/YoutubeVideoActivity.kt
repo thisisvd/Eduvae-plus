@@ -3,8 +3,7 @@ package com.digitalinclined.edugate.ui.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.constants.Constants.BASE_YOUTUBE_API_KEY
+import com.digitalinclined.edugate.BuildConfig
 import com.digitalinclined.edugate.databinding.ActivityYoutubeVideoBinding
 import com.digitalinclined.edugate.models.youtubemodel.Item
 import com.google.android.material.snackbar.Snackbar
@@ -20,7 +19,7 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
     // view binding
     private lateinit var binding: ActivityYoutubeVideoBinding
 
-    // var
+    // vars
     private lateinit var videoItem: Item
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +66,7 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
                     sharingIntent.type = "text/plain"
                     val shareBody = "Hii!, I founded an useful video.\n\n" +
                             "See the video below.\n\nVideo link : $videoLink" +
-                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+                            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
                     sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
                     startActivity(sharingIntent)
                 }
@@ -77,7 +76,7 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
     }
 
     // youtube listener
-    private fun youtubeListener(){
+    private fun youtubeListener() {
         binding.apply {
             val listener = object : YouTubePlayer.OnInitializedListener {
                 override fun onInitializationSuccess(
@@ -90,7 +89,7 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
                         // Load video using youtube video id
                         youtubePlayer?.loadVideo(videoItem.id.videoId)
 
-                        Log.d(TAG,videoItem.id.videoId)
+                        Log.d(TAG, videoItem.id.videoId)
 
                         //start video
                         youtubePlayer?.play()
@@ -102,13 +101,12 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
                     p1: YouTubeInitializationResult?
                 ) {
                     // Display snack
-                    Snackbar.make(binding.root,"Loading failed!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Loading failed!", Snackbar.LENGTH_SHORT).show()
                 }
             }
 
             // init api
-            youtubePlayer.initialize(BASE_YOUTUBE_API_KEY,listener)
+            youtubePlayer.initialize(BuildConfig.BASE_YOUTUBE_API_KEY, listener)
         }
     }
-
 }

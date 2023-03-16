@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.IS_SPLASH_SCREEN_FIRST_SHOWED
 import com.digitalinclined.edugate.databinding.FragmentSplashScreenBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.SetupActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
@@ -31,7 +27,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
         // firebase init
         firebaseAuth = FirebaseAuth.getInstance()
 
-        if(IS_SPLASH_SCREEN_FIRST_SHOWED) {
+        if (IS_SPLASH_SCREEN_FIRST_SHOWED) {
 
             // setting fragment 2nd showed
             IS_SPLASH_SCREEN_FIRST_SHOWED = false

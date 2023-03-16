@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/theme_color"
     android:paddingLeft="@dimen/_18sdp"
     android:paddingRight="@dimen/_18sdp"
@@ -19,6 +19,7 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_200sdp"
             android:layout_gravity="center_horizontal"
+            android:scaleType="fitCenter"
             android:src="@drawable/onboarding_image" />
 
         <TextView
@@ -36,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/titillium_web_light"
-            android:text="Learn from India’s best\nteachers from the comfort of\nyour home."
+            android:text="Share &amp; get on-demand notes,\npapers and live classroom content\nwith recommended video lectures\nand discussion forum."
             android:textColor="@color/text_color"
             android:textSize="@dimen/_15sdp" />
 
@@ -44,9 +45,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_above="@+id/getStartedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/getStartedButton"
         android:orientation="vertical">
 
         <LinearLayout
@@ -55,14 +56,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/_15sdp"
-            android:paddingLeft="11dp"
-            android:paddingRight="11dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:layout_marginBottom="@dimen/_15sdp"
-            android:gravity="center"
             android:background="@drawable/round_google_login_background"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="11dp"
+            android:paddingTop="8dp"
+            android:paddingRight="11dp"
+            android:paddingBottom="8dp">
 
             <ImageView
                 android:layout_width="@dimen/_32sdp"
@@ -73,9 +74,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
                 android:fontFamily="@font/titillium_web"
                 android:text="Login with google"
-                android:layout_marginLeft="@dimen/_18sdp"
                 android:textColor="#3F4542"
                 android:textSize="@dimen/_17sdp"
                 android:textStyle="bold" />

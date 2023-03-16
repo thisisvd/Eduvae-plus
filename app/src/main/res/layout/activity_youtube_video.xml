@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/theme_color"
     android:layout_height="match_parent"
+    android:background="@color/theme_color"
     android:orientation="vertical"
     tools:context=".ui.fragments.YoutubeVideoActivity">
 
@@ -56,17 +56,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/_12sdp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:background="@drawable/chip_background_ui"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="4dp"
-            android:layout_marginEnd="@dimen/_6sdp">
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="32dp"
@@ -93,12 +93,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/_6sdp"
             android:background="@drawable/chip_background_ui"
             android:gravity="center_vertical"
-            android:layout_gravity="end"
             android:orientation="horizontal"
-            android:padding="4dp"
-            android:layout_marginStart="@dimen/_6sdp" >
+            android:padding="4dp">
 
             <ImageView
                 android:layout_width="32dp"
@@ -112,10 +112,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:fontFamily="@font/allerta"
-                android:text="Channel Name"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:fontFamily="@font/allerta"
+                android:maxLines="2"
+                android:text="Channel Name"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color"
@@ -130,9 +130,9 @@
         android:id="@+id/video_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/titillium_web_semibold"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
+        android:fontFamily="@font/titillium_web_semibold"
         android:text="Title of the video"
         android:textColor="@color/text_color"
         android:textSize="@dimen/_20sdp" />
@@ -143,12 +143,12 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:alpha=".8"
         android:fontFamily="@font/titillium_web_light"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa ultrices bibendum tempus nisi volutpat. Tincidunt dignissim amet sit tempor eleifend nascetur donec. Euismod quisque pulvinar nunc dui. Pulvinar sagittis consequat lacus, lobortis sodales. Amet, neque dictum nibh tortor quisque senectus dolor. "
         android:textColor="@color/text_color"
         android:textSize="@dimen/_14sdp" />
-    
+
 </LinearLayout>

@@ -1,17 +1,12 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.app.Dialog
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
@@ -20,7 +15,6 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.NotificationAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentNotificationBinding
-import com.digitalinclined.edugate.models.BranchListDataClass
 import com.digitalinclined.edugate.models.NotificationDataClass
 import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +22,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 class NotificationFragment : Fragment() {
 
@@ -103,9 +96,13 @@ class NotificationFragment : Fragment() {
                 Firebase.firestore.collection("notificationsAndAlerts").get()
                     .addOnSuccessListener { documentResult ->
                         if (documentResult != null) {
-                            Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
+                            Log.d(
+                                TAG,
+                                "DocumentSnapshot data size : ${documentResult.documents.size}"
+                            )
                             for (document in documentResult) {
-                                val dataClass = document.toObject(NotificationDataClass::class.java)!!
+                                val dataClass =
+                                    document.toObject(NotificationDataClass::class.java)!!
                                 notifyList.add(dataClass)
                             }
                             Log.d(TAG, "List size : ${notifyList.size}")
@@ -131,7 +128,7 @@ class NotificationFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = NotificationAdapter()
         binding.apply {
             recyclerView.apply {

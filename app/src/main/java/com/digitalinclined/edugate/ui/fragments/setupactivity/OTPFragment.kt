@@ -1,7 +1,6 @@
 package com.digitalinclined.edugate.ui.fragments.setupactivity
 
 import android.app.Dialog
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -29,7 +28,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
-class OTPFragment: Fragment(R.layout.fragment_otp) {
+class OTPFragment : Fragment(R.layout.fragment_otp) {
 
     // TAG
     private val TAG = "OTPFragment"
@@ -60,7 +59,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     // constant for google sign-in
-    private companion object{
+    private companion object {
         private const val RC_SIGN_IN = 100
         private const val TAG_GOOGLE_SIGN_IN = "GOOGLE_SING_IN_TAG"
     }
@@ -97,7 +96,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             dialog.apply {
                 setContentView(R.layout.custom_dialog)
                 setCancelable(false)
-                if(window != null){
+                if (window != null) {
                     window!!.setBackgroundDrawable(ColorDrawable(0))
                 }
             }
@@ -108,7 +107,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             progressButton.setBtnOriginalName("Verify")
 
             // Hiding the google/facebook sign in layout
-            if(recentFragment == "signUP") {
+            if (recentFragment == "signUP") {
                 linearLayout.visibility = View.GONE
             }
 
@@ -129,11 +128,12 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             }
 
             // code verify with input code
-            viewProgress.setOnClickListener{
+            viewProgress.setOnClickListener {
                 val code = otpView.text.toString().trim()
-                if(TextUtils.isEmpty(code)) {
+                if (TextUtils.isEmpty(code)) {
                     // Snack bar on empty OTP
-                    Snackbar.make(binding.root ,
+                    Snackbar.make(
+                        binding.root,
                         "Please enter verification code!",
                         Snackbar.LENGTH_SHORT
                     ).show()
@@ -172,7 +172,10 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
     // signing with google auth
     private fun firebaseAuthWithGoogle(idToken: String) {
-        Log.d(TAG_GOOGLE_SIGN_IN,"firebaseAuthWithGoogleAccount: begin firebase auth with google account.")
+        Log.d(
+            TAG_GOOGLE_SIGN_IN,
+            "firebaseAuthWithGoogleAccount: begin firebase auth with google account."
+        )
 
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
@@ -182,7 +185,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 Log.d(TAG_GOOGLE_SIGN_IN, "signInWithCredential:success")
                 val user = firebaseAuth.currentUser
 
-                if(authResult.additionalUserInfo!!.isNewUser){
+                if (authResult.additionalUserInfo!!.isNewUser) {
                     dialog.dismiss()
                     dialogForNewUser(user)
                 } else {
@@ -198,16 +201,23 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     }
 
     // dialog to check for account
-    private fun dialogForNewUser(user: FirebaseUser?){
+    private fun dialogForNewUser(user: FirebaseUser?) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle("Account don't Exists!")
-                .setMessage("No Account exists with this email. " +
-                        "Do you want to create a new account with this email?")
-            setPositiveButton("Create") { _,_ ->
+                .setMessage(
+                    "No Account exists with this email. " +
+                            "Do you want to create a new account with this email?"
+                )
+            setPositiveButton("Create") { _, _ ->
                 dialog.show()
-                createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+                createNewAccount(
+                    user!!.displayName,
+                    user!!.email,
+                    user!!.phoneNumber,
+                    user!!.photoUrl.toString()
+                )
             }
-            setNegativeButton("Go back") { _,_ ->
+            setNegativeButton("Go back") { _, _ ->
                 // signing out the authenticated user via (LOGIN)
                 firebaseAuth.currentUser!!.delete().addOnSuccessListener {
                     Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
@@ -220,7 +230,12 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     }
 
     // create a new account in fireStore for users [SIGN-UP CODE]
-    private fun createNewAccount(name: String? = null, email: String? = null, phone: String? = null, photoUrlLink: String? = null) {
+    private fun createNewAccount(
+        name: String? = null,
+        email: String? = null,
+        phone: String? = null,
+        photoUrlLink: String? = null
+    ) {
 
         // user data
         val user = hashMapOf(
@@ -252,7 +267,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     private fun firebasePhoneCallback() {
         mCallBacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                Log.d(TAG,"OnVerificationComplete")
+                Log.d(TAG, "OnVerificationComplete")
 
                 val code = phoneAuthCredential.smsCode.toString()
                 binding.otpView.setText(code)
@@ -262,22 +277,25 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
             override fun onVerificationFailed(e: FirebaseException) {
                 dialog.dismiss()
-                Log.d(TAG,"VerificationFailed : ${e.message}")
+                Log.d(TAG, "VerificationFailed : ${e.message}")
             }
 
-            override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
-                Log.d(TAG,"onCodeSent: $verificationId")
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                Log.d(TAG, "onCodeSent: $verificationId")
                 mVerificationId = verificationId
                 forceResendingToken = token
                 dialog.dismiss()
-                Log.d(TAG,"OnCodeSent Successfully with ID : $verificationId")
+                Log.d(TAG, "OnCodeSent Successfully with ID : $verificationId")
             }
         }
     }
 
     // start Phone verification and send the code first time
     private fun startPhoneNumberVerification(phone: String) {
-        Log.d(TAG,"startPhoneNumberVerification $phone")
+        Log.d(TAG, "startPhoneNumberVerification $phone")
 
         // progress update
         dialog.show()
@@ -294,8 +312,11 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     }
 
     // re-sending code verification
-    private fun resendVerificationCode(phone: String, token: PhoneAuthProvider.ForceResendingToken) {
-        Log.d(TAG,"resendVerificationCode $phone")
+    private fun resendVerificationCode(
+        phone: String,
+        token: PhoneAuthProvider.ForceResendingToken
+    ) {
+        Log.d(TAG, "resendVerificationCode $phone")
 
         // progress show
         dialog.show()
@@ -312,8 +333,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
     }
 
     // verify phone number with manually typed code
-    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String?){
-        Log.d(TAG,"verifyPhoneNumberWithCode $verificationId : $code")
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String?) {
+        Log.d(TAG, "verifyPhoneNumberWithCode $verificationId : $code")
 
         // getting credentials
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
@@ -322,7 +343,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
     // Signing-in with valid credential's
     private fun signInWIthPhoneAuthCredential(credential: PhoneAuthCredential) {
-        Log.d(TAG,":::::signInWIthPhoneAuthCredential:::::")
+        Log.d(TAG, ":::::signInWIthPhoneAuthCredential:::::")
 
         // progress button activated
         progressButton.buttonActivated("Verifying...")
@@ -335,8 +356,8 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
             .addOnFailureListener { e ->
                 // login failed
                 progressButton.buttonFailed("Verify")
-                Toast.makeText(requireContext(),"Wrong OTP Code!", Toast.LENGTH_SHORT).show()
-                Log.d(TAG,"${e.message}")
+                Toast.makeText(requireContext(), "Wrong OTP Code!", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "${e.message}")
             }
     }
 
@@ -349,12 +370,12 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
 
         // fetching data and performing operations
         dbReference.get().addOnCompleteListener { snapshot ->
-            if(snapshot.isSuccessful){
-                for(document in snapshot.result!!) {
-                    if(document.id == firebaseAuth.currentUser?.uid) {
+            if (snapshot.isSuccessful) {
+                for (document in snapshot.result!!) {
+                    if (document.id == firebaseAuth.currentUser?.uid) {
 
                         // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
-                        if(recentFragment == "login") {
+                        if (recentFragment == "login") {
                             // User already have an account in db
                             progressButton.buttonSuccessfullyFinished("Verified!")
                             startActivity(Intent(requireActivity(), MainActivity::class.java))
@@ -363,18 +384,25 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                         }
 
                         // CODE TO BE RUN IF RECENT FRAGMENT IS SIGN UP
-                        if(recentFragment == "signUP") {
+                        if (recentFragment == "signUP") {
                             // User already have an account in db
                             progressButton.buttonSuccessfullyFinished("Verified!")
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setTitle("Account Already Exists!")
-                                    .setMessage("Account with this number already exists. " +
-                                            "Do you want to login with an existing account?")
-                                setPositiveButton("Login") { _,_ ->
-                                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                                    .setMessage(
+                                        "Account with this number already exists. " +
+                                                "Do you want to login with an existing account?"
+                                    )
+                                setPositiveButton("Login") { _, _ ->
+                                    startActivity(
+                                        Intent(
+                                            requireActivity(),
+                                            MainActivity::class.java
+                                        )
+                                    )
                                     requireActivity().finish()
                                 }
-                                setNegativeButton("Go back") { _,_ ->
+                                setNegativeButton("Go back") { _, _ ->
                                     // signing out the authenticated user via (LOGIN)
                                     firebaseAuth.signOut()
                                     findNavController().popBackStack()
@@ -389,7 +417,7 @@ class OTPFragment: Fragment(R.layout.fragment_otp) {
                 }
 
                 // CODE TO BE RUN IF RECENT FRAGMENT IS LOGIN
-                if(recentFragment == "login") {
+                if (recentFragment == "login") {
                     // If the OTP verified account doesn't exist in db
                     if (!isAccountExistsForLogin) {
                         progressButton.buttonFailed("Verify")

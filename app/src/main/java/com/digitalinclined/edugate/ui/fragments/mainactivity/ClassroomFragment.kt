@@ -4,19 +4,16 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.text.InputType
 import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.ClassroomRecyclerAdapter
@@ -63,7 +60,7 @@ class ClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentClassroomBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentClassroomBinding.inflate(layoutInflater, container, false)
 
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Classroom"
 
@@ -88,8 +85,8 @@ class ClassroomFragment : Fragment() {
             dialog.apply {
                 setContentView(R.layout.custom_dialog)
                 setCancelable(false)
-                if(window != null) {
-                   window!!.setBackgroundDrawable(ColorDrawable(0))
+                if (window != null) {
+                    window!!.setBackgroundDrawable(ColorDrawable(0))
                 }
             }
 
@@ -156,14 +153,17 @@ class ClassroomFragment : Fragment() {
     }
 
     // new classroom link dialog
-    private fun showClassroomLinkDialog(){
+    private fun showClassroomLinkDialog() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Join new classroom!")
         val input = EditText(requireContext())
         input.apply {
             hint = "Enter classroom code"
             inputType = InputType.TYPE_CLASS_TEXT
-            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             params.setMargins(16, 0, 16, 0)
             this.layoutParams = params
         }
@@ -173,10 +173,11 @@ class ClassroomFragment : Fragment() {
 
             if (!input.text.isNullOrEmpty()) {
                 if (allValidClassRoom.contains(input.text.toString())) {
-                    Log.d(TAG,"Classroom added!")
+                    Log.d(TAG, "Classroom added!")
                     addClassroomToUserAccount(input.text.toString())
                 } else {
-                    Snackbar.make(binding.root, "Invalid classroom code!", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Invalid classroom code!", Snackbar.LENGTH_SHORT)
+                        .show()
                     dialog.dismiss()
                 }
             } else {
@@ -193,23 +194,25 @@ class ClassroomFragment : Fragment() {
         binding.apply {
             // create db in fireStore
             dbReference.document(firebaseAuth.currentUser!!.uid)
-            .update("joinedClassrooms", FieldValue.arrayUnion(roomId))
-            .addOnSuccessListener {
-                Log.d(TAG, "Room added Successfully!")
-                JOINED_CLASSROOM_LIST.add(roomId)
-                fetchClassroomFromFirebase()
-                dialog.dismiss()
-                Snackbar.make(binding.root,"Room added successfully!",Snackbar.LENGTH_LONG).show()
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error in following user!", e)
-                Snackbar.make(binding.root,"Error in following user!",Snackbar.LENGTH_LONG).show()
-            }
+                .update("joinedClassrooms", FieldValue.arrayUnion(roomId))
+                .addOnSuccessListener {
+                    Log.d(TAG, "Room added Successfully!")
+                    JOINED_CLASSROOM_LIST.add(roomId)
+                    fetchClassroomFromFirebase()
+                    dialog.dismiss()
+                    Snackbar.make(binding.root, "Room added successfully!", Snackbar.LENGTH_LONG)
+                        .show()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error in following user!", e)
+                    Snackbar.make(binding.root, "Error in following user!", Snackbar.LENGTH_LONG)
+                        .show()
+                }
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = ClassroomRecyclerAdapter()
         binding.apply {
             classroomRecyclerView.apply {
@@ -226,7 +229,10 @@ class ClassroomFragment : Fragment() {
                     "iconColor" to iconColor,
                     "classroomDetailsClass" to dataClass
                 )
-                findNavController().navigate(R.id.action_classroomFragment_to_openClassroomFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_classroomFragment_to_openClassroomFragment,
+                    bundle
+                )
             }
         }
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -12,14 +12,14 @@
         app:cardCornerRadius="@dimen/_14sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:background="@color/button_gradient_end_color" >
+            android:background="@color/button_gradient_end_color"
+            android:gravity="center">
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -37,23 +37,23 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:src="@drawable/ic_baseline_check_24"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/white"
                 android:indeterminateTintMode="src_atop"
+                android:src="@drawable/ic_baseline_check_24"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/btnName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/button_gradient_end_color"
+                android:letterSpacing=".1"
                 android:padding="@dimen/_8sdp"
                 android:text="Name Of Button"
-                android:letterSpacing=".1"
-                android:backgroundTint="@color/button_gradient_end_color"
                 android:textAllCaps="true"
-                android:textSize="@dimen/_17sdp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17sdp" />
 
         </LinearLayout>
 

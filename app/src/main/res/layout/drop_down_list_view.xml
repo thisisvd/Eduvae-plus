@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:id="@+id/textView2"
-    android:layout_height="wrap_content"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView2"
     android:layout_width="match_parent"
-    android:text="TextView"
-    android:padding="15dp"
-    android:textColor="@color/third_text_color"
+    android:layout_height="wrap_content"
     android:fontFamily="@font/titillium_web"
+    android:padding="15dp"
+    android:text="TextView"
+    android:textColor="@color/third_text_color"
     android:textSize="15sp"
-    android:textStyle="bold"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    android:textStyle="bold" />

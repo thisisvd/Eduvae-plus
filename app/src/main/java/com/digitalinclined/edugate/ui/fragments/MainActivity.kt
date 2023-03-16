@@ -56,16 +56,16 @@ class MainActivity : AppCompatActivity() {
     // TAG
     private val TAG = "MainActivity"
 
-    // viewBinding
+    // view binding
     private lateinit var binding: ActivityMainBinding
 
-    // Nav Host Fragment
+    // nav-host fragment
     private lateinit var navHostFragment: NavHostFragment
 
-    // Shared Preference
+    // shared preference
     lateinit var sharedPreferences: SharedPreferences
 
-    // Firebase
+    // firebase
     private lateinit var firebaseAuth: FirebaseAuth
 
     // firebase db
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Screen orientation
+        // screen orientation
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // firebase init
@@ -119,8 +119,8 @@ class MainActivity : AppCompatActivity() {
             navigationDrawerListener()
 
             // toggle livedata observer
-            toggleEnabled.observe(this@MainActivity){ isToggleMenu ->
-                if(isToggleMenu) {
+            toggleEnabled.observe(this@MainActivity) { isToggleMenu ->
+                if (isToggleMenu) {
                     val drawable = getDrawable(R.drawable.ic_baseline_menu_24)
                     toggle.setHomeAsUpIndicator(drawable)
                     IS_BACK_TOOLBAR_BTN_ACTIVE = false
@@ -137,8 +137,8 @@ class MainActivity : AppCompatActivity() {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(this@MainActivity)
                 .collect { status ->
-                    Log.d("NetworkListener",status.toString())
-                    if(status) {
+                    Log.d("NetworkListener", status.toString())
+                    if (status) {
                         binding.noNetworkLayout.visibility = View.GONE
                         isNetworkConnected = true
                         fetchFirebaseUserData()
@@ -153,14 +153,14 @@ class MainActivity : AppCompatActivity() {
 
             // open wifi settings panel
             turnOnWifi.setOnClickListener {
-                if(!isNetworkConnected) {
+                if (!isNetworkConnected) {
                     startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
                 }
             }
 
             // open mobile settings panel
             turnOnMobileNetwork.setOnClickListener {
-                if(!isNetworkConnected) {
+                if (!isNetworkConnected) {
                     startActivity(Intent(Settings.ACTION_DATA_ROAMING_SETTINGS))
                 }
             }
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     // fetching the user data from firebase and saving it in to shared preferences
     fun fetchFirebaseUserData() {
-        if(isNetworkConnected) {
+        if (isNetworkConnected) {
             lifecycleScope.launch(Dispatchers.IO) {
                 dbReference.document(firebaseAuth.currentUser!!.uid).get()
                     .addOnSuccessListener { document ->
@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity() {
                             }
 
                             // add classroom list
-                            if (userProfile.joinedClassrooms != null){
+                            if (userProfile.joinedClassrooms != null) {
                                 for (classID in userProfile.joinedClassrooms) {
                                     if (!JOINED_CLASSROOM_LIST.contains(classID)) {
                                         JOINED_CLASSROOM_LIST.add(classID)
@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
                                     .putString(USER_PHONE, userProfile.phone)
                                     .putString(USER_COURSE, userProfile.course)
                                     .putString(USER_YEAR, userProfile.year)
-                                    .putString(USER_SEMESTER,userProfile.semester)
+                                    .putString(USER_SEMESTER, userProfile.semester)
                                     .putString(USER_CITY, userProfile.city)
                                     .putString(
                                         USER_PROFILE_PHOTO_LINK,
@@ -217,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                                 ).show()
                             }
 
-                            if(userProfile.course.isNullOrEmpty() || userProfile.year.isNullOrEmpty()) {
+                            if (userProfile.course.isNullOrEmpty() || userProfile.year.isNullOrEmpty()) {
                                 navHostFragment.navController.navigate(R.id.completeProfileFragment2)
                                 binding.apply {
                                     toolbar.visibility = View.GONE
@@ -241,7 +241,8 @@ class MainActivity : AppCompatActivity() {
     private fun bottomNavigationDrawer() {
         binding.apply {
 
-            navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragmentMain) as NavHostFragment
+            navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.navHostFragmentMain) as NavHostFragment
             val navController = navHostFragment.navController
             bottomNavigationView.apply {
                 val popupMenu = PopupMenu(context, null)
@@ -285,7 +286,12 @@ class MainActivity : AppCompatActivity() {
     private fun navigationDrawerListener() {
         binding.apply {
             // nav drawer setup and adding toggle button
-            toggle = ActionBarDrawerToggle(this@MainActivity, drawerLayout, R.string.open, R.string.close)
+            toggle = ActionBarDrawerToggle(
+                this@MainActivity,
+                drawerLayout,
+                R.string.open,
+                R.string.close
+            )
             drawerLayout.addDrawerListener(toggle)
             toggle.drawerArrowDrawable.color =
                 ContextCompat.getColor(applicationContext, R.color.white)
@@ -315,14 +321,15 @@ class MainActivity : AppCompatActivity() {
                 navBuilder.setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.wait_animation)
                     .setPopEnterAnim(R.anim.wait_animation).setPopExitAnim(R.anim.fade_out)
 
-                when(item.itemId) {
+                when (item.itemId) {
                     // Previous Question Papers
                     R.id.previousQuestionPapers -> {
                         val bundle = bundleOf(
                             "url" to "https://www.rgpvonline.com/",
                             "urlSiteName" to "RGPV Papers site"
                         )
-                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.webViewFragment, bundle, navBuilder.build())
                         true
                     }
                     // Syllabus
@@ -331,7 +338,8 @@ class MainActivity : AppCompatActivity() {
                             "url" to "https://www.rgpv.ac.in/uni/frm_viewscheme.aspx",
                             "urlSiteName" to "RGPV Schema & syllabus"
                         )
-                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.webViewFragment, bundle, navBuilder.build())
                         true
                     }
                     // Notes
@@ -340,7 +348,8 @@ class MainActivity : AppCompatActivity() {
                             "url" to "https://www.rgpvnotes.in/",
                             "urlSiteName" to "RGPV Notes"
                         )
-                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.webViewFragment, bundle, navBuilder.build())
                         true
                     }
                     // University Portal
@@ -349,12 +358,14 @@ class MainActivity : AppCompatActivity() {
                             "url" to "https://www.rgpv.ac.in/",
                             "urlSiteName" to "RGPV University"
                         )
-                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.webViewFragment, bundle, navBuilder.build())
                         true
                     }
                     // Notification
                     R.id.notification -> {
-                        navHostFragment.findNavController().navigate(R.id.notificationFragment,null,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.notificationFragment, null, navBuilder.build())
                         true
                     }
                     // Job Update
@@ -363,7 +374,8 @@ class MainActivity : AppCompatActivity() {
                             "url" to "https://www.naukri.com/",
                             "urlSiteName" to "Naukri.com"
                         )
-                        navHostFragment.findNavController().navigate(R.id.webViewFragment,bundle,navBuilder.build())
+                        navHostFragment.findNavController()
+                            .navigate(R.id.webViewFragment, bundle, navBuilder.build())
                         true
                     }
                     // About Us
@@ -380,7 +392,7 @@ class MainActivity : AppCompatActivity() {
                     // Signing out the user
                     R.id.signOut -> {
                         FirebaseAuth.getInstance().signOut()
-                        startActivity(Intent(this@MainActivity,SetupActivity::class.java))
+                        startActivity(Intent(this@MainActivity, SetupActivity::class.java))
                         finish()
                         sharedPreferences.edit().clear().commit()
                         true
@@ -406,13 +418,13 @@ class MainActivity : AppCompatActivity() {
 
             var jsonArray = JSONArray(json)
 
-            for(i in 0 until jsonArray.length()) {
+            for (i in 0 until jsonArray.length()) {
                 var jsonObj = jsonArray.getString(i)
                 INDIAN_CITY_DATA.add(jsonObj)
             }
 
-        }catch (e: IOException) {
-            Log.d(TAG,e.message.toString())
+        } catch (e: IOException) {
+            Log.d(TAG, e.message.toString())
         }
 
     }
@@ -422,7 +434,7 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             return when (item.itemId) {
                 android.R.id.home -> {
-                    if(IS_BACK_TOOLBAR_BTN_ACTIVE) {
+                    if (IS_BACK_TOOLBAR_BTN_ACTIVE) {
                         navHostFragment.navController.popBackStack()
                         val drawable = getDrawable(R.drawable.ic_baseline_menu_24)
                         toggle.setHomeAsUpIndicator(drawable)

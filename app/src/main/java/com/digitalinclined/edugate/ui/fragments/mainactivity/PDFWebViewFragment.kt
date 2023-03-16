@@ -60,7 +60,7 @@ class PDFWebViewFragment : Fragment() {
             if (args.pdfLink.isNotEmpty()) {
                 // loading a pdf view
                 viewModel.getSelectedPdf(args.pdfLink).observe(viewLifecycleOwner) {
-                    if(it != null) {
+                    if (it != null) {
                         var getBytes = Base64.decode(it.fileData, Base64.NO_WRAP)
                         Log.d(TAG, "$it : $getBytes")
                         pdfView.fromBytes(getBytes).load()

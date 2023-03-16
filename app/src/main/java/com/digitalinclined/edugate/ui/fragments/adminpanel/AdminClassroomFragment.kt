@@ -35,7 +35,7 @@ class AdminClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentClassroomBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentClassroomBinding.inflate(layoutInflater, container, false)
 
         binding.onlyForAdminLayout.visibility = View.VISIBLE
 
@@ -93,7 +93,7 @@ class AdminClassroomFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = ClassroomRecyclerAdapter()
         binding.apply {
             classroomRecyclerView.apply {
@@ -110,7 +110,10 @@ class AdminClassroomFragment : Fragment() {
                     "iconColor" to iconColor,
                     "classroomDetailsClass" to dataClass
                 )
-                findNavController().navigate(R.id.action_adminClassroomFragment_to_adminOpenClassroomFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_adminClassroomFragment_to_adminOpenClassroomFragment,
+                    bundle
+                )
             }
         }
     }

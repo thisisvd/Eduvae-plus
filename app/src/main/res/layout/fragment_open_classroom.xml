@@ -50,9 +50,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
                         android:fontFamily="@font/titillium_web"
                         android:gravity="end"
-                        android:layout_marginStart="@dimen/_12sdp"
                         android:text="Classroom"
                         android:textColor="@color/button_gradient_start_color"
                         android:textSize="@dimen/_18sdp"
@@ -119,11 +119,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_12sdp"
                         android:fontFamily="@font/titillium_web_semibold"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_16sdp"
                         android:textStyle="bold"
-                        android:layout_marginEnd="@dimen/_12sdp"
                         app:layout_constraintEnd_toStartOf="@+id/classroom_id_link"
                         app:layout_constraintStart_toEndOf="@+id/imageView1"
                         app:layout_constraintTop_toTopOf="@+id/imageView1" />
@@ -133,8 +133,8 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/baseline_link_24"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="@+id/classroom_name_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/classroom_name_tv" />
 
                     <TextView
@@ -179,9 +179,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
                     android:fontFamily="@font/titillium_web"
                     android:text="Discussions..."
-                    android:layout_marginRight="@dimen/_12sdp"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"
@@ -195,25 +195,25 @@
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
                     android:backgroundTint="@color/button_gradient_end_color"
                     android:text="Submit Classwork"
-                    android:visibility="gone"
-                    android:layout_marginEnd="12dp"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     app:cornerRadius="@dimen/_11sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:indeterminate="true"
                 android:layout_gravity="center_horizontal"
+                android:indeterminate="true"
                 android:indeterminateTint="@color/navy_blue_color"
                 android:indeterminateTintMode="src_atop"
                 android:visibility="visible" />

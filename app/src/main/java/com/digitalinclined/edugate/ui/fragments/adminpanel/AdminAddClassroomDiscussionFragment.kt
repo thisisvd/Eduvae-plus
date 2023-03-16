@@ -95,7 +95,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -112,16 +112,16 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
 
             // submit discussion
             submitDiscussion.setOnClickListener {
-                if(!discussionContentTitle.text.toString().isNullOrEmpty()) {
+                if (!discussionContentTitle.text.toString().isNullOrEmpty()) {
                     dialog.show()
                     uploadingPDFAndAddToServer()
                 } else {
-                    Snackbar.make(it,"Please fill all fields!",Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(it, "Please fill all fields!", Snackbar.LENGTH_LONG).show()
                 }
             }
 
             // attach a file
-            attachFile.setOnClickListener{
+            attachFile.setOnClickListener {
                 selectPDFFromStorage()
             }
 
@@ -137,7 +137,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
         binding.apply {
             viewModel.apply {
                 if (pdfBase64FileData.isNotEmpty() && isImageAttached) {
-                    Log.d("JOSHA","1")
+                    Log.d("JOSHA", "1")
                     val currentPDFIDName = System.currentTimeMillis().toString()
                     insertData(
                         PDFDataRoom(
@@ -152,7 +152,10 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                         override fun onTick(millisUntilFinished: Long) {
                             if ((millisUntilFinished / 1000) == 7L) {
                                 getSelectedPdf(currentPDFIDName).observe(viewLifecycleOwner) { pdfId ->
-                                    uploadPicture(discussionContentTitle.text.toString(),pdfId.uniqueID)
+                                    uploadPicture(
+                                        discussionContentTitle.text.toString(),
+                                        pdfId.uniqueID
+                                    )
                                 }
                             }
                         }
@@ -163,7 +166,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                     }
                     timer!!.start()
                 } else if (pdfBase64FileData.isNotEmpty()) {
-                    Log.d("JOSHA","2")
+                    Log.d("JOSHA", "2")
                     val currentPDFIDName = System.currentTimeMillis().toString()
                     insertData(
                         PDFDataRoom(
@@ -193,10 +196,10 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                     }
                     timer!!.start()
                 } else if (isImageAttached) {
-                    Log.d("JOSHA","3")
+                    Log.d("JOSHA", "3")
                     uploadPicture(discussionContentTitle.text.toString())
                 } else {
-                    Log.d("JOSHA","4")
+                    Log.d("JOSHA", "4")
                     addToServer(discussionContentTitle.text.toString(), pdfBase64FileName, "")
                 }
             }
@@ -225,7 +228,11 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                         .update("classDueDate", System.currentTimeMillis().toString())
                         .addOnSuccessListener {
                             Log.d(TAG, "Update in server successful!")
-                            Snackbar.make(binding.root, "Discussion added to class!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "Discussion added to class!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             findNavController().popBackStack()
                             dialog.dismiss()
                         }
@@ -248,7 +255,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
     }
 
     // choose picture to upload
-    private fun choosePicture(){
+    private fun choosePicture() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -284,7 +291,8 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                         }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Failed to fetch Image!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to fetch Image!", Toast.LENGTH_SHORT)
+                        .show()
                     dialog.dismiss()
                 }
         }
@@ -297,26 +305,29 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
             type = "application/pdf"
             addCategory(Intent.CATEGORY_OPENABLE)
         }
-        startActivityForResult(Intent.createChooser(openStorageIntent, "Select PDF"), PDF_SELECTION_CODE)
+        startActivityForResult(
+            Intent.createChooser(openStorageIntent, "Select PDF"),
+            PDF_SELECTION_CODE
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // pdf selection
-        if(requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PDF_SELECTION_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val selectedPdfFromStorage = data.data
 
             // file name from uri
-            val fileName = queryName(requireContext(),selectedPdfFromStorage!!)
-            Toast.makeText(requireContext(),fileName.toString(),Toast.LENGTH_SHORT).show()
+            val fileName = queryName(requireContext(), selectedPdfFromStorage!!)
+            Toast.makeText(requireContext(), fileName.toString(), Toast.LENGTH_SHORT).show()
             pdfBase64FileName = fileName.toString()
             pdfFileStorageLocation = selectedPdfFromStorage
 
             pdfBase64FileData = getBase64FromPath(selectedPdfFromStorage)
 
-            Log.d("TAGU",selectedPdfFromStorage.path.toString())
-            Log.d("TAGU",pdfBase64FileName)
+            Log.d("TAGU", selectedPdfFromStorage.path.toString())
+            Log.d("TAGU", pdfBase64FileName)
 
             // file name view
             binding.attachFile.visibility = View.GONE
@@ -324,7 +335,7 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
         }
 
         // image selection
-        if(requestCode==IMAGE_SELECTION_CODE && resultCode== Activity.RESULT_OK && data?.data!=null) {
+        if (requestCode == IMAGE_SELECTION_CODE && resultCode == Activity.RESULT_OK && data?.data != null) {
             imageURI = data.data!!
             isImageAttached = true
             binding.apply {
@@ -336,7 +347,12 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
                 attachAnImageFile.visibility = View.GONE
                 attachImageDone.visibility = View.VISIBLE
 
-                attachedIconView.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_baseline_check_24))
+                attachedIconView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_baseline_check_24
+                    )
+                )
             }
         }
     }
@@ -347,8 +363,8 @@ class AdminAddClassroomDiscussionFragment : Fragment() {
         val iStream: InputStream? = requireActivity().contentResolver.openInputStream(uri)
         val inputData: ByteArray = getBytes(iStream!!)
 
-        var getBase64String = encodeToString(inputData,NO_WRAP)
-        Log.d(TAG,getBase64String)
+        var getBase64String = encodeToString(inputData, NO_WRAP)
+        Log.d(TAG, getBase64String)
 
         return getBase64String
     }

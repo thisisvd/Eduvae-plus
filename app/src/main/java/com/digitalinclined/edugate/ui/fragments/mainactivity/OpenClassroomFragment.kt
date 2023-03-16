@@ -90,7 +90,7 @@ class OpenClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentOpenClassroomBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentOpenClassroomBinding.inflate(layoutInflater, container, false)
 
         // change the title bar
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Open Classroom"
@@ -108,7 +108,7 @@ class OpenClassroomFragment : Fragment() {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null) {
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -132,7 +132,7 @@ class OpenClassroomFragment : Fragment() {
             // observer
             quizSubmissionObserver.observe(viewLifecycleOwner) {
                 if (it.isTaken) {
-                    submitClassWorkToServer(it.userMarks!!,it.totalMarks!!)
+                    submitClassWorkToServer(it.userMarks!!, it.totalMarks!!)
                     quizSubmissionObserver.postValue(QuizSubmissionDataClass())
                 }
             }
@@ -143,12 +143,14 @@ class OpenClassroomFragment : Fragment() {
     private fun fetchClassroomFromFirebase() {
         var discussionsList = ArrayList<ClassroomObjectsDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial")
+                .get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(ClassroomObjectsDataClass::class.java)!!
+                            val dataClass =
+                                document.toObject(ClassroomObjectsDataClass::class.java)!!
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")
@@ -156,13 +158,17 @@ class OpenClassroomFragment : Fragment() {
                         if (discussionsList.isNotEmpty()) {
                             recyclerAdapter.differ.submitList(discussionsList)
                         } else {
-                            Snackbar.make(binding.root,"No discussions posted!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "No discussions posted!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         binding.progressBar.visibility = View.GONE
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
@@ -172,7 +178,8 @@ class OpenClassroomFragment : Fragment() {
     private fun fetchClassroomWorkFromFirebase() {
         var quizList = ArrayList<QuizQuestion>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/classwork").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/classwork")
+                .get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
@@ -188,13 +195,14 @@ class OpenClassroomFragment : Fragment() {
                                 quizList.size
                             )
                         } else {
-                            Snackbar.make(binding.root,"No quiz posted!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(binding.root, "No quiz posted!", Snackbar.LENGTH_LONG)
+                                .show()
                         }
                         binding.progressBar.visibility = View.GONE
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
@@ -238,7 +246,7 @@ class OpenClassroomFragment : Fragment() {
                 val requestOptions = RequestOptions()
                 requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
                 requestOptions.centerCrop()
-                if(!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
+                if (!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
                     Glide.with(root)
                         .load(args.classroomDetailsClass.imageInt!!)
                         .apply(requestOptions)
@@ -277,7 +285,8 @@ class OpenClassroomFragment : Fragment() {
             classroomNameTv.text = args.classroomDetailsClass.classroomName
 
             // due date
-            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
+            classroomLastUpdateTv.text =
+                "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
         }
     }
 
@@ -285,16 +294,22 @@ class OpenClassroomFragment : Fragment() {
     private fun submitClassWork() {
         dialog.show()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom").document(args.classroomDetailsClass.classroomID.toString())
-                .update("classworkStudentList", FieldValue.arrayUnion(Firebase.auth.currentUser!!.uid))
+            Firebase.firestore.collection("classroom")
+                .document(args.classroomDetailsClass.classroomID.toString())
+                .update(
+                    "classworkStudentList",
+                    FieldValue.arrayUnion(Firebase.auth.currentUser!!.uid)
+                )
                 .addOnSuccessListener {
                     binding.submitWork.visibility = View.GONE
-                    Snackbar.make(binding.root,"Classwork submitted!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Classwork submitted!", Snackbar.LENGTH_SHORT)
+                        .show()
                     dialog.dismiss()
                 }
                 .addOnFailureListener { e ->
                     Log.e(TAG, "Error in submit work to id", e)
-                    Snackbar.make(binding.root,"Error in submitting work!",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Error in submitting work!", Snackbar.LENGTH_SHORT)
+                        .show()
                     dialog.dismiss()
                 }
         }
@@ -307,16 +322,17 @@ class OpenClassroomFragment : Fragment() {
             val data = System.currentTimeMillis() * userMarks
 
             val classworkData = hashMapOf(
-                "userCourse" to sharedPreferences.getString(USER_COURSE,""),
-                "userImage" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,""),
+                "userCourse" to sharedPreferences.getString(USER_COURSE, ""),
+                "userImage" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK, ""),
                 "userMarks" to "${userMarks}/${totalMarks}",
-                "userName" to sharedPreferences.getString(USER_NAME,""),
-                "userSemester" to sharedPreferences.getString(USER_SEMESTER,""),
+                "userName" to sharedPreferences.getString(USER_NAME, ""),
+                "userSemester" to sharedPreferences.getString(USER_SEMESTER, ""),
                 "userTimeStamp" to data
             )
 
             // create db in fireStore
-            Firebase.firestore.collection("classroom").document(args.classroomDetailsClass.classroomID.toString())
+            Firebase.firestore.collection("classroom")
+                .document(args.classroomDetailsClass.classroomID.toString())
                 .collection("classworkSubmissions")
                 .document(Firebase.auth.currentUser!!.uid)
                 .set(classworkData)
@@ -339,7 +355,7 @@ class OpenClassroomFragment : Fragment() {
                 .update("joinedClassrooms", FieldValue.arrayRemove(classId))
                 .addOnSuccessListener {
                     Log.d(TAG, "Class removed Successfully!")
-                    if(JOINED_CLASSROOM_LIST.contains(classId)) {
+                    if (JOINED_CLASSROOM_LIST.contains(classId)) {
                         val index = JOINED_CLASSROOM_LIST.indexOf(classId)
                         JOINED_CLASSROOM_LIST.removeAt(index)
                         findNavController().popBackStack()
@@ -354,7 +370,7 @@ class OpenClassroomFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = ClassroomDiscussionRecyclerAdapter()
         binding.apply {
             classroomDiscussionRecyclerView.apply {
@@ -368,7 +384,10 @@ class OpenClassroomFragment : Fragment() {
                 val bundle = bundleOf(
                     "pdfLink" to pdfLink
                 )
-                findNavController().navigate(R.id.action_openClassroomFragment_to_PDFWebViewFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_openClassroomFragment_to_PDFWebViewFragment,
+                    bundle
+                )
             }
         }
     }
@@ -380,7 +399,10 @@ class OpenClassroomFragment : Fragment() {
                 val bundle = bundleOf(
                     "classroomID" to args.classroomDetailsClass.classroomID
                 )
-                findNavController().navigate(R.id.action_openClassroomFragment_to_addClassroomDiscussionFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_openClassroomFragment_to_addClassroomDiscussionFragment,
+                    bundle
+                )
                 true
             }
             R.id.remove_classroom -> {
@@ -396,10 +418,14 @@ class OpenClassroomFragment : Fragment() {
                     val bundle = bundleOf(
                         "classroomID" to args.classroomDetailsClass.classroomID
                     )
-                    findNavController().navigate(R.id.action_openClassroomFragment_to_scoreBoardFragment,bundle)
-                    Toast.makeText(requireContext(),"View Score board",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(
+                        R.id.action_openClassroomFragment_to_scoreBoardFragment,
+                        bundle
+                    )
+                    Toast.makeText(requireContext(), "View Score board", Toast.LENGTH_SHORT).show()
                 } else {
-                    Snackbar.make(binding.root,"No Score board present",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "No Score board present", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 true
             }
@@ -409,10 +435,12 @@ class OpenClassroomFragment : Fragment() {
 
     // copy classroom link
     private fun copyClassroomId() {
-        val clipboard: ClipboardManager = requireContext().getSystemService<ClipboardManager>() as ClipboardManager
-        val clip: ClipData = ClipData.newPlainText("Classroom id", args.classroomDetailsClass.classroomID)
+        val clipboard: ClipboardManager =
+            requireContext().getSystemService<ClipboardManager>() as ClipboardManager
+        val clip: ClipData =
+            ClipData.newPlainText("Classroom id", args.classroomDetailsClass.classroomID)
         clipboard.setPrimaryClip(clip)
-        Snackbar.make(binding.root,"Classroom link copied!",Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, "Classroom link copied!", Snackbar.LENGTH_SHORT).show()
     }
 
     // show alert before deletion of all items

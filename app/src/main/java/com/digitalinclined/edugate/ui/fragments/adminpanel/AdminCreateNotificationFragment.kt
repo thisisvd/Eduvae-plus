@@ -12,9 +12,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.FragmentAdminCreateNotificationBinding
-import com.digitalinclined.edugate.dialogs.CreateClassroomIconDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -35,14 +33,14 @@ class AdminCreateNotificationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAdminCreateNotificationBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentAdminCreateNotificationBinding.inflate(layoutInflater, container, false)
 
         // init Loading Dialog
         dialog = Dialog(requireContext())
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -72,9 +70,12 @@ class AdminCreateNotificationFragment : Fragment() {
             // create btn
             postNotificationBtn.setOnClickListener {
                 if (!notificationTitle.text.isNullOrEmpty() && !notificationContent.text.isNullOrEmpty()) {
-                    postNotificationInServer(notificationTitle.text.toString(),notificationContent.text.toString())
+                    postNotificationInServer(
+                        notificationTitle.text.toString(),
+                        notificationContent.text.toString()
+                    )
                 } else {
-                    Snackbar.make(binding.root,"Enter all fields",Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Enter all fields", Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
@@ -99,7 +100,8 @@ class AdminCreateNotificationFragment : Fragment() {
                 .addOnSuccessListener {
                     Log.d(TAG, "Update in server successful!")
                     dialog.dismiss()
-                    Toast.makeText(requireContext(),"Notification posted!",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Notification posted!", Toast.LENGTH_SHORT)
+                        .show()
                     findNavController().popBackStack()
                 }
                 .addOnFailureListener { e ->

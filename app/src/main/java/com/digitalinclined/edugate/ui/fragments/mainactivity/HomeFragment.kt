@@ -3,16 +3,11 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -21,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
+import com.digitalinclined.edugate.constants.Constants.APP_SHARE_URL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
@@ -103,7 +99,7 @@ class HomeFragment : Fragment() {
                     "url" to "https://www.naukri.com/",
                     "urlSiteName" to "Naukri.com"
                 )
-                findNavController().navigate(R.id.webViewFragment,bundle)
+                findNavController().navigate(R.id.webViewFragment, bundle)
             }
 
             // discussion form
@@ -115,7 +111,10 @@ class HomeFragment : Fragment() {
             shareAppLayout.setOnClickListener {
                 val sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"
-                val shareBody = "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${getString(R.string.app_name)} : Link"
+                val shareBody =
+                    "Share, discuss, learn, post and do many more exciting things only in one app.\n\nDownload the app now via link.\n\n${
+                        getString(R.string.app_name)
+                    } : $APP_SHARE_URL"
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
                 startActivity(sharingIntent)
@@ -132,7 +131,7 @@ class HomeFragment : Fragment() {
                     "url" to "https://www.rgpv.ac.in/",
                     "urlSiteName" to "RGPV University"
                 )
-                findNavController().navigate(R.id.webViewFragment,bundle)
+                findNavController().navigate(R.id.webViewFragment, bundle)
             }
 
             // notification
@@ -165,7 +164,9 @@ class HomeFragment : Fragment() {
     // get user name
     private fun getUserName() {
         binding.apply {
-            val name = (requireActivity() as MainActivity).sharedPreferences.getString(USER_NAME,"")!!.split(" ")
+            val name =
+                (requireActivity() as MainActivity).sharedPreferences.getString(USER_NAME, "")!!
+                    .split(" ")
             userName.text = "${name[0]} "
         }
     }
@@ -175,7 +176,7 @@ class HomeFragment : Fragment() {
         binding.apply {
 
             // Slider Image Adapter
-            val adapter = SliderImageAdapter(requireContext(),webViewProgressBar)
+            val adapter = SliderImageAdapter(requireContext(), webViewProgressBar)
 
             // adapter init
             sliderView.setSliderAdapter(adapter)
@@ -192,10 +193,11 @@ class HomeFragment : Fragment() {
         val requestOptions = RequestOptions()
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
         requestOptions.centerCrop()
-        if(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString() != null &&
-            sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString() != "") {
+        if (sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString() != null &&
+            sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString() != ""
+        ) {
             Glide.with(rootView)
-                .load(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK,"").toString())
+                .load(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString())
                 .apply(requestOptions)
                 .into(rootView.findViewById(R.id.homeProfileImage))
         }
@@ -211,8 +213,8 @@ class HomeFragment : Fragment() {
             R.id.homeProfileMenu -> {
                 val navBuilder = NavOptions.Builder()
                 navBuilder.setEnterAnim(R.anim.slide_down).setExitAnim(R.anim.wait_animation)
-                .setPopEnterAnim(R.anim.wait_animation).setPopExitAnim(R.anim.slide_up)
-                findNavController().navigate(R.id.myProfile,null,navBuilder.build())
+                    .setPopEnterAnim(R.anim.wait_animation).setPopExitAnim(R.anim.slide_up)
+                findNavController().navigate(R.id.myProfile, null, navBuilder.build())
                 true
             }
             R.id.uploadVideo -> {

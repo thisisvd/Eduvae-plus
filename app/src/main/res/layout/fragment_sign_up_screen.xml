@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/theme_color"
     android:paddingLeft="@dimen/_18sdp"
     android:paddingRight="@dimen/_18sdp"
@@ -62,8 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
-            app:errorEnabled="true"
             android:hint=" "
+            app:errorEnabled="true"
             app:errorTextColor="@color/red">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -97,8 +97,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
-            app:errorEnabled="true"
             android:hint=" "
+            app:errorEnabled="true"
             app:errorTextColor="@color/red">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -132,24 +132,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/titillium_web"
-            app:errorEnabled="true"
             android:hint=" "
+            app:errorEnabled="true"
             app:errorTextColor="@color/red">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/edittext_stroke"
-            android:fontFamily="@font/titillium_web"
-            android:hint="Your phone number"
-            android:inputType="number"
-            android:maxLength="10"
-            android:padding="@dimen/_13sdp"
-            android:textColor="@color/text_color"
-            android:textColorHint="@color/text_color"
-            android:textSize="@dimen/_14sdp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/edittext_stroke"
+                android:fontFamily="@font/titillium_web"
+                android:hint="Your phone number"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="@dimen/_13sdp"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/_14sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,8 +167,8 @@
         android:padding="@dimen/_8sdp"
         android:text="Next >"
         android:textColor="@color/white"
-        app:cornerRadius="@dimen/_14sdp"
-        android:textSize="@dimen/_17sdp" />
+        android:textSize="@dimen/_17sdp"
+        app:cornerRadius="@dimen/_14sdp" />
 
     <LinearLayout
         android:id="@+id/OnBoardingLinearLayout"

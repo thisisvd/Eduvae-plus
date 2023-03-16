@@ -53,7 +53,8 @@ class VideosListFragment : Fragment() {
         _binding = FragmentVideosListBinding.inflate(inflater, container, false)
 
         // change the title bar
-        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Recommended Videos"
+        (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text =
+            "Recommended Videos"
         toggle = (activity as MainActivity).toggle
         toggle.isDrawerIndicatorEnabled = false
         val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
@@ -104,16 +105,16 @@ class VideosListFragment : Fragment() {
                     setOnItemClickListener { _, _, i, _ ->
                         selectedSubject = subjectsLists[i]
                         if (!selectedSubject.isNullOrEmpty()) {
-                            viewModel.getYoutubeResult(selectedSubject,"IN")
+                            viewModel.getYoutubeResult(selectedSubject, "IN")
                         }
                     }
 
                     // set default subject & default request
-                    setText(subjectsLists[0],false)
+                    setText(subjectsLists[0], false)
                     selectedSubject = subjectsLists[0]
 
                     if (!selectedSubject.isNullOrEmpty()) {
-                        viewModel.getYoutubeResult(selectedSubject,"IN")
+                        viewModel.getYoutubeResult(selectedSubject, "IN")
                     }
                 }
             }
@@ -152,7 +153,7 @@ class VideosListFragment : Fragment() {
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = VideosListAdapter()
         binding.apply {
             recyclerView.apply {

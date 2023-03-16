@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/theme_color"
+    android:orientation="vertical"
     tools:context=".ui.fragments.adminpanel.AdminAddClassworkFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,12 +33,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
             android:fontFamily="@font/titillium_web"
             android:gravity="end"
             android:text="Add classroom work quiz"
             android:textColor="@color/button_gradient_start_color"
             android:textSize="@dimen/_18sdp"
-            android:layout_marginStart="@dimen/_12sdp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/back_btn"
@@ -50,12 +50,12 @@
         android:id="@+id/homeNewsUpperText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
         android:fontFamily="@font/titillium_web_semibold"
         android:text="Create class quizzes in one go other wise you have \nto re-create the whole quiz."
         android:textColor="@color/text_color"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:layout_margin="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/only_for_admin_layout" />
@@ -64,11 +64,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/_12sdp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/add_work_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeNewsUpperText"
-        app:layout_constraintBottom_toTopOf="@+id/add_work_btn"
-        android:scrollbars="none">
+        app:layout_constraintTop_toBottomOf="@+id/homeNewsUpperText">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,9 +113,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,9 +146,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -179,9 +179,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -212,9 +212,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -256,12 +256,12 @@
                 android:id="@+id/quiz_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:background="@drawable/edittext_stroke"
                 android:fontFamily="@font/titillium_web"
                 android:hint="Correct answer"
                 android:inputType="number"
                 android:maxLength="1"
-                android:layout_marginTop="@dimen/_12sdp"
                 android:padding="@dimen/_13sdp"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/text_color"
@@ -276,10 +276,10 @@
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
         android:backgroundTint="@color/button_gradient_end_color"
         android:padding="@dimen/_8sdp"
         android:text="Add question"
-        android:layout_margin="@dimen/_12sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/_17sdp"
         app:cornerRadius="@dimen/_14sdp"

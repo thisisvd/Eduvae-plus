@@ -27,8 +27,8 @@
             <ImageView
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                app:tint="@color/text_color"
-                android:src="@drawable/splash_logo" />
+                android:src="@drawable/splash_logo"
+                app:tint="@color/text_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -168,8 +168,8 @@
                 <ImageView
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
-                    app:tint="@color/navy_blue_color"
-                    android:src="@drawable/icons8_add_link"/>
+                    android:src="@drawable/icons8_add_link"
+                    app:tint="@color/navy_blue_color" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -215,7 +215,7 @@
                 android:fontFamily="@font/titillium_web_semibold"
                 android:text="unDraw"
                 android:textColor="@color/light_blue_color"
-                android:textSize="@dimen/_12sdp"/>
+                android:textSize="@dimen/_12sdp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -263,7 +263,7 @@
                 android:fontFamily="@font/titillium_web_semibold"
                 android:text="Terms and Conditions"
                 android:textColor="@color/light_blue_color"
-                android:textSize="@dimen/_12sdp"/>
+                android:textSize="@dimen/_12sdp" />
 
             <LinearLayout
                 android:id="@+id/about_us_share_our_app"
@@ -302,10 +302,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textAlignment="center"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:fontFamily="@font/titillium_web_semibold"
                 android:text="Copyright © 2023 Educate. All rights reserved."
+                android:textAlignment="center"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/_10sdp" />
 

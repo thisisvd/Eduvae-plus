@@ -49,7 +49,7 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
     private lateinit var googleSignInClient: GoogleSignInClient
 
     // constant for google sign-in
-    private companion object{
+    private companion object {
         private const val RC_SIGN_IN = 100
         private const val TAG_GOOGLE_SIGN_IN = "GOOGLE_SING_IN_TAG"
     }
@@ -71,7 +71,7 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(dialog.window != null){
+            if (dialog.window != null) {
                 dialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -130,7 +130,10 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
 
     // signing with google auth
     private fun firebaseAuthWithGoogle(idToken: String) {
-        Log.d(TAG_GOOGLE_SIGN_IN,"firebaseAuthWithGoogleAccount: begin firebase auth with google account.")
+        Log.d(
+            TAG_GOOGLE_SIGN_IN,
+            "firebaseAuthWithGoogleAccount: begin firebase auth with google account."
+        )
 
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
@@ -140,7 +143,7 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
                 Log.d(TAG_GOOGLE_SIGN_IN, "signInWithCredential:success")
                 val user = firebaseAuth.currentUser
 
-                if(authResult.additionalUserInfo!!.isNewUser){
+                if (authResult.additionalUserInfo!!.isNewUser) {
                     dialog.dismiss()
                     dialogForNewUser(user)
                 } else {
@@ -156,16 +159,23 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
     }
 
     // dialog to check for account
-    private fun dialogForNewUser(user: FirebaseUser?){
+    private fun dialogForNewUser(user: FirebaseUser?) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle("Account don't Exists!")
-                .setMessage("No Account exists with this email. " +
-                        "Do you want to create a new account with this email?")
-            setPositiveButton("Create") { _,_ ->
+                .setMessage(
+                    "No Account exists with this email. " +
+                            "Do you want to create a new account with this email?"
+                )
+            setPositiveButton("Create") { _, _ ->
                 dialog.show()
-                createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+                createNewAccount(
+                    user!!.displayName,
+                    user!!.email,
+                    user!!.phoneNumber,
+                    user!!.photoUrl.toString()
+                )
             }
-            setNegativeButton("Go back") { _,_ ->
+            setNegativeButton("Go back") { _, _ ->
                 // signing out the authenticated user via (LOGIN)
                 firebaseAuth.currentUser!!.delete().addOnSuccessListener {
                     Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
@@ -178,7 +188,12 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
     }
 
     // create a new account in fireStore for users [SIGN-UP CODE]
-    private fun createNewAccount(name: String? = null, email: String? = null, phone: String? = null, photoUrlLink: String? = null) {
+    private fun createNewAccount(
+        name: String? = null,
+        email: String? = null,
+        phone: String? = null,
+        photoUrlLink: String? = null
+    ) {
 
         // user data
         val user = hashMapOf(
@@ -212,10 +227,14 @@ class OnBoardingScreenFragment : Fragment(R.layout.fragment_on_boarding_screen) 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // Handle the back button event
 
-            if(isBackPressedTwice) {
+            if (isBackPressedTwice) {
                 requireActivity().finish()
-            }else {
-                Toast.makeText(requireContext(),"Press back one more time to quit!",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Press back one more time to quit!",
+                    Toast.LENGTH_SHORT
+                ).show()
                 isBackPressedTwice = true
             }
 

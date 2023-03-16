@@ -8,7 +8,7 @@ object Constants {
 
     // APIs
     const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
-    const val BASE_YOUTUBE_API_KEY = "AIzaSyCdn27lKADWOvbq8-nclKDnKphucdUKmls"
+    const val APP_SHARE_URL = "https://drive.google.com/file/d/1t_zYYCGf_8-4q_nprhGlYmusnqBiNGYN/view"
 
     // admin
     var ADMIN_USER_NAME = "Admin"

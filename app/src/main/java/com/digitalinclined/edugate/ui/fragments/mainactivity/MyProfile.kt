@@ -29,7 +29,6 @@ import com.digitalinclined.edugate.constants.Constants.IS_BACK_TOOLBAR_BTN_ACTIV
 import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST
 import com.digitalinclined.edugate.constants.Constants.USER_CITY
 import com.digitalinclined.edugate.constants.Constants.USER_COURSE
-import com.digitalinclined.edugate.constants.Constants.USER_CURRENT_COURSE
 import com.digitalinclined.edugate.constants.Constants.USER_EMAIL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.constants.Constants.USER_PHONE
@@ -48,7 +47,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MyProfile: Fragment(R.layout.fragment_myprofile) {
+class MyProfile : Fragment(R.layout.fragment_myprofile) {
 
     // TAG
     private val TAG = "MyProfile"
@@ -119,13 +118,17 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
             // save button listener
             viewProgress.setOnClickListener {
-                if(!isTextEmpty() && isEnteredValueTrue()) {
+                if (!isTextEmpty() && isEnteredValueTrue()) {
                     progressButton.buttonActivated("Saving...")
                     if (isValuesUpdated()) {
                         updateInAnAccount()
                     } else {
                         progressButton.buttonActivated("Save Changes")
-                        Toast.makeText(requireContext(),"Error occurred please check for values again!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Error occurred please check for values again!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -140,7 +143,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     }
 
     //choose profile picture
-    private fun choosePicture(){
+    private fun choosePicture() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
@@ -149,7 +152,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==1 && resultCode==RESULT_OK && data?.data!=null) {
+        if (requestCode == 1 && resultCode == RESULT_OK && data?.data != null) {
             imageURI = data.data!!
             binding.apply {
                 userProfileImage.setImageURI(imageURI)
@@ -202,13 +205,13 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
         binding.apply {
             val user = hashMapOf(
                 "name" to nameTV.text.toString(),
-                "email" to sharedPreferences.getString(USER_EMAIL,""),
+                "email" to sharedPreferences.getString(USER_EMAIL, ""),
                 "phone" to phoneNumber.text.toString(),
                 "course" to chooseCourseAutoTextView.text.toString(),
                 "year" to yearAutoTextView.text.toString(),
                 "city" to cityAutoTextView.text.toString(),
                 "semester" to semesterAutoTextView.text.toString(),
-                "profilephotolink" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"")
+                "profilephotolink" to sharedPreferences.getString(USER_PROFILE_PHOTO_LINK, "")
             )
 
             // create db in fireStore
@@ -237,7 +240,11 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 result = true
             }
 
-            if (chooseCourseAutoTextView.text.toString() != sharedPreferences.getString(USER_COURSE, "")) {
+            if (chooseCourseAutoTextView.text.toString() != sharedPreferences.getString(
+                    USER_COURSE,
+                    ""
+                )
+            ) {
                 result = true
             }
 
@@ -249,7 +256,11 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 result = true
             }
 
-            if (semesterAutoTextView.text.toString() != sharedPreferences.getString(USER_SEMESTER, "")) {
+            if (semesterAutoTextView.text.toString() != sharedPreferences.getString(
+                    USER_SEMESTER,
+                    ""
+                )
+            ) {
                 result = true
             }
 
@@ -265,8 +276,8 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     private fun getUserDataFromSharedPreferences() {
         binding.apply {
 
-            nameTV.text = sharedPreferences.getString(USER_NAME,"")
-            if(sharedPreferences.getString(USER_CITY,"") != "") {
+            nameTV.text = sharedPreferences.getString(USER_NAME, "")
+            if (sharedPreferences.getString(USER_CITY, "") != "") {
                 cityUpperText.text = "${sharedPreferences.getString(USER_CITY, "")}, India"
             }
             phoneNumber.setText(sharedPreferences.getString(USER_PHONE, ""))
@@ -279,10 +290,11 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             val requestOptions = RequestOptions()
             requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
             requestOptions.centerCrop()
-            if(sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"").toString() != null &&
-                sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"").toString() != "") {
+            if (sharedPreferences.getString(USER_PROFILE_PHOTO_LINK, "").toString() != null &&
+                sharedPreferences.getString(USER_PROFILE_PHOTO_LINK, "").toString() != ""
+            ) {
                 Glide.with(root)
-                    .load(sharedPreferences.getString(USER_PROFILE_PHOTO_LINK,"").toString())
+                    .load(sharedPreferences.getString(USER_PROFILE_PHOTO_LINK, "").toString())
                     .apply(requestOptions)
                     .into(userProfileImage)
             }
@@ -292,7 +304,7 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
     }
 
     // Setting adapters for Spinner / AutoTextView
-    private fun adapterForSpinners(){
+    private fun adapterForSpinners() {
         binding.apply {
 
             // adapter for course list
@@ -364,26 +376,27 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
             if (phoneNumber.text.isNullOrEmpty()) {
                 isTextEmpty = true
                 phoneNumberLayout.error = "*Phone number can't be empty!"
-            } else if(phoneNumber.text.toString().length < 10) {
+            } else if (phoneNumber.text.toString().length < 10) {
                 isTextEmpty = true
                 phoneNumberLayout.error = "*Please enter a valid phone number!"
             }
 
-            if(chooseCourseAutoTextView.text.isNullOrEmpty()) {
+            if (chooseCourseAutoTextView.text.isNullOrEmpty()) {
                 isTextEmpty = true
             }
 
-            if(yearAutoTextView.text.isNullOrEmpty()) {
+            if (yearAutoTextView.text.isNullOrEmpty()) {
                 isTextEmpty = true
             }
 
-            if(semesterAutoTextView.text.isNullOrEmpty()) {
+            if (semesterAutoTextView.text.isNullOrEmpty()) {
                 isTextEmpty = true
             }
 
-            if(isTextEmpty) {
+            if (isTextEmpty) {
                 // Snack bar on empty OTP
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()
@@ -441,27 +454,30 @@ class MyProfile: Fragment(R.layout.fragment_myprofile) {
                 }
             }
 
-            if(!resultCourse) {
+            if (!resultCourse) {
                 chooseCourseAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()
                 result = false
             }
 
-            if(!resultYear) {
+            if (!resultYear) {
                 yearAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()
                 result = false
             }
 
-            if(!resultSemester) {
+            if (!resultSemester) {
                 semesterAutoTextView.setText("")
-                Snackbar.make(binding.root ,
+                Snackbar.make(
+                    binding.root,
                     "Please enter all fields!",
                     Snackbar.LENGTH_SHORT
                 ).show()

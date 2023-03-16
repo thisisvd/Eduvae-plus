@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -27,12 +26,12 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class LoginFragment: Fragment(R.layout.fragment_login) {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     // TAG
     private val TAG = "LoginFragment"
 
-    // viewBinding
+    // view binding
     private lateinit var binding: FragmentLoginBinding
 
     // temp login first time open variable
@@ -52,7 +51,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     // constant for google sign-in
-    private companion object{
+    private companion object {
         private const val RC_SIGN_IN = 100
         private const val TAG_GOOGLE_SIGN_IN = "GOOGLE_SING_IN_TAG"
     }
@@ -69,7 +68,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(dialog.window != null){
+            if (dialog.window != null) {
                 dialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -131,7 +130,10 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
     // signing with google auth
     private fun firebaseAuthWithGoogle(idToken: String) {
-        Log.d(TAG_GOOGLE_SIGN_IN,"firebaseAuthWithGoogleAccount: begin firebase auth with google account.")
+        Log.d(
+            TAG_GOOGLE_SIGN_IN,
+            "firebaseAuthWithGoogleAccount: begin firebase auth with google account."
+        )
 
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
@@ -141,7 +143,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                 Log.d(TAG_GOOGLE_SIGN_IN, "signInWithCredential:success")
                 val user = firebaseAuth.currentUser
 
-                if(authResult.additionalUserInfo!!.isNewUser){
+                if (authResult.additionalUserInfo!!.isNewUser) {
                     dialog.dismiss()
                     dialogForNewUser(user)
                 } else {
@@ -157,16 +159,23 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
     }
 
     // dialog to check for account
-    private fun dialogForNewUser(user: FirebaseUser?){
+    private fun dialogForNewUser(user: FirebaseUser?) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setTitle("Account don't Exists!")
-                .setMessage("No Account exists with this email. " +
-                        "Do you want to create a new account with this email?")
-            setPositiveButton("Create") { _,_ ->
+                .setMessage(
+                    "No Account exists with this email. " +
+                            "Do you want to create a new account with this email?"
+                )
+            setPositiveButton("Create") { _, _ ->
                 dialog.show()
-                createNewAccount(user!!.displayName,user!!.email,user!!.phoneNumber,user!!.photoUrl.toString())
+                createNewAccount(
+                    user!!.displayName,
+                    user!!.email,
+                    user!!.phoneNumber,
+                    user!!.photoUrl.toString()
+                )
             }
-            setNegativeButton("Go back") { _,_ ->
+            setNegativeButton("Go back") { _, _ ->
                 // signing out the authenticated user via (LOGIN)
                 firebaseAuth.currentUser!!.delete().addOnSuccessListener {
                     Log.d(TAG, "USER NOT FOUND HENCE DELETED!")
@@ -179,7 +188,12 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
     }
 
     // create a new account in fireStore for users [SIGN-UP CODE]
-    private fun createNewAccount(name: String? = null, email: String? = null, phone: String? = null, photoUrlLink: String? = null) {
+    private fun createNewAccount(
+        name: String? = null,
+        email: String? = null,
+        phone: String? = null,
+        photoUrlLink: String? = null
+    ) {
 
         // user data
         val user = hashMapOf(
@@ -206,23 +220,23 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
                 dialog.dismiss()
             }
     }
-    
+
     // on verification button clicked
     private fun onVerificationClicked() {
 
         binding.apply {
 
             // check for layout visibility
-            if(phoneNumberLayout.isVisible && !isTextEmpty()){
+            if (phoneNumberLayout.isVisible && !isTextEmpty()) {
 
                 val bundle = Bundle().apply {
                     putString("fragment", "login")
-                    putString("phone",phoneNumber.text.toString())
+                    putString("phone", phoneNumber.text.toString())
                 }
                 findNavController().navigate(R.id.action_loginFragment_to_OTPFragment, bundle)
 
             } else {
-                if(isOpenFirstTime) {
+                if (isOpenFirstTime) {
                     // Animate loginLinearLayout
                     ObjectAnimator.ofFloat(loginLinearLayout, "translationY", 222f).apply {
                         duration = 800
@@ -262,7 +276,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             if (phoneNumber.text.isNullOrEmpty()) {
                 isTextEmpty = true
                 phoneNumberEdittextLayout.error = "*Phone number can't be empty!"
-            } else if(phoneNumber.text.toString().length < 10) {
+            } else if (phoneNumber.text.toString().length < 10) {
                 isTextEmpty = true
                 phoneNumberEdittextLayout.error = "*Please enter a valid phone number!"
             }

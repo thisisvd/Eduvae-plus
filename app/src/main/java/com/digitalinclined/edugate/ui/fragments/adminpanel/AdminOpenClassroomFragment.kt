@@ -3,16 +3,13 @@ package com.digitalinclined.edugate.ui.fragments.adminpanel
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.TextPaint
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
@@ -65,7 +62,7 @@ class AdminOpenClassroomFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentOpenClassroomBinding.inflate(layoutInflater,container,false)
+        _binding = FragmentOpenClassroomBinding.inflate(layoutInflater, container, false)
 
         // view visible
         binding.onlyForAdminLayout.visibility = View.VISIBLE
@@ -76,7 +73,7 @@ class AdminOpenClassroomFragment : Fragment() {
         dialog.apply {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
-            if(window != null){
+            if (window != null) {
                 window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
@@ -98,7 +95,10 @@ class AdminOpenClassroomFragment : Fragment() {
                 val bundle = bundleOf(
                     "classroomID" to args.classroomDetailsClass.classroomID
                 )
-                findNavController().navigate(R.id.action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment,bundle)
+                findNavController().navigate(
+                    R.id.action_adminOpenClassroomFragment_to_adminAddClassroomDiscussionFragment,
+                    bundle
+                )
             }
 
             // delete classroom permanent
@@ -136,12 +136,14 @@ class AdminOpenClassroomFragment : Fragment() {
     private fun fetchClassroomFromFirebase() {
         var discussionsList = ArrayList<ClassroomObjectsDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/discussionsmaterial")
+                .get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(ClassroomObjectsDataClass::class.java)!!
+                            val dataClass =
+                                document.toObject(ClassroomObjectsDataClass::class.java)!!
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")
@@ -149,13 +151,17 @@ class AdminOpenClassroomFragment : Fragment() {
                         if (discussionsList.isNotEmpty()) {
                             recyclerAdapter.differ.submitList(discussionsList)
                         } else {
-                            Snackbar.make(binding.root,"No discussions posted!", Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                "No discussions posted!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                         binding.progressBar.visibility = View.GONE
                     }
                 }.addOnFailureListener { e ->
                     Log.d(TAG, "Error adding document", e)
-                    Snackbar.make(binding.root,"Error occurred!", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(binding.root, "Error occurred!", Snackbar.LENGTH_LONG).show()
                     binding.progressBar.visibility = View.GONE
                 }
         }
@@ -183,7 +189,7 @@ class AdminOpenClassroomFragment : Fragment() {
                 val requestOptions = RequestOptions()
                 requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
                 requestOptions.centerCrop()
-                if(!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
+                if (!args.classroomDetailsClass.imageInt!!.isNullOrEmpty()) {
                     Glide.with(root)
                         .load(args.classroomDetailsClass.imageInt!!)
                         .apply(requestOptions)
@@ -222,12 +228,13 @@ class AdminOpenClassroomFragment : Fragment() {
             classroomNameTv.text = args.classroomDetailsClass.classroomName
 
             // due date
-            classroomLastUpdateTv.text = "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
+            classroomLastUpdateTv.text =
+                "Last updated on - ${DateTimeFormatFetcher().getDateTime(args.classroomDetailsClass.classDueDate!!.toLong())}"
         }
     }
 
     // Recycler view setup
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         recyclerAdapter = ClassroomDiscussionRecyclerAdapter()
         binding.apply {
             classroomDiscussionRecyclerView.apply {
@@ -238,7 +245,7 @@ class AdminOpenClassroomFragment : Fragment() {
         // on click listener
         recyclerAdapter.apply {
             setClassroomOnItemClickListener {
-                Snackbar.make(binding.root,"Error in loading pdf!",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Error in loading pdf!", Snackbar.LENGTH_SHORT).show()
             }
         }
     }
@@ -295,7 +302,8 @@ class AdminOpenClassroomFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
 
             // delete class work and update class values / fields
-            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/classwork").get()
+            Firebase.firestore.collection("classroom/${args.classroomDetailsClass.classroomID}/classwork")
+                .get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         for (document in documentResult) {
@@ -322,7 +330,8 @@ class AdminOpenClassroomFragment : Fragment() {
                                 .document(args.classroomDetailsClass.classroomID.toString())
                                 .update("classworkStudentList", FieldValue.arrayUnion())
                             dialog.dismiss()
-                            Snackbar.make(binding.root,"Room deleted!",Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(binding.root, "Room deleted!", Snackbar.LENGTH_SHORT)
+                                .show()
                             findNavController().popBackStack()
                         }
                         .addOnFailureListener {
