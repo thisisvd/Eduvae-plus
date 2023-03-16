@@ -41,4 +41,4 @@ Glide
 
 ## Copyright
 
-© 2022 Education App. All rights reserved.
+© 2023 Education App. All rights reserved.
