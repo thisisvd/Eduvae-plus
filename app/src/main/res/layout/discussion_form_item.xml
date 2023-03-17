@@ -187,9 +187,10 @@
         app:layout_constraintTop_toBottomOf="@+id/discussLL2">
 
         <ImageView
+            android:id="@+id/like_discuss"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24"
+            app:srcCompat="@drawable/like"
             app:tint="@color/text_color" />
 
         <TextView
@@ -206,6 +207,7 @@
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <ImageView
+            android:id="@+id/comments_discuss"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:layout_marginLeft="@dimen/_10sdp"

@@ -16,10 +16,12 @@ import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.databinding.DiscussionFormItemBinding
 import com.digitalinclined.edugate.models.DiscussionDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class DiscussionRecyclerAdapter(val context: Context) : RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
+class DiscussionRecyclerAdapter(val context: Context) :
+    RecyclerView.Adapter<DiscussionRecyclerAdapter.DiscussionViewHolder>() {
 
     // temp followers list
     private var followersList = ArrayList<String>()
@@ -122,8 +124,17 @@ class DiscussionRecyclerAdapter(val context: Context) : RecyclerView.Adapter<Dis
             followUser.setOnClickListener {
                 followItemClickListener?.let { it(data, followUser) }
             }
-        }
 
+            // like
+            likeDiscuss.setOnClickListener {
+                Snackbar.make(it, "Post appreciated", Snackbar.LENGTH_SHORT).show()
+            }
+
+            // comments
+            commentsDiscuss.setOnClickListener {
+                Snackbar.make(it, "Error in loading comments", Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // check for existing follower
