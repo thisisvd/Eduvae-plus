@@ -56,7 +56,7 @@ class AddDiscussionFragment : Fragment() {
 
     // firebase db
     private val db = Firebase.firestore
-    private val dbReference = db.collection("sharedNotes")
+    private val dbReference = db.collection("discussionsData")
 
     // shared Preferences
     private lateinit var sharedPreferences: SharedPreferences

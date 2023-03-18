@@ -9,8 +9,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         app:cardCornerRadius="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
 
-            <ImageView
+        <ImageView
                 android:id="@+id/classroom_icon_img"
                 android:layout_width="@dimen/_55sdp"
                 android:layout_height="@dimen/_55sdp"

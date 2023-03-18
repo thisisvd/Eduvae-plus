@@ -83,7 +83,7 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
     private fun fetchDiscussionsFromFirebase() {
         var discussionsList = ArrayList<DiscussionDataClass>()
         lifecycleScope.launch(Dispatchers.IO) {
-            db.collection("sharedNotes").get()
+            db.collection("discussionsData").get()
                 .addOnSuccessListener { documentResult ->
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
