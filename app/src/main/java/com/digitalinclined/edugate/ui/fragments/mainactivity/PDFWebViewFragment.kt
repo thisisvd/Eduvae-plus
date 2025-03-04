@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -37,8 +38,7 @@ class PDFWebViewFragment : Fragment() {
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPDFWebViewBinding.inflate(inflater, container, false)
 
@@ -46,8 +46,11 @@ class PDFWebViewFragment : Fragment() {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Pdf Viewer"
         toggle = (activity as MainActivity).toggle
         toggle.isDrawerIndicatorEnabled = false
-        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-        toggle.setHomeAsUpIndicator(drawable)
+        toggle.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                requireContext(), R.drawable.ic_baseline_arrow_back_ios_new_24
+            )
+        )
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         return binding.root
@@ -63,9 +66,7 @@ class PDFWebViewFragment : Fragment() {
                     if (it != null) {
                         var getBytes = Base64.decode(it.fileData, Base64.NO_WRAP)
                         Log.d(TAG, "$it : $getBytes")
-//                        pdfView.fromBytes(getBytes).load()
                     } else {
-//                        pdfView.fromAsset("machine_learning.pdf").load()
                     }
                 }
             } else {

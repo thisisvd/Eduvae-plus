@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
@@ -36,12 +37,8 @@ class FeedbackFragment : Fragment() {
     // alert progress dialog
     private lateinit var dialog: Dialog
 
-    // smile count
-    private var smileCount = -1
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFeedbackBinding.inflate(inflater, container, false)
 
@@ -49,8 +46,11 @@ class FeedbackFragment : Fragment() {
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Feedback!"
         toggle = (activity as MainActivity).toggle
         toggle.isDrawerIndicatorEnabled = false
-        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-        toggle.setHomeAsUpIndicator(drawable)
+        toggle.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                requireContext(), R.drawable.ic_baseline_arrow_back_ios_new_24
+            )
+        )
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         // init Loading Dialog
@@ -80,37 +80,15 @@ class FeedbackFragment : Fragment() {
     private fun onClickListeners() {
         binding.apply {
 
-//            // smile Listener
-//            smileRating.setSmileySelectedListener { type ->
-//
-//                when {
-//                    SmileyRating.Type.GREAT == type -> smileCount = 5
-//                    SmileyRating.Type.GOOD == type -> smileCount = 4
-//                    SmileyRating.Type.OKAY == type -> smileCount = 3
-//                    SmileyRating.Type.BAD == type -> smileCount = 2
-//                    SmileyRating.Type.TERRIBLE == type -> smileCount = 1
-//                }
-//
-//            }
-
             // on submit click
             submitFeedback.setOnClickListener {
                 if (!feedbackEt.text.isNullOrEmpty()) {
-                    if (smileCount >= 0) {
-                        dialog.show()
-                        addFeedbackInServer(feedbackEt.text.toString())
-                    } else {
-                        Snackbar.make(
-                            binding.root,
-                            "Please select rating smile!",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
+                    dialog.show()
+                    addFeedbackInServer(feedbackEt.text.toString())
                 } else {
                     Snackbar.make(binding.root, "Empty feedback!", Snackbar.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 
@@ -119,18 +97,15 @@ class FeedbackFragment : Fragment() {
         binding.apply {
 
             val feedbackData = hashMapOf(
-                "feedbackInWords" to feedbackInWords,
-                "starRating" to smileCount
+                "feedbackInWords" to feedbackInWords
             )
 
             Firebase.firestore.collection("userFeedbacks").document(Firebase.auth.currentUser!!.uid)
-                .set(feedbackData)
-                .addOnSuccessListener {
+                .set(feedbackData).addOnSuccessListener {
                     Log.d(TAG, "Feedback added successfully!")
                     dialog.dismiss()
                     showAlertDialogForConfirm()
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     Log.w(TAG, "Error in adding feedback!", e)
                     dialog.dismiss()
                     Snackbar.make(binding.root, "Error occurred! Try again", Snackbar.LENGTH_LONG)
@@ -141,13 +116,10 @@ class FeedbackFragment : Fragment() {
 
     // delete classwork to classroom
     private fun showAlertDialogForConfirm() {
-        AlertDialog.Builder(requireContext())
-            .setPositiveButton("Close") { _, _ ->
-                findNavController().popBackStack()
-            }
-            .setTitle("Thank you for providing feedback!")
-            .setMessage("Your feedback has been submitted successfully.")
-            .setCancelable(false)
+        AlertDialog.Builder(requireContext()).setPositiveButton("Close") { _, _ ->
+            findNavController().popBackStack()
+        }.setTitle("Thank you for providing feedback!")
+            .setMessage("Your feedback has been submitted successfully.").setCancelable(false)
             .create().show()
     }
 
