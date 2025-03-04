@@ -15,5 +15,7 @@
     <string name="about_app_description">While using this application students can take the advantage of various facilities in a single app like students can see their syllabus, notes, discuss their doubts, get previous year question papers as well as attempt quiz to improve their knowledge.
 Along with this there will be a facility to upload notes to help other students</string>
     <string name="image">image</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
 
 </resources>

@@ -6,6 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.mainactivity.PDFWebViewFragment">
 
+    <ImageView
+        android:id="@+id/pdfImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:contentDescription="@string/image"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/prevButton"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/_12sdp"
+        android:text="@string/previous"
+        android:textColor="@color/light_blue_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/nextButton"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/_12sdp"
+        android:text="@string/next"
+        android:textColor="@color/light_blue_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ProgressBar
         android:id="@+id/pdfProgressBar"
         style="?android:attr/progressBarStyle"
