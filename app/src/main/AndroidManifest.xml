@@ -22,9 +22,6 @@
         android:theme="@style/Theme.Edugate"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.fragments.YoutubeVideoActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.fragments.SetupActivity"
             android:exported="true">
             <intent-filter>
