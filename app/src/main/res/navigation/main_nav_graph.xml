@@ -236,5 +236,16 @@
         <argument
             android:name="branchesData"
             app:argType="com.digitalinclined.edugate.models.BranchListDataClass" />
+        <action
+            android:id="@+id/action_videosListFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideoFragment"
+        android:label="VideoFragment" >
+        <argument
+            android:name="item"
+            app:argType="com.digitalinclined.edugate.models.youtubemodel.Item" />
     </fragment>
 </navigation>

@@ -1,16 +1,17 @@
 package com.digitalinclined.edugate.ui.fragments.mainactivity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
@@ -18,7 +19,6 @@ import com.digitalinclined.edugate.adapter.VideosListAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.databinding.FragmentVideosListBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
-import com.digitalinclined.edugate.ui.fragments.YoutubeVideoActivity
 import com.digitalinclined.edugate.ui.viewmodel.MainViewModel
 import com.digitalinclined.edugate.utils.Resource
 
@@ -47,8 +47,7 @@ class VideosListFragment : Fragment() {
     private var selectedSubject = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentVideosListBinding.inflate(inflater, container, false)
 
@@ -57,8 +56,11 @@ class VideosListFragment : Fragment() {
             "Recommended Videos"
         toggle = (activity as MainActivity).toggle
         toggle.isDrawerIndicatorEnabled = false
-        val drawable = requireActivity().getDrawable(R.drawable.ic_baseline_arrow_back_ios_new_24)
-        toggle.setHomeAsUpIndicator(drawable)
+        toggle.setHomeAsUpIndicator(
+            ContextCompat.getDrawable(
+                requireContext(), R.drawable.ic_baseline_arrow_back_ios_new_24
+            )
+        )
         Constants.IS_BACK_TOOLBAR_BTN_ACTIVE = true
 
         return binding.root
@@ -82,17 +84,15 @@ class VideosListFragment : Fragment() {
     private fun setUpAdaptersForSpinners() {
         binding.apply {
 
-            if (args != null && args.branchesData.branchCode!!.isNotEmpty()) {
+            if (args.branchesData.branchCode!!.isNotEmpty()) {
                 val subjectsLists = ArrayList<String>()
                 for (item in args.branchesData.majorSubjects!!) {
                     subjectsLists.add(item)
                 }
 
                 // adapter for course list
-                var courseAdapter = ArrayAdapter(
-                    requireContext(),
-                    R.layout.drop_down_list_view,
-                    subjectsLists
+                val courseAdapter = ArrayAdapter(
+                    requireContext(), R.layout.drop_down_list_view, subjectsLists
                 )
 
                 // course spinner adapter
@@ -104,7 +104,7 @@ class VideosListFragment : Fragment() {
                     // on change listener
                     setOnItemClickListener { _, _, i, _ ->
                         selectedSubject = subjectsLists[i]
-                        if (!selectedSubject.isNullOrEmpty()) {
+                        if (selectedSubject.isNotEmpty()) {
                             viewModel.getYoutubeResult(selectedSubject, "IN")
                         }
                     }
@@ -113,7 +113,7 @@ class VideosListFragment : Fragment() {
                     setText(subjectsLists[0], false)
                     selectedSubject = subjectsLists[0]
 
-                    if (!selectedSubject.isNullOrEmpty()) {
+                    if (selectedSubject.isNotEmpty()) {
                         viewModel.getYoutubeResult(selectedSubject, "IN")
                     }
                 }
@@ -130,18 +130,20 @@ class VideosListFragment : Fragment() {
                 when (response) {
                     is Resource.Success -> {
                         response.data?.let { videosList ->
-                            if (!videosList.isNullOrEmpty()) {
+                            if (videosList.isNotEmpty()) {
                                 recyclerAdapter.differ.submitList(videosList)
                             }
                         }
                         progressBar.visibility = View.GONE
                     }
+
                     is Resource.Error -> {
                         response.message?.let { message ->
                             Log.e(TAG, "An error occurred : $message")
                         }
                         progressBar.visibility = View.GONE
                     }
+
                     is Resource.Loading -> {
                         Log.d(TAG, "Youtube search api Loading!")
                         progressBar.visibility = View.VISIBLE
@@ -164,9 +166,11 @@ class VideosListFragment : Fragment() {
         // on click listener
         recyclerAdapter.apply {
             setOnItemClickListener {
-                val intent = Intent(requireActivity(), YoutubeVideoActivity::class.java)
-                intent.putExtra("videoItem", it)
-                startActivity(intent)
+                findNavController().navigate(
+                    VideosListFragmentDirections.actionVideosListFragmentToVideoFragment(
+                        it
+                    )
+                )
             }
         }
     }
