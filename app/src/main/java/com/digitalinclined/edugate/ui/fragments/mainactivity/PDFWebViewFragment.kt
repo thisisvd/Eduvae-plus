@@ -106,19 +106,33 @@ class PDFWebViewFragment : Fragment() {
     }
 
     private fun showPage(index: Int) {
-        pdfRenderer?.let { renderer ->
-            if (index < 0 || index >= renderer.pageCount) return
+        binding.apply {
+            pdfRenderer?.let { renderer ->
+                if (index < 0 || index >= renderer.pageCount) return
 
-            currentPage?.close()
-            currentPage = renderer.openPage(index)
+                if (index == 0) {
+                    prevButton.visibility = View.GONE
+                } else {
+                    prevButton.visibility = View.VISIBLE
+                }
 
-            val bitmap = Bitmap.createBitmap(
-                currentPage!!.width, currentPage!!.height, Bitmap.Config.ARGB_8888
-            )
-            currentPage!!.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                if (index == (renderer.pageCount - 1)) {
+                    nextButton.visibility = View.GONE
+                } else {
+                    nextButton.visibility = View.VISIBLE
+                }
 
-            binding.pdfImageView.setImageBitmap(bitmap)
-            currentPageIndex = index
+                currentPage?.close()
+                currentPage = renderer.openPage(index)
+
+                val bitmap = Bitmap.createBitmap(
+                    currentPage!!.width, currentPage!!.height, Bitmap.Config.ARGB_8888
+                )
+                currentPage!!.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+
+                pdfImageView.setImageBitmap(bitmap)
+                currentPageIndex = index
+            }
         }
     }
 
