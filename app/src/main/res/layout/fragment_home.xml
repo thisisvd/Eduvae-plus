@@ -64,23 +64,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="12dp"
-            android:layout_marginLeft="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="12dp"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:cardCornerRadius="@dimen/_8sdp">
 
-            <ProgressBar
-                android:id="@+id/webViewProgressBar"
-                style="@android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/text_color"
-                android:indeterminateTintMode="src_atop" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/autoSlideHome"
+                android:layout_width="match_parent"
+                android:layout_height="135dp"
+                android:orientation="horizontal" />
 
         </androidx.cardview.widget.CardView>
 

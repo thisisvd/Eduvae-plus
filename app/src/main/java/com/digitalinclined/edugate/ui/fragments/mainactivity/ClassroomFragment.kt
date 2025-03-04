@@ -6,7 +6,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -56,8 +61,7 @@ class ClassroomFragment : Fragment() {
     private var allValidClassRoom = arrayListOf<String>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentClassroomBinding.inflate(layoutInflater, container, false)
@@ -125,9 +129,7 @@ class ClassroomFragment : Fragment() {
                             binding.progressBar.visibility = View.GONE
                         } else {
                             Snackbar.make(
-                                binding.root,
-                                "No Classroom available!",
-                                Snackbar.LENGTH_LONG
+                                binding.root, "No Classroom available!", Snackbar.LENGTH_LONG
                             ).show()
                             binding.noClassroomJoinedTv.visibility = View.VISIBLE
                             binding.progressBar.visibility = View.GONE
@@ -146,7 +148,6 @@ class ClassroomFragment : Fragment() {
         when (item.itemId) {
             R.id.add_new_classroom -> {
                 showClassroomLinkDialog()
-                true
             }
         }
         return super.onOptionsItemSelected(item)
@@ -161,8 +162,7 @@ class ClassroomFragment : Fragment() {
             hint = "Enter classroom code"
             inputType = InputType.TYPE_CLASS_TEXT
             val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
             )
             params.setMargins(16, 0, 16, 0)
             this.layoutParams = params
@@ -194,16 +194,14 @@ class ClassroomFragment : Fragment() {
         binding.apply {
             // create db in fireStore
             dbReference.document(firebaseAuth.currentUser!!.uid)
-                .update("joinedClassrooms", FieldValue.arrayUnion(roomId))
-                .addOnSuccessListener {
+                .update("joinedClassrooms", FieldValue.arrayUnion(roomId)).addOnSuccessListener {
                     Log.d(TAG, "Room added Successfully!")
                     JOINED_CLASSROOM_LIST.add(roomId)
                     fetchClassroomFromFirebase()
                     dialog.dismiss()
                     Snackbar.make(binding.root, "Room added successfully!", Snackbar.LENGTH_LONG)
                         .show()
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     Log.w(TAG, "Error in following user!", e)
                     Snackbar.make(binding.root, "Error in following user!", Snackbar.LENGTH_LONG)
                         .show()
@@ -230,14 +228,12 @@ class ClassroomFragment : Fragment() {
                     "classroomDetailsClass" to dataClass
                 )
                 findNavController().navigate(
-                    R.id.action_classroomFragment_to_openClassroomFragment,
-                    bundle
+                    R.id.action_classroomFragment_to_openClassroomFragment, bundle
                 )
             }
         }
     }
 
-    // calling own menu for this fragment // (not required any more but not deleted because testing is not done)
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.classroom_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -247,5 +243,4 @@ class ClassroomFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

@@ -3,22 +3,34 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.*
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
+import com.digitalinclined.edugate.adapter.CarouselAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.APP_SHARE_URL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
 import com.digitalinclined.edugate.databinding.FragmentHomeBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import com.digitalinclined.edugate.utils.DotItemDecorator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -37,6 +49,9 @@ class HomeFragment : Fragment() {
 
     // Firebase
     private lateinit var firebaseAuth: FirebaseAuth
+
+    // adapter
+    private var carouselAdapter: CarouselAdapter? = null
 
     // firebase db
     private val db = Firebase.firestore
@@ -167,29 +182,51 @@ class HomeFragment : Fragment() {
     // Slider image view container
     private fun sliderImageView() {
         binding.apply {
+            autoSlideHome.apply {
+                val linearLayoutManager =
+                    LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+                layoutManager = linearLayoutManager
+                carouselAdapter = CarouselAdapter(this.context)
+                PagerSnapHelper().attachToRecyclerView(this)
+                addItemDecoration(DotItemDecorator(3))
+                adapter = carouselAdapter
+                isNestedScrollingEnabled = true
+                val handler = Handler(Looper.getMainLooper())
+                val delay = 4000L
+                var currentPosition = 0
 
-//            // Slider Image Adapter
-//            val adapter = SliderImageAdapter(requireContext(), webViewProgressBar)
-//
-//            // adapter init
-//            sliderView.setSliderAdapter(adapter)
-//            sliderView.setIndicatorAnimation(IndicatorAnimationType.SWAP)
-//            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-//            sliderView.startAutoCycle()
+                val runnable = object : Runnable {
+                    override fun run() {
+                        if (currentPosition == carouselAdapter!!.itemCount) {
+                            currentPosition = 0
+                        }
+                        val smoothScroller = object : LinearSmoothScroller(requireContext()) {
+                            override fun getHorizontalSnapPreference(): Int {
+                                return SNAP_TO_END
+                            }
+                        }
+                        smoothScroller.targetPosition = currentPosition++
+                        linearLayoutManager.startSmoothScroll(smoothScroller)
+                        handler.postDelayed(this, delay)
+                    }
+                }
+
+                handler.postDelayed(runnable, delay)
+
+            }
         }
     }
 
     // onPrepareOptionsMenu for Circle layout profile menu
     override fun onPrepareOptionsMenu(menu: Menu) {
-        val profileMenuItem = menu!!.findItem(R.id.homeProfileMenu)
+        val profileMenuItem = menu.findItem(R.id.homeProfileMenu)
         val rootView = profileMenuItem.actionView as FrameLayout
         val requestOptions = RequestOptions()
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
         requestOptions.centerCrop()
         if (sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "")
                 .toString() != null && sharedPreferences.getString(
-                Constants.USER_PROFILE_PHOTO_LINK,
-                ""
+                Constants.USER_PROFILE_PHOTO_LINK, ""
             ).toString() != ""
         ) {
             Glide.with(rootView)
