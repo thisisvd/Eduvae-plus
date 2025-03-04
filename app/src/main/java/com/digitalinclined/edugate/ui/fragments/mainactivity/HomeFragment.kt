@@ -55,7 +55,13 @@ class HomeFragment : Fragment() {
 
     // firebase db
     private val db = Firebase.firestore
-    private val dbReference = db.collection("extraData")
+
+    // handler
+    private val handler = Handler(Looper.getMainLooper())
+    private var runnable: Runnable? = null
+    private var currentPosition = 0
+    private val delay: Long = 4000L
+    private lateinit var carouselLinearLayoutManager: LinearLayoutManager
 
     // enable the options menu in activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +98,8 @@ class HomeFragment : Fragment() {
         // on click listeners
         onClickListeners()
 
+        // start auto scroll
+        startAutoScroll()
     }
 
     // on click listeners
@@ -183,37 +191,45 @@ class HomeFragment : Fragment() {
     private fun sliderImageView() {
         binding.apply {
             autoSlideHome.apply {
-                val linearLayoutManager =
+                carouselLinearLayoutManager =
                     LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-                layoutManager = linearLayoutManager
+                layoutManager = carouselLinearLayoutManager
                 carouselAdapter = CarouselAdapter(this.context)
                 PagerSnapHelper().attachToRecyclerView(this)
                 addItemDecoration(DotItemDecorator(3))
                 adapter = carouselAdapter
                 isNestedScrollingEnabled = true
-                val handler = Handler(Looper.getMainLooper())
-                val delay = 4000L
-                var currentPosition = 0
-
-                val runnable = object : Runnable {
-                    override fun run() {
-                        if (currentPosition == carouselAdapter!!.itemCount) {
-                            currentPosition = 0
-                        }
-                        val smoothScroller = object : LinearSmoothScroller(requireContext()) {
-                            override fun getHorizontalSnapPreference(): Int {
-                                return SNAP_TO_END
-                            }
-                        }
-                        smoothScroller.targetPosition = currentPosition++
-                        linearLayoutManager.startSmoothScroll(smoothScroller)
-                        handler.postDelayed(this, delay)
-                    }
-                }
-
-                handler.postDelayed(runnable, delay)
-
             }
+        }
+    }
+
+    private fun startAutoScroll() {
+        if (runnable == null) {
+            runnable = object : Runnable {
+                override fun run() {
+                    if (carouselAdapter?.itemCount == 0) return
+                    if (currentPosition >= (carouselAdapter!!.itemCount)) {
+                        currentPosition = 0
+                    }
+
+                    val smoothScroller = object : LinearSmoothScroller(requireContext()) {
+                        override fun getHorizontalSnapPreference(): Int {
+                            return SNAP_TO_END
+                        }
+                    }
+                    smoothScroller.targetPosition = currentPosition++
+                    carouselLinearLayoutManager.startSmoothScroll(smoothScroller)
+                    handler.postDelayed(this, delay)
+                }
+            }
+            handler.postDelayed(runnable!!, delay)
+        }
+    }
+
+    private fun stopAutoScroll() {
+        runnable?.let {
+            handler.removeCallbacks(it)
+            runnable = null
         }
     }
 
@@ -263,8 +279,19 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onResume() {
+        super.onResume()
+        startAutoScroll()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopAutoScroll()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        stopAutoScroll()
     }
 }

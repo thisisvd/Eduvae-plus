@@ -2,17 +2,19 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.digitalinclined.edugate.BuildConfig
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.APP_SHARE_URL
 import com.digitalinclined.edugate.databinding.FragmentAboutUsBinding
 import com.digitalinclined.edugate.ui.fragments.MainActivity
+import java.util.Calendar
 
 class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
 
@@ -47,6 +49,17 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
     private fun onClickListeners() {
         binding.apply {
 
+            // version number
+            versionNumber.text = "Version (${BuildConfig.VERSION_NAME}) - ${
+                Calendar.getInstance().get(
+                    Calendar.YEAR
+                )
+            }"
+
+            copyrightTv.text = "Copyright © ${
+                Calendar.getInstance().get(Calendar.YEAR)
+            } Educate. All rights reserved."
+
             // vd link
             vdLink.setOnClickListener {
                 openProfileLinks("https://github.com/thisisvd", "Vimal's Github")
@@ -65,22 +78,6 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
             // unDraw
             undrawLink.setOnClickListener {
                 openProfileLinks("https://undraw.co", "unDraw")
-            }
-
-            // privacy policy
-            privatePolicyLink.setOnClickListener {
-                openProfileLinks(
-                    "http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage",
-                    "Privacy Policy"
-                )
-            }
-
-            // terms & co
-            termsAndCoLink.setOnClickListener {
-                openProfileLinks(
-                    "http://cryptobeetle.centralindia.cloudapp.azure.com//privacypoliciespage",
-                    "Terms & Conditions"
-                )
             }
 
             // share app
@@ -102,10 +99,8 @@ class AboutUsFragment : Fragment(R.layout.fragment_about_us) {
     // open link
     private fun openProfileLinks(link: String, name: String) {
         val bundle = bundleOf(
-            "url" to link,
-            "urlSiteName" to name
+            "url" to link, "urlSiteName" to name
         )
         findNavController().navigate(R.id.action_aboutUsFragment_to_webViewFragment, bundle)
     }
-
 }
