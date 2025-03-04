@@ -3,8 +3,8 @@ package com.digitalinclined.edugate.ui.fragments.setupactivity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.IS_SPLASH_SCREEN_FIRST_SHOWED

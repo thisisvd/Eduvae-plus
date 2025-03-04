@@ -11,7 +11,8 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="textInputLayoutFocusedRectEnabled">false</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/theme_color_unchangeable</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/theme_color_unchangeable
+        </item>
         <!-- Customize your theme here. -->
 
     </style>

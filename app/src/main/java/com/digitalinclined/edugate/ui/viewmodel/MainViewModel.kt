@@ -14,7 +14,6 @@ import com.digitalinclined.edugate.restapi.APIClient
 import com.digitalinclined.edugate.ui.viewmodel.repository.Repository
 import com.digitalinclined.edugate.utils.Resource
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class MainViewModel(
     application: Application

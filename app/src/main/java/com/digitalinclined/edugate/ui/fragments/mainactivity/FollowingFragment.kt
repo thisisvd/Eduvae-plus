@@ -2,12 +2,12 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
@@ -54,7 +54,7 @@ class FollowingFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFollowingBinding.inflate(inflater, container, false)
         binding.apply {
 
@@ -106,9 +106,9 @@ class FollowingFragment : Fragment() {
                     if (document != null) {
                         val userProfile = document.toObject(UserFollowingProfile::class.java)!!
                         userProfile.userID = userID
-                        Log.d(TAG, userProfile!!.name.toString())
-                        if (userProfile!!.name != null) {
-                            followedUsersList.add(userProfile!!)
+                        Log.d(TAG, userProfile.name.toString())
+                        if (userProfile.name != null) {
+                            followedUsersList.add(userProfile)
                             recyclerAdapter.differ.submitList(followedUsersList)
                             recyclerAdapter.notifyDataSetChanged()
                             binding.progressBar.visibility = View.GONE
@@ -167,7 +167,7 @@ class FollowingFragment : Fragment() {
             .setTitle("Unfollow $name!")
             .setMessage("Are you sure you want to unfollow $name from your following list?")
             .setPositiveButton("Yes") { _, _ ->
-                deleteFollowingUserIDs(userID!!)
+                deleteFollowingUserIDs(userID)
                 showProgressBar()
             }
             .setNegativeButton("No", null)

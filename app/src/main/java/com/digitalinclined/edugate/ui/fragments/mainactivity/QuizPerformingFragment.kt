@@ -43,7 +43,7 @@ class QuizPerformingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentQuizPerformingBinding.inflate(layoutInflater, container, false)
 
         // toggle btn toolbar setup

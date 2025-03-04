@@ -2,13 +2,13 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.digitalinclined.edugate.R
@@ -47,7 +47,7 @@ class NotificationFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
 
         (activity as MainActivity).findViewById<TextView>(R.id.toolbarTitle).text = "Notifications"
@@ -102,7 +102,7 @@ class NotificationFragment : Fragment() {
                             )
                             for (document in documentResult) {
                                 val dataClass =
-                                    document.toObject(NotificationDataClass::class.java)!!
+                                    document.toObject(NotificationDataClass::class.java)
                                 notifyList.add(dataClass)
                             }
                             Log.d(TAG, "List size : ${notifyList.size}")

@@ -62,7 +62,7 @@ class ClassroomFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentClassroomBinding.inflate(layoutInflater, container, false)
 
@@ -112,7 +112,7 @@ class ClassroomFragment : Fragment() {
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(ClassroomDetailsClass::class.java)!!
+                            val dataClass = document.toObject(ClassroomDetailsClass::class.java)
                             if (JOINED_CLASSROOM_LIST.contains(dataClass.classroomID)) {
                                 classroomList.add(dataClass)
                             }

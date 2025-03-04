@@ -23,7 +23,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
@@ -212,9 +217,9 @@ class OTPFragment : Fragment(R.layout.fragment_otp) {
                 dialog.show()
                 createNewAccount(
                     user!!.displayName,
-                    user!!.email,
-                    user!!.phoneNumber,
-                    user!!.photoUrl.toString()
+                    user.email,
+                    user.phoneNumber,
+                    user.photoUrl.toString()
                 )
             }
             setNegativeButton("Go back") { _, _ ->

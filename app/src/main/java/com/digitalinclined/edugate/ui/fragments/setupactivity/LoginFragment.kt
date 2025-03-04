@@ -69,7 +69,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             setContentView(R.layout.custom_dialog)
             setCancelable(false)
             if (dialog.window != null) {
-                dialog!!.window!!.setBackgroundDrawable(ColorDrawable(0))
+                dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
             }
         }
 
@@ -170,9 +170,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 dialog.show()
                 createNewAccount(
                     user!!.displayName,
-                    user!!.email,
-                    user!!.phoneNumber,
-                    user!!.photoUrl.toString()
+                    user.email,
+                    user.phoneNumber,
+                    user.photoUrl.toString()
                 )
             }
             setNegativeButton("Go back") { _, _ ->

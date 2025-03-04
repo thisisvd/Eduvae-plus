@@ -81,7 +81,7 @@ class AddDiscussionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddDiscussionBinding.inflate(inflater, container, false)
 
         // sharedPreferences init
@@ -171,7 +171,7 @@ class AddDiscussionFragment : Fragment() {
                             dialog.dismiss()
                         }
                     }
-                    timer!!.start()
+                    timer.start()
                 }
             }
         }
@@ -283,7 +283,7 @@ class AddDiscussionFragment : Fragment() {
     }
 
     // uri file name
-    private fun queryName(context: Context, uri: Uri): String? {
+    private fun queryName(context: Context, uri: Uri): String {
         val returnCursor: Cursor = context.contentResolver.query(uri, null, null, null, null)!!
         val nameIndex: Int = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         returnCursor.moveToFirst()

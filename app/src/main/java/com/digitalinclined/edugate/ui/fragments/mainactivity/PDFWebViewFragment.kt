@@ -39,7 +39,7 @@ class PDFWebViewFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPDFWebViewBinding.inflate(inflater, container, false)
 
         // change the title bar

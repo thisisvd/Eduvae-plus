@@ -11,7 +11,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.databinding.FollowingLayoutItemBinding
 import com.digitalinclined.edugate.models.UserFollowingProfile
 
-class FollowingRecyclerAdapter : RecyclerView.Adapter<FollowingRecyclerAdapter.UserFollowingProfilesViewHolder>() {
+class FollowingRecyclerAdapter :
+    RecyclerView.Adapter<FollowingRecyclerAdapter.UserFollowingProfilesViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<UserFollowingProfile>() {

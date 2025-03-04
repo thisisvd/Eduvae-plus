@@ -3,10 +3,10 @@ package com.digitalinclined.edugate.ui.fragments.setupactivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.COURSE_LIST
 import com.digitalinclined.edugate.constants.Constants.SEMESTER_LIST

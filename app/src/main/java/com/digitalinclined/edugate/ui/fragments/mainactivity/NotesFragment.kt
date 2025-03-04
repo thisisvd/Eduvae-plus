@@ -3,11 +3,11 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +23,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
@@ -91,7 +90,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(QuestionsNotesDataClass::class.java)!!
+                            val dataClass = document.toObject(QuestionsNotesDataClass::class.java)
                             Log.d(TAG, "List size : ${questionsList.size}")
                             questionsList.add(dataClass)
                         }

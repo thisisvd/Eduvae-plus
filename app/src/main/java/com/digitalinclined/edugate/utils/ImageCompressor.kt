@@ -41,27 +41,32 @@ class ImageCompressor {
     }
 
 
-    fun convertBase64ToScaledBitmap(blob:String ,scale:Float , height:Int):Bitmap{
+    fun convertBase64ToScaledBitmap(blob: String, scale: Float, height: Int): Bitmap {
         val decodedString: ByteArray = Base64.decode(blob, Base64.NO_WRAP)
         val inputStream: InputStream = ByteArrayInputStream(decodedString)
         val bmap = BitmapFactory.decodeStream(inputStream)
         Log.d(TAG, "convertBase64ToScaledBitmap: compressed width:${bmap.width}")
 
         //ratio of original image
-        val ratio = bmap.width.toDouble()/bmap.height.toDouble()
+        val ratio = bmap.width.toDouble() / bmap.height.toDouble()
         //reduced image width
-        val reducedWidth = ratio*(height*scale)
+        val reducedWidth = ratio * (height * scale)
 
-        return Bitmap.createScaledBitmap(bmap , reducedWidth.toInt() , (height*scale).toInt() , false)
+        return Bitmap.createScaledBitmap(
+            bmap,
+            reducedWidth.toInt(),
+            (height * scale).toInt(),
+            false
+        )
     }
 
 
     //scale image according to a given ratio/fixed size images
-    fun scaleImageToRatio(blob:String , w:Int , h:Int , scale:Float):Bitmap{
+    fun scaleImageToRatio(blob: String, w: Int, h: Int, scale: Float): Bitmap {
         val decodedString: ByteArray = Base64.decode(blob, Base64.NO_WRAP)
         val inputStream: InputStream = ByteArrayInputStream(decodedString)
         val bmap = BitmapFactory.decodeStream(inputStream)
-        return Bitmap.createScaledBitmap(bmap , w , h , false)
+        return Bitmap.createScaledBitmap(bmap, w, h, false)
     }
 
 }

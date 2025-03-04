@@ -94,7 +94,7 @@ class AddClassroomDiscussionFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddClassroomDiscussionBinding.inflate(inflater, container, false)
 
         // sharedPreferences init
@@ -185,7 +185,7 @@ class AddClassroomDiscussionFragment : Fragment() {
                             dialog.dismiss()
                         }
                     }
-                    timer!!.start()
+                    timer.start()
                 } else if (pdfBase64FileData.isNotEmpty()) {
                     Log.d("JOSHA", "2")
                     val currentPDFIDName = System.currentTimeMillis().toString()
@@ -215,7 +215,7 @@ class AddClassroomDiscussionFragment : Fragment() {
                             dialog.dismiss()
                         }
                     }
-                    timer!!.start()
+                    timer.start()
                 } else if (isImageAttached) {
                     Log.d("JOSHA", "3")
                     uploadPicture(discussionContentTitle.text.toString())
@@ -403,7 +403,7 @@ class AddClassroomDiscussionFragment : Fragment() {
     }
 
     // uri file name
-    private fun queryName(context: Context, uri: Uri): String? {
+    private fun queryName(context: Context, uri: Uri): String {
         val returnCursor: Cursor = context.contentResolver.query(uri, null, null, null, null)!!
         val nameIndex: Int = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         returnCursor.moveToFirst()

@@ -23,7 +23,8 @@ import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class ClassroomRecyclerAdapter : RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
+class ClassroomRecyclerAdapter :
+    RecyclerView.Adapter<ClassroomRecyclerAdapter.ClassroomViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassroomDetailsClass>() {
@@ -74,7 +75,7 @@ class ClassroomRecyclerAdapter : RecyclerView.Adapter<ClassroomRecyclerAdapter.C
                 requestOptions.centerCrop()
                 if (!data.imageInt!!.isNullOrEmpty()) {
                     Glide.with(root)
-                        .load(data.imageInt!!)
+                        .load(data.imageInt)
                         .apply(requestOptions)
                         .listener(object : RequestListener<Drawable?> {
                             override fun onLoadFailed(

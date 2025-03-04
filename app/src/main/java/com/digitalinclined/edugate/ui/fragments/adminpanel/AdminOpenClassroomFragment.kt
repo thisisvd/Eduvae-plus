@@ -8,7 +8,9 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
@@ -60,7 +62,7 @@ class AdminOpenClassroomFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentOpenClassroomBinding.inflate(layoutInflater, container, false)
 
@@ -143,7 +145,7 @@ class AdminOpenClassroomFragment : Fragment() {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
                             val dataClass =
-                                document.toObject(ClassroomObjectsDataClass::class.java)!!
+                                document.toObject(ClassroomObjectsDataClass::class.java)
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")

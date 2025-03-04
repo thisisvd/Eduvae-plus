@@ -1,7 +1,7 @@
 package com.digitalinclined.edugate.utils
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class DateTimeFormatFetcher {
 

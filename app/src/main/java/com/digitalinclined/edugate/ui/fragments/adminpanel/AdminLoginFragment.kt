@@ -37,7 +37,7 @@ class AdminLoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAdminLoginBinding.inflate(layoutInflater, container, false)
 
@@ -93,7 +93,7 @@ class AdminLoginFragment : Fragment() {
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val adminData = document.toObject(AdminLoginDataClass::class.java)!!
+                            val adminData = document.toObject(AdminLoginDataClass::class.java)
                             if (adminID == adminData.adminID.toString() && adminPassKey == adminData.adminPassKey.toString()) {
                                 adminName = adminData.adminName.toString()
                                 isAdminFound = true

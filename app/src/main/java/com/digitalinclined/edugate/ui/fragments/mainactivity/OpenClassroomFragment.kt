@@ -9,8 +9,12 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -88,7 +93,7 @@ class OpenClassroomFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentOpenClassroomBinding.inflate(layoutInflater, container, false)
 
@@ -150,7 +155,7 @@ class OpenClassroomFragment : Fragment() {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
                             val dataClass =
-                                document.toObject(ClassroomObjectsDataClass::class.java)!!
+                                document.toObject(ClassroomObjectsDataClass::class.java)
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")
@@ -184,7 +189,7 @@ class OpenClassroomFragment : Fragment() {
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(QuizQuestion::class.java)!!
+                            val dataClass = document.toObject(QuizQuestion::class.java)
                             quizList.add(dataClass)
                         }
                         if (quizList.isNotEmpty()) {
@@ -405,14 +410,17 @@ class OpenClassroomFragment : Fragment() {
                 )
                 true
             }
+
             R.id.remove_classroom -> {
                 showAlertForDeletion()
                 true
             }
+
             R.id.copy_class_id -> {
                 copyClassroomId()
                 true
             }
+
             R.id.score_board -> {
                 if (args.classroomDetailsClass.classworkStudentList != null && args.classroomDetailsClass.classworkStudentList!!.isNotEmpty()) {
                     val bundle = bundleOf(

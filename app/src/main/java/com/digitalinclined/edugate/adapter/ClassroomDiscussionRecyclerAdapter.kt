@@ -14,7 +14,8 @@ import com.digitalinclined.edugate.models.ClassroomObjectsDataClass
 import com.digitalinclined.edugate.utils.DateTimeFormatFetcher
 import com.google.android.material.snackbar.Snackbar
 
-class ClassroomDiscussionRecyclerAdapter : RecyclerView.Adapter<ClassroomDiscussionRecyclerAdapter.ClassroomViewHolder>() {
+class ClassroomDiscussionRecyclerAdapter :
+    RecyclerView.Adapter<ClassroomDiscussionRecyclerAdapter.ClassroomViewHolder>() {
 
     // Diff Util Call Back
     private val differCallback = object : DiffUtil.ItemCallback<ClassroomObjectsDataClass>() {

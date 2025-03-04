@@ -2,13 +2,13 @@ package com.digitalinclined.edugate.ui.fragments.mainactivity
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,7 +43,7 @@ class VideosBranchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentVideosBranchBinding.inflate(inflater, container, false)
 
         // change the title bar
@@ -85,7 +85,7 @@ class VideosBranchFragment : Fragment() {
                                 "DocumentSnapshot data size : ${documentResult.documents.size}"
                             )
                             for (document in documentResult) {
-                                val dataClass = document.toObject(BranchListDataClass::class.java)!!
+                                val dataClass = document.toObject(BranchListDataClass::class.java)
                                 branchList.add(dataClass)
                             }
                             Log.d(TAG, "List size : ${branchList.size}")

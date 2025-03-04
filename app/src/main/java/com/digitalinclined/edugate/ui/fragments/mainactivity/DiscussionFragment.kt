@@ -5,11 +5,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,7 +88,7 @@ class DiscussionFragment : Fragment(R.layout.fragment_discussion) {
                     if (documentResult != null) {
                         Log.d(TAG, "DocumentSnapshot data size : ${documentResult.documents.size}")
                         for (document in documentResult) {
-                            val dataClass = document.toObject(DiscussionDataClass::class.java)!!
+                            val dataClass = document.toObject(DiscussionDataClass::class.java)
                             discussionsList.add(dataClass)
                         }
                         Log.d(TAG, "List size : ${discussionsList.size}")

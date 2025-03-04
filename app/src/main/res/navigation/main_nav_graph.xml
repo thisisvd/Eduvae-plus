@@ -243,7 +243,7 @@
     <fragment
         android:id="@+id/videoFragment"
         android:name="com.digitalinclined.edugate.ui.fragments.mainactivity.VideoFragment"
-        android:label="VideoFragment" >
+        android:label="VideoFragment">
         <argument
             android:name="item"
             app:argType="com.digitalinclined.edugate.models.youtubemodel.Item" />

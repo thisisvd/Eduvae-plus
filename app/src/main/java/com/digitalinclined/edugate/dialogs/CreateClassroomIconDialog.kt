@@ -21,7 +21,7 @@ class CreateClassroomIconDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = CreateClassroomIconDialogBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

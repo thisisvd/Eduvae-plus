@@ -3,7 +3,8 @@ package com.digitalinclined.edugate.restapi
 import com.digitalinclined.edugate.BuildConfig
 import com.digitalinclined.edugate.models.youtubemodel.YoutubeResponse
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface APIInterface {
 

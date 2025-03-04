@@ -8,7 +8,8 @@ object Constants {
 
     // APIs
     const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
-    const val APP_SHARE_URL = "https://drive.google.com/file/d/1t_zYYCGf_8-4q_nprhGlYmusnqBiNGYN/view"
+    const val APP_SHARE_URL =
+        "https://drive.google.com/file/d/1t_zYYCGf_8-4q_nprhGlYmusnqBiNGYN/view"
 
     // admin
     var ADMIN_USER_NAME = "Admin"
@@ -24,7 +25,7 @@ object Constants {
     var TEMP_CREATE_USER_EMAIL: String? = null
 
     // COURSE LIST AND YEAR LIST FOR STUDENT
-    val COURSE_LIST = arrayListOf("BTECH","BCA","MBA","BCOM")
+    val COURSE_LIST = arrayListOf("BTECH", "BCA", "MBA", "BCOM")
 
     val YEAR_LIST = arrayListOf(
         "1st Year", "2nd Year", "3rd Year", "4th Year"
@@ -63,9 +64,9 @@ object Constants {
 
     // Constant color of maps
     val mapOfColors = mapOf(
-        0 to ColorComboRecyclerClass("#FEF8E2","#FFDC5C"),
-        1 to ColorComboRecyclerClass("#E7FAE9","#27FF3D"),
-        2 to ColorComboRecyclerClass("#EEF9FF","#49BEFD"),
-        3 to ColorComboRecyclerClass("#FDEBF9","#E529BC")
+        0 to ColorComboRecyclerClass("#FEF8E2", "#FFDC5C"),
+        1 to ColorComboRecyclerClass("#E7FAE9", "#27FF3D"),
+        2 to ColorComboRecyclerClass("#EEF9FF", "#49BEFD"),
+        3 to ColorComboRecyclerClass("#FDEBF9", "#E529BC")
     )
 }

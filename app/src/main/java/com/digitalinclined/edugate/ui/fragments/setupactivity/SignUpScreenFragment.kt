@@ -1,10 +1,10 @@
 package com.digitalinclined.edugate.ui.fragments.setupactivity
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants.TEMP_CREATE_USER_EMAIL

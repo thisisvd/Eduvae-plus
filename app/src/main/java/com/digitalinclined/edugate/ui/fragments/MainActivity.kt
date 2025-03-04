@@ -181,7 +181,7 @@ class MainActivity : AppCompatActivity() {
 
                             // add following users
                             if (userProfile.following != null) {
-                                Log.d(TAG, "${userProfile.following!!.size}")
+                                Log.d(TAG, "${userProfile.following.size}")
                                 FOLLOWING_USER_ID.postValue(userProfile.following)
                             }
 
@@ -270,6 +270,7 @@ class MainActivity : AppCompatActivity() {
                             viewBottom.visibility = View.VISIBLE
                             toggleEnabled.postValue(true)
                         }
+
                         else -> {
                             // bottom nav bar visibility INVISIBLE/GONE
                             bottomNavigationView.visibility = View.GONE
@@ -397,10 +398,12 @@ class MainActivity : AppCompatActivity() {
                         sharedPreferences.edit().clear().commit()
                         true
                     }
+
                     R.id.navDrawerCloseIcon -> {
                         drawerLayout.closeDrawer(GravityCompat.START)
                         true
                     }
+
                     else -> true
                 }
             }
@@ -445,6 +448,7 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                 }
+
                 else -> super.onOptionsItemSelected(item)
             }
         }
