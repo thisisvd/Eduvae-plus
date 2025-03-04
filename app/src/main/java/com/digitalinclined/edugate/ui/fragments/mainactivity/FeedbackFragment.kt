@@ -4,13 +4,13 @@ import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.digitalinclined.edugate.R
 import com.digitalinclined.edugate.constants.Constants
@@ -20,7 +20,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.hsalf.smileyrating.SmileyRating
 
 class FeedbackFragment : Fragment() {
 
@@ -81,18 +80,18 @@ class FeedbackFragment : Fragment() {
     private fun onClickListeners() {
         binding.apply {
 
-            // smile Listener
-            smileRating.setSmileySelectedListener { type ->
-
-                when {
-                    SmileyRating.Type.GREAT == type -> smileCount = 5
-                    SmileyRating.Type.GOOD == type -> smileCount = 4
-                    SmileyRating.Type.OKAY == type -> smileCount = 3
-                    SmileyRating.Type.BAD == type -> smileCount = 2
-                    SmileyRating.Type.TERRIBLE == type -> smileCount = 1
-                }
-
-            }
+//            // smile Listener
+//            smileRating.setSmileySelectedListener { type ->
+//
+//                when {
+//                    SmileyRating.Type.GREAT == type -> smileCount = 5
+//                    SmileyRating.Type.GOOD == type -> smileCount = 4
+//                    SmileyRating.Type.OKAY == type -> smileCount = 3
+//                    SmileyRating.Type.BAD == type -> smileCount = 2
+//                    SmileyRating.Type.TERRIBLE == type -> smileCount = 1
+//                }
+//
+//            }
 
             // on submit click
             submitFeedback.setOnClickListener {

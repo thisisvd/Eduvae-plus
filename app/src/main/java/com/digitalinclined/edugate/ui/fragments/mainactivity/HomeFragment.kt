@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.digitalinclined.edugate.R
-import com.digitalinclined.edugate.adapter.SliderImageAdapter
 import com.digitalinclined.edugate.constants.Constants
 import com.digitalinclined.edugate.constants.Constants.APP_SHARE_URL
 import com.digitalinclined.edugate.constants.Constants.USER_NAME
@@ -23,8 +22,6 @@ import com.digitalinclined.edugate.ui.fragments.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
 
 class HomeFragment : Fragment() {
 
@@ -52,9 +49,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
@@ -96,8 +91,7 @@ class HomeFragment : Fragment() {
             // apply for jobs btn
             jobItemBtn.setOnClickListener {
                 val bundle = bundleOf(
-                    "url" to "https://www.naukri.com/",
-                    "urlSiteName" to "Naukri.com"
+                    "url" to "https://www.naukri.com/", "urlSiteName" to "Naukri.com"
                 )
                 findNavController().navigate(R.id.webViewFragment, bundle)
             }
@@ -128,8 +122,7 @@ class HomeFragment : Fragment() {
             // university app
             universityAppLayout.setOnClickListener {
                 val bundle = bundleOf(
-                    "url" to "https://www.rgpv.ac.in/",
-                    "urlSiteName" to "RGPV University"
+                    "url" to "https://www.rgpv.ac.in/", "urlSiteName" to "RGPV University"
                 )
                 findNavController().navigate(R.id.webViewFragment, bundle)
             }
@@ -175,14 +168,14 @@ class HomeFragment : Fragment() {
     private fun sliderImageView() {
         binding.apply {
 
-            // Slider Image Adapter
-            val adapter = SliderImageAdapter(requireContext(), webViewProgressBar)
-
-            // adapter init
-            sliderView.setSliderAdapter(adapter)
-            sliderView.setIndicatorAnimation(IndicatorAnimationType.SWAP)
-            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-            sliderView.startAutoCycle()
+//            // Slider Image Adapter
+//            val adapter = SliderImageAdapter(requireContext(), webViewProgressBar)
+//
+//            // adapter init
+//            sliderView.setSliderAdapter(adapter)
+//            sliderView.setIndicatorAnimation(IndicatorAnimationType.SWAP)
+//            sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+//            sliderView.startAutoCycle()
         }
     }
 
@@ -193,13 +186,15 @@ class HomeFragment : Fragment() {
         val requestOptions = RequestOptions()
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL)
         requestOptions.centerCrop()
-        if (sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString() != null &&
-            sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString() != ""
+        if (sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "")
+                .toString() != null && sharedPreferences.getString(
+                Constants.USER_PROFILE_PHOTO_LINK,
+                ""
+            ).toString() != ""
         ) {
             Glide.with(rootView)
                 .load(sharedPreferences.getString(Constants.USER_PROFILE_PHOTO_LINK, "").toString())
-                .apply(requestOptions)
-                .into(rootView.findViewById(R.id.homeProfileImage))
+                .apply(requestOptions).into(rootView.findViewById(R.id.homeProfileImage))
         }
         rootView.setOnClickListener {
             onOptionsItemSelected(profileMenuItem)
@@ -217,6 +212,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.myProfile, null, navBuilder.build())
                 true
             }
+
             R.id.uploadVideo -> {
                 findNavController().navigate(R.id.action_homeFragment_to_uploadVideoFragment)
             }

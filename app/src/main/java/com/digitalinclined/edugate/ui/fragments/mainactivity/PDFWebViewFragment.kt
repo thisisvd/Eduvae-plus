@@ -63,9 +63,9 @@ class PDFWebViewFragment : Fragment() {
                     if (it != null) {
                         var getBytes = Base64.decode(it.fileData, Base64.NO_WRAP)
                         Log.d(TAG, "$it : $getBytes")
-                        pdfView.fromBytes(getBytes).load()
+//                        pdfView.fromBytes(getBytes).load()
                     } else {
-                        pdfView.fromAsset("machine_learning.pdf").load()
+//                        pdfView.fromAsset("machine_learning.pdf").load()
                     }
                 }
             } else {

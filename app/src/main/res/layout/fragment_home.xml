@@ -72,23 +72,23 @@
             android:layout_marginBottom="@dimen/_5sdp"
             app:cardCornerRadius="@dimen/_8sdp">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/sliderView"
-                android:layout_width="match_parent"
-                android:layout_height="135dp"
-                app:sliderAnimationDuration="1000"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="666"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="#FFF"
-                app:sliderIndicatorUnselectedColor="#805A5A5A"
-                app:sliderScrollTimeInSec="4"
-                app:sliderStartAutoCycle="true" />
+<!--            <com.smarteist.autoimageslider.SliderView-->
+<!--                android:id="@+id/sliderView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="135dp"-->
+<!--                app:sliderAnimationDuration="1000"-->
+<!--                app:sliderAutoCycleDirection="back_and_forth"-->
+<!--                app:sliderAutoCycleEnabled="true"-->
+<!--                app:sliderIndicatorAnimationDuration="666"-->
+<!--                app:sliderIndicatorGravity="center_horizontal|bottom"-->
+<!--                app:sliderIndicatorMargin="15dp"-->
+<!--                app:sliderIndicatorOrientation="horizontal"-->
+<!--                app:sliderIndicatorPadding="3dp"-->
+<!--                app:sliderIndicatorRadius="2dp"-->
+<!--                app:sliderIndicatorSelectedColor="#FFF"-->
+<!--                app:sliderIndicatorUnselectedColor="#805A5A5A"-->
+<!--                app:sliderScrollTimeInSec="4"-->
+<!--                app:sliderStartAutoCycle="true" />-->
 
             <ProgressBar
                 android:id="@+id/webViewProgressBar"
