@@ -62,7 +62,6 @@ git clone https://github.com/thisisvd/Eduvae-plus.git
 # API Key's
 BASE_YOUTUBE_API_KEY=***
 ```
-  - At last in `strings.xml` file replace `<string name="MAPS_API_KEY">MAPS_API_KEY</string>` with the original obtained maps api key.
 
 ## Diagrams
 
